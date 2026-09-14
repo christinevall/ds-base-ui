@@ -1,10 +1,28 @@
 # Sample Design System
 
-A design system built on [Base UI](https://base-ui.com) primitives, documented in [Storybook](https://storybook.js.org), with a token layer designed to sync to Figma variables.
+A playground for designers learning AI design system workflows. It is a small, real design system built on [Base UI](https://base-ui.com) primitives, documented in [Storybook](https://storybook.js.org) and mirrored into Figma, so you can try the whole loop yourself: tokens in code, components in Storybook, the same system as Figma variables and components, and AI tools connected to both through MCP.
+
+It is a teaching repo, not a production system. Some colour pairs still fail contrast (`npm run check:contrast`), and the places where Figma cannot match the code are listed in [`figma/GAPS.md`](figma/GAPS.md).
 
 42 components, 4 foundations pages, 4 full-screen patterns.
 
-**Live Storybook:** [christinevall.github.io/sample-design-system](https://christinevall.github.io/sample-design-system/) — no install needed. It updates on every merge to `main`.
+**Live Storybook:** [christinevall.github.io/ds-base-ui](https://christinevall.github.io/ds-base-ui/) — no install needed. It updates on every merge to `main`.
+
+**Figma library:** [Figma Community](https://www.figma.com/community/file/1681312616396112992) — the same system as Figma variables, text styles and components, generated from this code. Duplicate it to explore.
+
+## How I use this playground
+
+This is the workflow I'm exploring with it, and it will keep changing while I build a course around it.
+
+1. **Work on the `design` branch.** A branch is a parallel copy of the code. `design` is where prototypes live, so nothing you try there touches `main` ([docs/branching.md](docs/branching.md)).
+2. **See the system in Storybook.** Every component, live and working, so you can see the codebase instead of reading it.
+3. **Keep Figma in step with the code.** The Figma library is generated from this code through the Figma Console MCP (MCP is a standard plug that lets an AI tool read from another tool and work in it), following the `figma-mirror` skill in `.claude/skills/`. Variables, text styles and components use the same names and options as the code. Where Figma cannot express the CSS, it is written down in `figma/GAPS.md` rather than simplifying the CSS.
+4. **Prototype in Storybook with real components**, then ask the agent to build the screen in Figma, where the library is already set up.
+5. **Explore in Figma.** Move things by hand, put research and references next to it, and stay in the system or step out of it on purpose when the design needs something custom.
+6. **Bring it back to code.** Ask the agent to rebuild the Figma screen from the real components. `figma/manifest.json` is how a Figma name like `Button · variant=primary` resolves back to `<Button variant="primary">`. The result is a real, clickable prototype in Storybook.
+7. **Hand off.** An accepted prototype does not merge as it is. It gets built properly on a `feature/*` branch through a pull request, where developers run the tests and checks production code needs.
+
+**What has been tried and what has not.** The Figma to Storybook direction has been done here once: the booking flow under *Prototypes* in Storybook started as a Figma prototype. Steps 6 and 7 have not been run inside a real product team yet, and there is no packaged skill for moving prototypes between Figma and Storybook. You ask for it in plain words.
 
 ## Stack
 
@@ -111,6 +129,16 @@ See [docs/conventions.md](docs/conventions.md). The short version:
 ## Branching
 
 See [docs/branching.md](docs/branching.md). `main` is the design system; changes land on it through `feature/*` pull requests. `design` exists as a long-lived branch for designers to prototype in real code, and accepted prototypes come back through a normal feature branch rather than merging `design` directly.
+
+## Made by
+
+[Christine Vallaure](https://christinevallaure.com), founder of [moonlearning.io](https://moonlearning.io). I teach designers how Figma, code and AI fit together.
+
+- **The full course on this workflow** is in the making: advanced, for designers with solid Figma skills. The [newsletter](https://moonlearning.io/newsletter) is where I announce it.
+- **Live course on Maven:** [Build Scalable UI in Figma & AI: Design Systems Agents Can Actually Use](https://maven.com/moonlearning/figma). Four weeks, hybrid, all levels.
+- **Lightning session:** *Design Figma Files That Scale with AI*, with materials at [moonlearning.io/scaleAI](https://moonlearning.io/scaleAI).
+- **Self-paced Figma courses** in the [moonlearning store](https://moonlearning.io/store), and [free sessions](https://moonlearning.io/resources).
+- **For design teams:** in-house AI workshops and consulting, through [moonlearning.io](https://moonlearning.io).
 
 ## Credits
 
