@@ -37,6 +37,7 @@ fed by code — a sketchpad that speaks the system's vocabulary.
 | **DTCG format** (`$value`/`$type`) | The actual W3C standard; Brad's Eddie uses the older `value`/`type` form |
 | **Two tiers, not three** | Eddie has a component tier; 42 components need none yet. Documented as the extension point |
 | **Brad's `background`/`content`/`border`** colour categories | The role colours are genuinely multi-role — `accent` was used 17× as content, 15× as background, 9× as a border under one name that carried no intent |
+| **Primitives are named Brad's way: group → colour → step** (2026-09-14) | Follows Eddie's tier 1 (`brand`, `neutral`, `utility`): `neutral` (white named, 50–950), `brand.indigo`, `utility.green` / `yellow` / `red`. The old `success` / `warning` / `danger` ramps put meaning into tier 1, which only tier 2 should carry — a red that is not an error had no honest name. Semantic names are unchanged, so no component moved. Figma variables were renamed in place, so every alias and binding survived. `yellow` is Eddie's word; the values are the amber ramp |
 | **No Code Connect** | A per-component binding file, maintained by hand, Figma-proprietary, rots when either side changes. A second sync surface |
 | **Component contracts instead** | The manifest already publishes the contract. Generate the Figma library from it and names match *by construction* — nothing to bind |
 | **Validate is warn-only** | It must never block a designer mid-prototype. `--strict` exists for CI |

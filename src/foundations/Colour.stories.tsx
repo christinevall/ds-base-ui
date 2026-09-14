@@ -70,11 +70,12 @@ export const Primitives: Story = {
       title="Primitive ramps"
       intro="The raw material. Nothing outside src/tokens/semantic.css is allowed to reference these. They are shown here so you can see what the semantic layer is choosing from, not so you can use them."
     >
-      {(['neutral', 'brand', 'success', 'warning', 'danger'] as const).map((ramp) => {
+      {/* Named Brad's way: group → colour → step (brand/indigo, utility/red). */}
+      {(['neutral', 'brand-indigo', 'utility-green', 'utility-yellow', 'utility-red'] as const).map((ramp) => {
         const steps =
           ramp === 'neutral'
-            ? ['0', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-            : ramp === 'brand'
+            ? ['white', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
+            : ramp === 'brand-indigo'
               ? ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
               : ['100', '300', '500', '600', '700'];
         return (

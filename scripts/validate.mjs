@@ -42,7 +42,7 @@ for (const f of TOKENS_CSS) {
  * so size, line height and letter spacing are checked there instead.
  */
 const isPrimitive = (t) =>
-  /^--sds-color-(neutral|brand|success|warning|danger)-\d+$/.test(t) ||
+  /^--sds-color-(neutral-(white|\d+)|brand-[a-z]+-\d+|utility-[a-z]+-\d+)$/.test(t) ||
   /^--sds-shadow-/.test(t);
 
 for (const file of files) {
