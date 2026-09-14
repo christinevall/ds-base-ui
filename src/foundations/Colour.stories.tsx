@@ -85,7 +85,7 @@ export const Primitives: Story = {
                   <div
                     style={{
                       height: 48,
-                      background: `var(--sds-${ramp}-${step})`,
+                      background: `var(--sds-color-${ramp}-${step})`,
                       border: '1px solid var(--sds-color-border-default)',
                     }}
                   />
