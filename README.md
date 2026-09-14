@@ -4,7 +4,9 @@ A design system built on [Base UI](https://base-ui.com) primitives, documented i
 
 42 components, 4 foundations pages, 4 full-screen patterns.
 
-**Live Storybook:** [christinevall.github.io/sample-design-system](https://christinevall.github.io/sample-design-system/) — no install needed. It updates on every merge to `main`.
+**Live Storybook:** [christinevall.github.io/ds-base-ui](https://christinevall.github.io/ds-base-ui/) — no install needed. It updates on every merge to `main`.
+
+**Figma library:** [Figma Community](https://www.figma.com/community/file/1681312616396112992) — the same system as Figma variables, text styles and components, generated from this code. Duplicate it to explore.
 
 ## Stack
 
