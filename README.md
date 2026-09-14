@@ -1,6 +1,8 @@
 # Sample Design System
 
-A design system built on [Base UI](https://base-ui.com) primitives, documented in [Storybook](https://storybook.js.org), with a token layer designed to sync to Figma variables.
+A playground for designers learning AI design system workflows. It is a small, real design system built on [Base UI](https://base-ui.com) primitives, documented in [Storybook](https://storybook.js.org) and mirrored into Figma, so you can try the whole loop yourself: tokens in code, components in Storybook, the same system as Figma variables and components, and AI tools connected to both through MCP.
+
+It is a teaching repo, not a production system. Some colour pairs still fail contrast (`npm run check:contrast`), and the places where Figma cannot match the code are listed in [`figma/GAPS.md`](figma/GAPS.md).
 
 42 components, 4 foundations pages, 4 full-screen patterns.
 
@@ -113,6 +115,10 @@ See [docs/conventions.md](docs/conventions.md). The short version:
 ## Branching
 
 See [docs/branching.md](docs/branching.md). `main` is the design system; changes land on it through `feature/*` pull requests. `design` exists as a long-lived branch for designers to prototype in real code, and accepted prototypes come back through a normal feature branch rather than merging `design` directly.
+
+## Made by
+
+[Christine Vallaure](https://christinevallaure.com), [moonlearning.io](https://moonlearning.io). I teach designers how Figma, code and AI fit together, and I'm building courses and workshops around this way of working. News goes out through the [newsletter](https://moonlearning.io/newsletter).
 
 ## Credits
 
