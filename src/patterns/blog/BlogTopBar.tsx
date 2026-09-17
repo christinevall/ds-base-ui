@@ -27,7 +27,7 @@ export function BlogTopBar() {
           </NavigationMenu.List>
         </NavigationMenu.Root>
 
-        <Button>Subscribe</Button>
+        <Button onClick={goTo(storyIds.subscribe)}>Subscribe</Button>
       </div>
     </header>
   );
