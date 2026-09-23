@@ -13,7 +13,7 @@
  * last snapshot of the library, not from the live file: the overview says
  * when that snapshot was taken, so an old one is visible rather than trusted.
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync, rmSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const SUMMARY_ONLY = process.argv.includes('--summary');
@@ -26,8 +26,25 @@ const findings = JSON.parse(execSync('node scripts/validate.mjs --json', { encod
 const fm = existsSync(FIGMA) ? JSON.parse(readFileSync(FIGMA, 'utf8')) : null;
 const sb = existsSync(STORYBOOK) ? Object.values(JSON.parse(readFileSync(STORYBOOK, 'utf8')).components) : [];
 const git = (cmd) => { try { return execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } };
-const snapshotDate = git(`git log -1 --format=%cs -- ${FIGMA}`) || 'never committed';
+// When the Figma side was last read. The check never reaches Figma itself:
+// only Claude can, through the Figma Console MCP, by taking a snapshot. So
+// every output says when that was, and how to take a new one.
+// A snapshot not committed yet is dated by when the file was saved; a
+// committed one by its commit (a checkout rewrites the file's time).
 const snapshotDirty = git(`git status --porcelain -- ${FIGMA}`) !== '';
+const snapshotAt = snapshotDirty
+  ? (existsSync(FIGMA) ? statSync(FIGMA).mtime : null)
+  : new Date(git(`git log -1 --format=%cI -- ${FIGMA}`) || NaN);
+const pad = (n) => String(n).padStart(2, '0');
+const stamp = (d) => (d && !isNaN(d) ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}` : 'never');
+const ago = (d) => {
+  if (!d || isNaN(d)) return '';
+  const min = Math.round((Date.now() - d) / 60000);
+  return min < 60 ? `${min} min ago` : min < 60 * 48 ? `${Math.round(min / 60)} h ago` : `${Math.round(min / 1440)} days ago`;
+};
+const snapshotDate = stamp(snapshotAt);
+const snapshotNote = snapshotDirty ? `saved ${snapshotDate}, not committed yet` : `committed ${snapshotDate}`;
+const HOW_TO_REFRESH = 'To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude "take a snapshot of the library", then run npm run sync-status again.';
 
 // Which component a finding belongs to: Figma findings name the Figma item
 // first ("Card.Header: …", "Meter has no key"); code findings sit in its folder.
@@ -53,15 +70,15 @@ for (const f of findings) {
 // What "agree" means, one check per column. Each is a question validate
 // already answers; a finding moves that column to ❌ for that component.
 const CHECKS = [
-  { id: 'both', label: 'Exists in both', means: 'A Figma component exists and names this code file as its source' },
+  { id: 'keys', label: 'Figma key *', means: 'The Figma manifest has the key needed to find it and place it in another file (see * below the table)' },
+  { id: 'both', label: 'Same name', means: 'The Figma component is called what the code calls it (Accordion, Accordion.Item) and points to this code file' },
   { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
   { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
   { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
-  { id: 'keys', label: 'Figma key *', means: 'The Figma manifest has the key needed to place it in another file (see * below the table)' },
   { id: 'rules', label: 'Code follows the rules', means: 'Its CSS uses existing semantic tokens and whole text styles, no raw colours' },
 ];
 const checkOf = (f) => {
-  if (f.rule === 'figma-orphan') return 'both';
+  if (f.rule === 'figma-orphan' || f.rule === 'figma-unknown-name') return 'both';
   if (f.rule === 'figma-unknown-prop') return 'names';
   if (f.rule === 'figma-drift' && f.message.includes(' default ')) return 'defaults';
   if (f.rule === 'figma-drift') return 'options';
@@ -94,9 +111,10 @@ const summary = [
   `Sync status: ${count('match')} of ${rows.length - count('not mirrored')} mirrored components match` +
     (drift.length ? `, ${drift.length} need attention: ${drift.map((r) => `${r.name} (${r.issues[0]?.message ?? r.status})`).join('; ')}` : '') +
     (systemWide.length ? `. ${systemWide.length} system-wide finding(s): ${[...new Set(systemWide.map((f) => f.rule))].join(', ')}` : '') + '.',
-  `Figma side read from the snapshot of ${snapshotDate}${snapshotDirty ? ' (plus an uncommitted newer snapshot)' : ''}, not the live file.` +
+  `Figma side: the snapshot ${snapshotNote} (${ago(snapshotAt)}), not the live file. A new snapshot identical to it keeps this time.` +
     (fm?.keys ? ` Key map: ${Object.keys(fm.keys.components).length} components, ${Object.keys(fm.keys.textStyles).length} text styles, ${Object.keys(fm.keys.variables).length} variables.` : ' No key map yet.'),
   sb.length ? '' : 'Storybook manifest not built: code props are not listed (npm run build-storybook).',
+  HOW_TO_REFRESH,
 ].filter(Boolean);
 
 
@@ -130,6 +148,7 @@ function badgeSvg(text, variant, size) {
 
 if (!SUMMARY_ONLY) {
   mkdirSync('docs/sync-status', { recursive: true });
+  rmSync('docs/sync-status/summary-attention.svg', { force: true }); // redrawn below only when needed
   const badge = (file, text, variant, size = 'sm') => {
     writeFileSync(`docs/sync-status/${file}.svg`, badgeSvg(text, variant, size));
     return `![${text}](sync-status/${file}.svg)`;
@@ -151,7 +170,7 @@ if (!SUMMARY_ONLY) {
     '',
     'Every component, in code and in the Figma library, side by side. **Code is the source**: when the two disagree, Figma is updated (with the `figma-mirror` skill), never the other way round.',
     '',
-    `- **Figma side:** read from \`figma/manifest.json\`, the snapshot of **${snapshotDate}**, not the live file. If the library changed since, run \`scripts/figma/snapshot.figma.js\` again.`,
+    `- **Figma side:** the snapshot **${snapshotNote}**, read from \`figma/manifest.json\`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. ${HOW_TO_REFRESH}`,
     `- **Checks:** everything below comes from \`npm run validate\`. ${findings.length ? `${findings.length} finding(s) in total.` : 'No findings.'}`,
     `- **Tokens:** ${tokenCount} Figma variables, ${fm?.textStyles.length ?? 0} text styles, ${fm?.effectStyles.length ?? 0} effect styles.`,
     '',
@@ -190,7 +209,7 @@ if (!SUMMARY_ONLY) {
   writeFileSync('docs/sync-status.md', md);
   // The same, as data, for the Sync status page in Storybook (src/SyncStatus.mdx).
   writeFileSync('docs/sync-status.json', JSON.stringify({
-    snapshotDate, findings: findings.length, checks: CHECKS, rows,
+    snapshotDate: snapshotNote, howToRefresh: HOW_TO_REFRESH, findings: findings.length, checks: CHECKS, rows,
     systemWide: systemWide.map((f) => ({ message: f.message, rule: f.rule, file: f.file })),
     tokens: { variables: tokenCount, textStyles: fm?.textStyles.length ?? 0, effectStyles: fm?.effectStyles.length ?? 0 },
   }, null, 2) + '\n');

@@ -10,17 +10,20 @@
  *   node scripts/figma/tokens-to-figma.mjs --summary   counts only
  *
  * Naming rule: a Figma name is the token path with "." replaced by "/", and
- * its WEB code syntax is the real CSS variable, var(--sds-<path joined by ->).
+ * its WEB code syntax is the real CSS variable, var(--<prefix>-<path joined by ->).
+ * Paths, prefix and fonts come from ./config.mjs.
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
+import { CONFIG } from './config.mjs';
 
-const ROOT = fileURLToPath(new URL('../..', import.meta.url));
-const read = (p) => JSON.parse(readFileSync(join(ROOT, 'tokens', p), 'utf8'));
+const ROOT = process.cwd(); // the project root: run from there (npm run …)
+const P = CONFIG.prefix;
+const read = (p) => JSON.parse(readFileSync(join(ROOT, CONFIG.tokens.dir, p), 'utf8'));
 
 /** The family Figma uses for each font token: the first family the code names. */
-export const FIGMA_FONTS = { sans: 'Inter', mono: 'Roboto Mono' };
+export const FIGMA_FONTS = CONFIG.figmaFonts;
 const STYLE_BY_WEIGHT = {
   sans: { 400: 'Regular', 500: 'Medium', 600: 'Semi Bold', 700: 'Bold' },
   mono: { 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold' },
@@ -38,7 +41,7 @@ function leaves(node, path = [], type) {
 }
 
 const figmaName = (p) => p.join('/');
-const codeSyntax = (p) => `var(--sds-${p.join('-')})`;
+const codeSyntax = (p) => `var(--${P}-${p.join('-')})`;
 const refPath = (v) => String(v).match(/^\{([^}]+)\}$/)?.[1].split('.') ?? null;
 const r2 = (n) => Math.round(n * 100) / 100;
 const px = (v) => {
@@ -63,22 +66,22 @@ export function allTokens() {
   const tier1 = readTier1();
   return [
     ...leaves(tier1),
-    ...leaves(read('tier-2-usage/semantic.light.json')),
-    ...leaves(read('tier-2-usage/text-style.json')),
-  ].map((t) => ({ ...t, css: `--sds-${t.path.join('-')}` }));
+    ...leaves(read(CONFIG.tokens.light)),
+    ...leaves(read(CONFIG.tokens.textStyles)),
+  ].map((t) => ({ ...t, css: `--${P}-${t.path.join('-')}` }));
 }
 
 function readTier1() {
-  const dir = join(ROOT, 'tokens/tier-1-definitions');
-  return Object.assign({}, ...readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => read(`tier-1-definitions/${f}`)));
+  const dir = join(ROOT, CONFIG.tokens.dir, CONFIG.tokens.definitions);
+  return Object.assign({}, ...readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => read(`${CONFIG.tokens.definitions}/${f}`)));
 }
 
 export function buildPayload() {
   const tier1 = readTier1();
   const get = (p) => p.reduce((n, k) => n?.[k], tier1)?.$value;
-  const light = read('tier-2-usage/semantic.light.json');
-  const dark = read('tier-2-usage/semantic.dark.json');
-  const styles = read('tier-2-usage/text-style.json').typography;
+  const light = read(CONFIG.tokens.light);
+  const dark = read(CONFIG.tokens.dark);
+  const styles = read(CONFIG.tokens.textStyles).typography;
 
   const variables = [];
   const add = (collection, path, type, scopes, values, extra = {}) =>
@@ -172,7 +175,7 @@ export function buildPayload() {
       family: FIGMA_FONTS[family],
       style: STYLE_BY_WEIGHT[family][weight],
       textCase: value('text-transform') === 'uppercase' ? 'UPPER' : 'ORIGINAL',
-      description: `${def.$description ?? ''} CSS: var(--sds-typography-${style}-*).`.trim(),
+      description: `${def.$description ?? ''} CSS: var(--${P}-typography-${style}-*).`.trim(),
       bind: Object.fromEntries(
         [['fontFamily', 'font-family'], ['fontSize', 'font-size'], ['fontWeight', 'font-weight'], ['lineHeight', 'line-height'], ['letterSpacing', 'letter-spacing']]
           .map(([field, prop]) => [field, figmaName([...base, prop])]),

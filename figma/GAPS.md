@@ -95,6 +95,24 @@ when it is resolved.
   render); the code needs a fix on a `feature/*` branch. Until then prototypes
   put a single checkbox in a one-option `CheckboxGroup` (the workshop sign-up
   does).
+- **2026-09-23, found by rebuilding the booking flow in Figma.**
+  - **Accordion.Item panel padding: fixed in the library and published (2026-09-23).**
+    The `content` frame had left/right `space/4` and top/bottom `space/2`, the
+    CSS shorthand `padding: 0 space-2 space-4` read the wrong way round. Now top
+    0, left/right `space/2`, bottom `space/4`, checked against Storybook (text
+    at 8px, panel 58px). Files that use the library still have to accept the
+    update (the Playground: not checked).
+  - **Meter and Progress: the bar length is not a property.** `Meter.Indicator`
+    is a fixed-width rectangle (42% by default) and an instance cannot resize
+    it, so an instance shows the default fill whatever its `value` text says.
+    Open: a variant per step, or a width bound to a number variable.
+  - **Dialog.Content: its description says "portal, backdrop and popup"**, but
+    the component is the popup only. A page draws the backdrop itself with
+    `color/background/overlay` (as the rows above say). Open: fix the
+    description, or add the backdrop.
+  - **Not checked:** Collapsible was compared for the same padding mistake and
+    matches; no other component's padding was compared. The parked "Same look"
+    check on the Sync status page would do that.
 
 - **2026-09-23, Inter and Roboto Mono.** Code now names both fonts
   (`src/fonts/`), so the font rows above are gone. Figma already used Inter and

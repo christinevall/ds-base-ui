@@ -20,7 +20,8 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
 | Check that Figma and the code are still in sync, component by component | *Sync status* in Storybook, or [`docs/sync-status.md`](docs/sync-status.md) (`npm run sync-status` updates both) |
-| See every manifest, check, command, skill and MCP, or demo them | [The toolkit](#the-toolkit-lists-checks-commands-skills) |
+| See how a page is laid out: the six layout words and the page anatomy | *Layout* in Storybook, or [`docs/layout.md`](docs/layout.md) |
+| See every manifest, check, command, skill and MCP, or demo them | *Toolkit* in Storybook, or [The toolkit](#the-toolkit-lists-checks-commands-skills) below |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 
 ## In plain words
@@ -77,7 +78,7 @@ tokens/*.json ──npm run build:tokens──►  CSS variables ──►  Reac
 ```
 
 - **Names match on purpose.** `color/background/accent` in Figma is `--sds-color-background-accent` in CSS, and a Figma layer `Button · variant=primary` resolves to `<Button variant="primary">` through `figma/manifest.json`.
-- **One page shows whether code and Figma are in sync.** *Sync status* in Storybook (and [`docs/sync-status.md`](docs/sync-status.md)) lists every component with one column per check: in both, same property names, same options, same defaults, Figma key, code follows the rules. It checks names, not the look. `npm run sync-status` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
+- **One page shows whether code and Figma are in sync.** *Sync status* in Storybook (and [`docs/sync-status.md`](docs/sync-status.md)) lists every component with one column per check: Figma key, same name, same property names, same options, same defaults, code follows the rules. It checks names, not the look. `npm run sync-status` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
 - **The key map.** `figma/manifest.json` also stores each Figma item's key, the handle an AI needs to place a library component in another file. With it, building a screen in Figma is a lookup instead of a search through the whole library.
 - **Where Figma cannot express the CSS**, it is written down in [`figma/GAPS.md`](figma/GAPS.md) instead of simplifying the CSS.
 - **Code Connect** is not set up: it needs an Organization or Enterprise plan.
@@ -96,7 +97,7 @@ so it cannot go stale without a check noticing.
 | --- | --- | --- | --- |
 | **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
 | **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `sync-status`, Claude when building in Figma |
-| **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (in both, same property names, same options, same defaults, Figma key, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
+| **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (Figma key, same name, same property names, same options, same defaults, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
 | **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
 
 ### The checks
@@ -134,8 +135,8 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 | Skill | For | Say |
 | --- | --- | --- |
 | [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
-| [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)) | "Run the inspection" |
-| `prototype-sync` *(in progress)* | Prototypes in both directions: a Storybook story → Figma screens made of library instances, and Figma screens → a Storybook story, with a notes overview on each side | – |
+| [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)). **By [Brad Frost](https://bradfrost.com)**, from [bradfrost/skills](https://github.com/bradfrost/skills) (MIT), unchanged; customised for this system in [`ds-inspection/GARAGE.md`](ds-inspection/GARAGE.md): one report for designers and developers, with 🎨 Design / 🛠️ Dev columns | "Run the inspection" |
+| [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | **Needs the Storybook MCP and the Figma Console MCP.** Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
 
 ### The plugs (MCP)
 
@@ -230,7 +231,7 @@ figma/
   manifest.json        what the Figma library contains, plus the key map
   GAPS.md              where Figma cannot match the code, and why
 .claude/
-  skills/              figma-mirror, ds-inspection
+  skills/              figma-mirror, ds-inspection, storybook-figma-sync
   settings.json        the session-start sync check
 .mcp.json              the Storybook MCP for Claude Code
 src/
@@ -248,6 +249,7 @@ docs/
   architecture.md      why the repo is shaped this way
   conventions.md       how to add a component
   branching.md         the Gitflow variant, including the design branch
+  layout.md            the layout words: Stack, Cluster, Split, Columns, Grid, Page
   sync-status.md       GENERATED — code and Figma side by side (sync-status.json feeds the Storybook page)
 ```
 

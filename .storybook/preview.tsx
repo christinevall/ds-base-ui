@@ -64,6 +64,8 @@ const preview: Preview = {
         order: [
           'Getting started',
           'Sync status',
+          'Toolkit',
+          'Layout',
           'Foundations',
           ['Colour', 'Typography', 'Space and shape', 'Motion'],
           'Components',
