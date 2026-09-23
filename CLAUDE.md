@@ -110,9 +110,13 @@ including when the Figma snapshot was taken, or say it did not run. The full
 table is `docs/sync-status.md`, or *Sync status* in Storybook.
 
 **Report, flag, suggest, then ask.** Never change anything on your own: no
-file, no Figma node, no rule or skill, no regenerated report. After any check,
-give the result, flag every ✗, suggest the fix for each, and ask yes or no.
-Act only on a yes.
+file, no Figma node, no rule or skill. After any check, give the result, flag
+every ✗, suggest the fix for each, and ask yes or no. Act only on a yes.
+
+**One exception: keep Storybook's sync status current, without asking.**
+Whenever `figma/manifest.json` has just been saved from a live snapshot, run
+`npm run sync-status` (not `--summary`) straight away, so `docs/sync-status.*`
+and the badge in Storybook show the same state as the check. Say that you did.
 
 **Before building anything in Figma**, check sync first, live if you can. If
 the library file is connected (`figma_list_open_files`), read a live snapshot

@@ -87,6 +87,13 @@ meets something it cannot express. Anything not listed is expected to match.
 What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
+- **Accordion named "Accordion1": fixed (2026-09-23, 16:40).** A live snapshot
+  at 16:29 found the library's Accordion renamed to "Accordion1" (same key, same
+  description, only the name), most likely by accident; not checked who or why.
+  Renamed back by hand in Figma. A new live snapshot is byte-identical to the
+  committed 16:03 one, and sync status is 39 of 39. Not checked: whether the
+  library was published after the rename back, so files using it may still
+  offer "Accordion1" until it is.
 - **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
   `Checkbox` renders a `Field.Item`, which needs an enclosing `Field.Root`; on
   its own Base UI throws "FieldRootContext is missing". Every Checkbox story
