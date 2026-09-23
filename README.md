@@ -134,7 +134,7 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 | Skill | For | Say |
 | --- | --- | --- |
 | [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
-| [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)) | "Run the inspection" |
+| [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)). **By [Brad Frost](https://bradfrost.com)**, from [bradfrost/skills](https://github.com/bradfrost/skills) (MIT), unchanged; customised for this system in [`ds-inspection/GARAGE.md`](ds-inspection/GARAGE.md): one report for designers and developers, with 🎨 Design / 🛠️ Dev columns | "Run the inspection" |
 | [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | **Needs the Storybook MCP and the Figma Console MCP.** Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
 
 ### The plugs (MCP)

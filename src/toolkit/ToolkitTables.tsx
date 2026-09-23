@@ -102,7 +102,11 @@ export function Skills() {
         ],
         [
           link(`${REPO}.claude/skills/ds-inspection/SKILL.md`, 'ds-inspection'),
-          'A health check of the whole system, with a red/yellow/green report and a work order',
+          <>
+            A health check of the whole system, with a red/yellow/green report and a work order. <strong>By Brad Frost</strong>,
+            from {link('https://github.com/bradfrost/skills', 'bradfrost/skills')} (MIT), unchanged; customised for this system in{' '}
+            {link(`${REPO}ds-inspection/GARAGE.md`, 'GARAGE.md')}: a report for designers and developers (🎨 / 🛠️ columns, plain language)
+          </>,
           '"Run the inspection"',
           '–',
         ],
