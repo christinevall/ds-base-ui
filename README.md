@@ -77,7 +77,7 @@ tokens/*.json ──npm run build:tokens──►  CSS variables ──►  Reac
 ```
 
 - **Names match on purpose.** `color/background/accent` in Figma is `--sds-color-background-accent` in CSS, and a Figma layer `Button · variant=primary` resolves to `<Button variant="primary">` through `figma/manifest.json`.
-- **One page shows whether code and Figma are in sync.** *Sync status* in Storybook (and [`docs/sync-status.md`](docs/sync-status.md)) lists every component with one column per check: in both, same property names, same options, same defaults, Figma key, code follows the rules. It checks names, not the look. `npm run sync-status` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
+- **One page shows whether code and Figma are in sync.** *Sync status* in Storybook (and [`docs/sync-status.md`](docs/sync-status.md)) lists every component with one column per check: Figma key, same name, same property names, same options, same defaults, code follows the rules. It checks names, not the look. `npm run sync-status` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
 - **The key map.** `figma/manifest.json` also stores each Figma item's key, the handle an AI needs to place a library component in another file. With it, building a screen in Figma is a lookup instead of a search through the whole library.
 - **Where Figma cannot express the CSS**, it is written down in [`figma/GAPS.md`](figma/GAPS.md) instead of simplifying the CSS.
 - **Code Connect** is not set up: it needs an Organization or Enterprise plan.
@@ -96,7 +96,7 @@ so it cannot go stale without a check noticing.
 | --- | --- | --- | --- |
 | **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
 | **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `sync-status`, Claude when building in Figma |
-| **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (in both, same property names, same options, same defaults, Figma key, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
+| **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (Figma key, same name, same property names, same options, same defaults, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
 | **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
 
 ### The checks

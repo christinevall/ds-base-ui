@@ -13,7 +13,7 @@
  * last snapshot of the library, not from the live file: the overview says
  * when that snapshot was taken, so an old one is visible rather than trusted.
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync, rmSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const SUMMARY_ONLY = process.argv.includes('--summary');
@@ -43,7 +43,7 @@ const ago = (d) => {
   return min < 60 ? `${min} min ago` : min < 60 * 48 ? `${Math.round(min / 60)} h ago` : `${Math.round(min / 1440)} days ago`;
 };
 const snapshotDate = stamp(snapshotAt);
-const snapshotNote = `${snapshotDate}${snapshotDirty ? ', not committed yet' : ''}`;
+const snapshotNote = snapshotDirty ? `saved ${snapshotDate}, not committed yet` : `committed ${snapshotDate}`;
 const HOW_TO_REFRESH = 'To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude "take a snapshot of the library", then run npm run sync-status again.';
 
 // Which component a finding belongs to: Figma findings name the Figma item
@@ -70,11 +70,11 @@ for (const f of findings) {
 // What "agree" means, one check per column. Each is a question validate
 // already answers; a finding moves that column to ❌ for that component.
 const CHECKS = [
-  { id: 'both', label: 'Exists in both', means: 'A Figma component with the same name exists and names this code file as its source' },
+  { id: 'keys', label: 'Figma key *', means: 'The Figma manifest has the key needed to find it and place it in another file (see * below the table)' },
+  { id: 'both', label: 'Same name', means: 'The Figma component is called what the code calls it (Accordion, Accordion.Item) and points to this code file' },
   { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
   { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
   { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
-  { id: 'keys', label: 'Figma key *', means: 'The Figma manifest has the key needed to place it in another file (see * below the table)' },
   { id: 'rules', label: 'Code follows the rules', means: 'Its CSS uses existing semantic tokens and whole text styles, no raw colours' },
 ];
 const checkOf = (f) => {
@@ -111,7 +111,7 @@ const summary = [
   `Sync status: ${count('match')} of ${rows.length - count('not mirrored')} mirrored components match` +
     (drift.length ? `, ${drift.length} need attention: ${drift.map((r) => `${r.name} (${r.issues[0]?.message ?? r.status})`).join('; ')}` : '') +
     (systemWide.length ? `. ${systemWide.length} system-wide finding(s): ${[...new Set(systemWide.map((f) => f.rule))].join(', ')}` : '') + '.',
-  `Figma side: the snapshot saved ${snapshotNote} (${ago(snapshotAt)}), not the live file.` +
+  `Figma side: the snapshot ${snapshotNote} (${ago(snapshotAt)}), not the live file. A new snapshot identical to it keeps this time.` +
     (fm?.keys ? ` Key map: ${Object.keys(fm.keys.components).length} components, ${Object.keys(fm.keys.textStyles).length} text styles, ${Object.keys(fm.keys.variables).length} variables.` : ' No key map yet.'),
   sb.length ? '' : 'Storybook manifest not built: code props are not listed (npm run build-storybook).',
   HOW_TO_REFRESH,
@@ -148,6 +148,7 @@ function badgeSvg(text, variant, size) {
 
 if (!SUMMARY_ONLY) {
   mkdirSync('docs/sync-status', { recursive: true });
+  rmSync('docs/sync-status/summary-attention.svg', { force: true }); // redrawn below only when needed
   const badge = (file, text, variant, size = 'sm') => {
     writeFileSync(`docs/sync-status/${file}.svg`, badgeSvg(text, variant, size));
     return `![${text}](sync-status/${file}.svg)`;
@@ -169,7 +170,7 @@ if (!SUMMARY_ONLY) {
     '',
     'Every component, in code and in the Figma library, side by side. **Code is the source**: when the two disagree, Figma is updated (with the `figma-mirror` skill), never the other way round.',
     '',
-    `- **Figma side:** the snapshot saved **${snapshotNote}**, read from \`figma/manifest.json\`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. ${HOW_TO_REFRESH}`,
+    `- **Figma side:** the snapshot **${snapshotNote}**, read from \`figma/manifest.json\`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. ${HOW_TO_REFRESH}`,
     `- **Checks:** everything below comes from \`npm run validate\`. ${findings.length ? `${findings.length} finding(s) in total.` : 'No findings.'}`,
     `- **Tokens:** ${tokenCount} Figma variables, ${fm?.textStyles.length ?? 0} text styles, ${fm?.effectStyles.length ?? 0} effect styles.`,
     '',

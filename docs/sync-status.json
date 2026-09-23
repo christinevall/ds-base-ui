@@ -1,11 +1,17 @@
 {
-  "snapshotDate": "2026-09-23",
+  "snapshotDate": "committed 2026-09-23 14:44",
+  "howToRefresh": "To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude \"take a snapshot of the library\", then run npm run sync-status again.",
   "findings": 0,
   "checks": [
     {
+      "id": "keys",
+      "label": "Figma key *",
+      "means": "The Figma manifest has the key needed to find it and place it in another file (see * below the table)"
+    },
+    {
       "id": "both",
-      "label": "Exists in both",
-      "means": "A Figma component exists and names this code file as its source"
+      "label": "Same name",
+      "means": "The Figma component is called what the code calls it (Accordion, Accordion.Item) and points to this code file"
     },
     {
       "id": "names",
@@ -21,11 +27,6 @@
       "id": "defaults",
       "label": "Same defaults",
       "means": "The default Figma variant uses the code defaults"
-    },
-    {
-      "id": "keys",
-      "label": "Figma key *",
-      "means": "The Figma manifest has the key needed to place it in another file (see * below the table)"
     },
     {
       "id": "rules",
@@ -48,11 +49,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -74,11 +75,11 @@
         "dismissLabel"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -96,11 +97,11 @@
         "description"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -133,11 +134,11 @@
         "contentProps"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -161,11 +162,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -186,11 +187,11 @@
         "size"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -211,11 +212,11 @@
         "listProps"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -239,11 +240,11 @@
         "render"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -262,11 +263,11 @@
         "variant"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -289,11 +290,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -316,11 +317,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -341,11 +342,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -378,11 +379,11 @@
         "contentProps"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -400,11 +401,11 @@
         "positionerClassName"
       ],
       "checks": {
+        "keys": null,
         "both": null,
         "names": null,
         "options": null,
         "defaults": null,
-        "keys": null,
         "rules": true
       },
       "issues": [],
@@ -422,11 +423,11 @@
         "description"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -443,11 +444,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -464,11 +465,11 @@
         "onFormSubmit"
       ],
       "checks": {
+        "keys": null,
         "both": null,
         "names": null,
         "options": null,
         "defaults": null,
-        "keys": null,
         "rules": true
       },
       "issues": [],
@@ -492,11 +493,11 @@
         "render"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -524,11 +525,11 @@
         "positionerClassName"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -548,11 +549,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -576,11 +577,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -599,11 +600,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -624,11 +625,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -651,11 +652,11 @@
         "sideOffset"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -676,11 +677,11 @@
         "sideOffset"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -703,11 +704,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -732,11 +733,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -753,11 +754,11 @@
         "viewportClassName"
       ],
       "checks": {
+        "keys": null,
         "both": null,
         "names": null,
         "options": null,
         "defaults": null,
-        "keys": null,
         "rules": true
       },
       "issues": [],
@@ -789,11 +790,11 @@
         "contentProps"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -813,11 +814,11 @@
         "orientation"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -840,11 +841,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -864,11 +865,11 @@
         "aria-label"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -889,11 +890,11 @@
         "description"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -920,11 +921,11 @@
         "containerProps"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -944,11 +945,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -970,11 +971,11 @@
         "name"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -999,11 +1000,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -1020,11 +1021,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -1050,11 +1051,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -1076,11 +1077,11 @@
         "className"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -1102,11 +1103,11 @@
       ],
       "codeProps": [],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],
@@ -1127,11 +1128,11 @@
         "sideOffset"
       ],
       "checks": {
+        "keys": true,
         "both": true,
         "names": true,
         "options": true,
         "defaults": true,
-        "keys": true,
         "rules": true
       },
       "issues": [],

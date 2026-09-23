@@ -51,7 +51,7 @@ export function Checks() {
       caption="Checks"
       head={['Check', 'Answers', 'Run it']}
       rows={[
-        ['Sync status', 'Are code and Figma still in sync? One column per check: exists in both, same property names, options, defaults, Figma key, code follows the rules', <>{cmd('npm run sync-status')} · or open <em>Sync status</em> in this sidebar</>],
+        ['Sync status', 'Are code and Figma still in sync? One column per check: Figma key, same name, same property names, options, defaults, code follows the rules', <>{cmd('npm run sync-status')} · or open <em>Sync status</em> in this sidebar</>],
         ['Session check', 'The same, as one line, at the start of every Claude session', 'Automatic (.claude/settings.json)'],
         ['validate', 'Tokens exist, no primitives or raw colours in components, whole text styles, Figma names and keys match the code', <>{cmd('npm run validate')} · {cmd('npm run validate -- --strict')} for CI</>],
         ['audit', 'Inside a Figma component: is every colour, padding, gap and radius bound to a variable?', 'Ask Claude, with Figma open: "audit the Accordion"'],
