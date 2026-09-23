@@ -27,7 +27,8 @@ export function BlogTopBar() {
           </NavigationMenu.List>
         </NavigationMenu.Root>
 
-        <Button onClick={goTo(storyIds.subscribe)}>Subscribe</Button>
+        {/* The Subscribe prototype was removed (2026-09-23); the button stays as designed. */}
+        <Button>Subscribe</Button>
       </div>
     </header>
   );
