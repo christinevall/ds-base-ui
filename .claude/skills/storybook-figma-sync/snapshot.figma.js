@@ -13,7 +13,11 @@
 // importVariableByKeyAsync). Names say what to place; keys say how to pick it
 // up. A key only changes when an item is deleted and rebuilt, so a key diff in
 // figma/manifest.json means every file using that item loses its link.
-const snap = { file: 'sample-design-system', components: [], variables: {}, codeSyntaxExceptions: {}, textStyles: [], effectStyles: [], keys: { components: {}, textStyles: {}, effectStyles: {}, variables: {} } };
+// Must match `prefix` in config.mjs (plugin code cannot import it).
+const PREFIX = 'sds';
+// The library's name, as written into the manifest.
+const LIBRARY = 'sample-design-system';
+const snap = { file: LIBRARY, components: [], variables: {}, codeSyntaxExceptions: {}, textStyles: [], effectStyles: [], keys: { components: {}, textStyles: {}, effectStyles: {}, variables: {} } };
 const sortObj = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.localeCompare(b)));
 for (const page of figma.root.children) {
   await page.loadAsync();
@@ -46,7 +50,7 @@ const byId = new Map((await figma.variables.getLocalVariablesAsync()).map((v) =>
 for (const c of await figma.variables.getLocalVariableCollectionsAsync()) {
   const names = c.variableIds.map((id) => byId.get(id)).filter(Boolean).map((v) => {
     const web = v.codeSyntax?.WEB ?? null;
-    if (web !== `var(--sds-${v.name.replace(/\//g, '-')})`) snap.codeSyntaxExceptions[v.name] = web;
+    if (web !== `var(--${PREFIX}-${v.name.replace(/\//g, '-')})`) snap.codeSyntaxExceptions[v.name] = web;
     snap.keys.variables[v.name] = v.key;
     return v.name;
   });

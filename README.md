@@ -20,7 +20,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
 | Check that Figma and the code are still in sync, component by component | *Sync status* in Storybook, or [`docs/sync-status.md`](docs/sync-status.md) (`npm run sync-status` updates both) |
-| See every manifest, check, command, skill and MCP, or demo them | [The toolkit](#the-toolkit-lists-checks-commands-skills) |
+| See every manifest, check, command, skill and MCP, or demo them | *Toolkit* in Storybook, or [The toolkit](#the-toolkit-lists-checks-commands-skills) below |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 
 ## In plain words
@@ -135,7 +135,7 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 | --- | --- | --- |
 | [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
 | [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)) | "Run the inspection" |
-| [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
+| [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | **Needs the Storybook MCP and the Figma Console MCP.** Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
 
 ### The plugs (MCP)
 
