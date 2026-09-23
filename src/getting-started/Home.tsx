@@ -104,7 +104,7 @@ export function HowItIsBuilt() {
         <Tile title="3 · Style Dictionary" text="npm run build:tokens turns the JSON into CSS variables and breakpoints. The CSS is output: edit the JSON, never the CSS." href={LINKS.styleDictionary} label="styledictionary.com" />
         <Tile title="4 · Components" text="Base UI wrapped and styled with semantic tokens and whole text styles only, one CSS Module per component." href={LINKS.folder('src/components')} label="The components" />
         <Tile title="5 · Storybook" text="Every component in every state, with a Storybook MCP so AI tools can look up what exists and with which props." href={page('components-button--docs')} label="Start with Button" />
-        <Tile title="6 · Figma" text="The library is generated from the code with the figma-mirror skill: same names, props and tokens. Sync status proves it." href={page('sync-status--docs')} label="Sync status" />
+        <Tile title="6 · Figma" text="The library is generated from the code with the figma-library-from-code skill: same names, props and tokens. Sync status proves it." href={page('sync-status--docs')} label="Sync status" />
       </div>
     </div>
   );
@@ -134,7 +134,7 @@ export function FigmaAndCode() {
         <Tile title="Layout" text="The six layout words and how this code builds a page, so a Figma screen comes back into code unchanged." href={page('layout--docs')} label="Open" />
         <Tile title="Figma only" text="Prototyping with Claude from a Figma library alone, before there is a Storybook." href={page('figma-only--docs')} label="Open" />
         <Tile title="Gaps" text="Where Figma cannot match the code, and why, plus what is still open." href={page('gaps--docs')} label="Open" />
-        <Tile title="The skills" text="figma-mirror and storybook-figma-sync, shared for other design systems, MIT licensed." href={LINKS.skills} label="On GitHub" />
+        <Tile title="The skills" text="figma-library-from-code and storybook-figma-sync, shared for other design systems, MIT licensed." href={LINKS.skills} label="On GitHub" />
       </div>
     </div>
   );

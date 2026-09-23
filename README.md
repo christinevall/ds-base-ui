@@ -63,7 +63,7 @@ A design system in code is a small chain of tools, not one. You do not need to w
 | **Vite** 8 | A fast development server and bundler | Shows a code change in the browser within a second. Runs quietly under Storybook |
 | **Storybook** 10 | A workshop where each component is shown on its own, in every state | Getting started, Foundations, Components, Patterns, and the Prototypes |
 | **Storybook MCP** and **a11y** addons | A plug for AI assistants, and an accessibility checker | Claude or Cursor ask Storybook which components exist (http://localhost:6001/mcp); every story is checked for accessibility |
-| **Figma Console MCP** | A plug that lets an AI assistant read and build inside the Figma desktop app | Generated the Figma library from this code, following the `figma-mirror` skill |
+| **Figma Console MCP** | A plug that lets an AI assistant read and build inside the Figma desktop app | Generated the Figma library from this code, following the `figma-library-from-code` skill |
 | **Claude Code** + `CLAUDE.md` | An AI coding assistant, and the rules it reads first | Ground before writing, semantic tokens only, wrap Base UI; `npm run validate` checks the result |
 
 ## How Figma and code stay in sync
@@ -73,7 +73,7 @@ A design system in code is a small chain of tools, not one. You do not need to w
 ```
 tokens/*.json ──npm run build:tokens──►  CSS variables ──►  React components ──►  Storybook
       │
-      └── figma-mirror skill (Claude + Figma Console MCP) ──►  Figma variables, text styles, components
+      └── figma-library-from-code skill (Claude + Figma Console MCP) ──►  Figma variables, text styles, components
                                                                        │
                               npm run validate ◄── figma/manifest.json ┘   (fails if a name, option, default or key drifts)
 ```
@@ -123,7 +123,7 @@ What the checks do **not** see: values inside Figma components (a padding that d
 | `npm run validate` | The rules check above |
 | `npm run sync-status` | Rewrites [`docs/sync-status.md`](docs/sync-status.md) and the Storybook page, and prints the summary |
 | `npm run check:contrast` | The contrast check |
-| `npm run figma:tokens` | What the Figma variables and text styles should be, from the tokens (the `figma-mirror` skill compares it with the live file) |
+| `npm run figma:tokens` | What the Figma variables and text styles should be, from the tokens (the `figma-library-from-code` skill compares it with the live file) |
 | `npm run figma:spec -- <Name>` | A component's CSS turned into a Figma build spec: bindings, text styles, gaps to decide |
 | `npx tsc -b --noEmit` · `npm run lint` | Type check and lint, before any pull request |
 
@@ -131,11 +131,11 @@ Two scripts run **inside Figma**, not in the terminal. Ask Claude with Figma ope
 
 ### Skills
 
-A skill is a written procedure Claude follows for one kind of job. Call it by name (`/figma-mirror`) or just describe the job.
+A skill is a written procedure Claude follows for one kind of job. Call it by name (`/figma-library-from-code`) or just describe the job.
 
 | Skill | For | Say |
 | --- | --- | --- |
-| [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
+| [`figma-library-from-code`](.claude/skills/figma-library-from-code/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
 | [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)). **By [Brad Frost](https://bradfrost.com)**, from [bradfrost/skills](https://github.com/bradfrost/skills) (MIT), unchanged; customised for this system in [`ds-inspection/GARAGE.md`](ds-inspection/GARAGE.md): one report for designers and developers, with 🎨 Design / 🛠️ Dev columns | "Run the inspection" |
 | [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | **Needs the Storybook MCP and the Figma Console MCP.** Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
 
@@ -174,7 +174,7 @@ This is the workflow I'm exploring with it, and it will keep changing while I bu
 
 1. **Work on the `design` branch.** A branch is a parallel copy of the code. `design` is where prototypes live, so nothing you try there touches `main` ([docs/branching.md](docs/branching.md)).
 2. **See the system in Storybook.** Every component, live and working, so you can see the codebase instead of reading it.
-3. **Keep Figma in step with the code.** The Figma library is generated from this code through the Figma Console MCP (MCP is a standard plug that lets an AI tool read from another tool and work in it), following the `figma-mirror` skill in `.claude/skills/`. Variables, text styles and components use the same names and options as the code. Where Figma cannot express the CSS, it is written down in `figma/GAPS.md` rather than simplifying the CSS.
+3. **Keep Figma in step with the code.** The Figma library is generated from this code through the Figma Console MCP (MCP is a standard plug that lets an AI tool read from another tool and work in it), following the `figma-library-from-code` skill in `.claude/skills/`. Variables, text styles and components use the same names and options as the code. Where Figma cannot express the CSS, it is written down in `figma/GAPS.md` rather than simplifying the CSS.
 4. **Prototype in Storybook with real components**, then ask the agent to build the screen in Figma, where the library is already set up.
 5. **Explore in Figma.** Move things by hand, put research and references next to it, and stay in the system or step out of it on purpose when the design needs something custom.
 6. **Bring it back to code.** Ask the agent to rebuild the Figma screen from the real components. `figma/manifest.json` is how a Figma name like `Button · variant=primary` resolves back to `<Button variant="primary">`. The result is a real, clickable prototype in Storybook.
@@ -232,7 +232,7 @@ figma/
   manifest.json        what the Figma library contains, plus the key map
   GAPS.md              where Figma cannot match the code, and why
 .claude/
-  skills/              figma-mirror, ds-inspection, storybook-figma-sync
+  skills/              figma-library-from-code, ds-inspection, storybook-figma-sync
   settings.json        the session-start sync check
 .mcp.json              the Storybook MCP for Claude Code
 src/
