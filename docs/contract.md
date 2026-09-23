@@ -8,9 +8,9 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 - **Checks:** everything below comes from `npm run validate`. No findings.
 - **Tokens:** 176 Figma variables, 14 text styles, 3 effect styles.
 
-**39 match · 0 need attention · 3 not mirrored by decision**
+![39 of 39 mirrored components agree](contract/summary-agree.svg) ![3 not mirrored, by decision](contract/summary-not-mirrored.svg) ![Figma snapshot of 2026-09-23](contract/summary-snapshot.svg)
 
-**How to read it:** every column is one thing code and Figma must agree on. ✅ they agree · ❌ they do not, the reason is under *Needs attention* · ➖ not mirrored to Figma, by decision.
+**How to read it:** every column is one thing code and Figma must agree on. ![✓ agree](contract/agree.svg) they agree · ![✗ differs](contract/differs.svg) they do not, the reason is under *Needs attention* · ![not mirrored](contract/not-mirrored.svg) not mirrored to Figma, by decision.
 
 - **In both:** A Figma component exists and names this code file as its source.
 - **Same property names:** Every Figma property is a real prop, part or text of the code component.
@@ -21,48 +21,48 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 
 | Component | In both | Same property names | Same options | Same defaults | Figma key * | Code follows the rules | In Figma |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | --- |
-| **Accordion** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Accordion, Accordion.Item |
-| **Alert** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Alert |
-| **AlertDialog** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | AlertDialog.Content |
-| **Autocomplete** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Autocomplete, Autocomplete.Content, Autocomplete.Control, Autocomplete.Item |
-| **Avatar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Avatar |
-| **Badge** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Badge |
-| **Breadcrumb** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Breadcrumb, Breadcrumb.Current, Breadcrumb.Link, Breadcrumb.Separator |
-| **Button** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Button |
-| **Card** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Card |
-| **Checkbox** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Checkbox |
-| **CheckboxGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | CheckboxGroup |
-| **Collapsible** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Collapsible, Collapsible.Trigger |
-| **Combobox** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Combobox, Combobox.Content, Combobox.Control, Combobox.Item |
-| **ContextMenu** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | the same popup as Menu |
-| **Dialog** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Dialog.Content |
-| **Fieldset** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Fieldset |
-| **Form** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | no visuals of its own |
-| **IconButton** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | IconButton |
-| **Menu** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Menu.Content, Menu.GroupLabel, Menu.Item, Menu.Separator, Menu.SubmenuTrigger |
-| **Menubar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Menubar, Menubar.Trigger |
-| **Meter** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Meter |
-| **NavigationMenu** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | NavigationMenu, NavigationMenu.Link, NavigationMenu.Trigger |
-| **NumberField** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | NumberField |
-| **Popover** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Popover.Content |
-| **PreviewCard** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PreviewCard.Content |
-| **Progress** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Progress |
-| **RadioGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | RadioGroup, RadioGroupItem |
-| **ScrollArea** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | behaviour, not something you draw |
-| **Select** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Select, Select.Content, Select.GroupLabel, Select.Item, Select.Trigger |
-| **Separator** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Separator |
-| **Slider** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Slider |
-| **Spinner** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Spinner |
-| **Switch** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Switch |
-| **Table** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Table, Table.Cell, Table.HeaderCell |
-| **Tabs** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Tabs, Tabs.Tab |
-| **TextField** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | TextField |
-| **Textarea** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Textarea |
-| **Toast** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toast.Root |
-| **Toggle** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toggle |
-| **ToggleGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ToggleGroup |
-| **Toolbar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toolbar, Toolbar.Button, Toolbar.Input, Toolbar.Link, Toolbar.Separator |
-| **Tooltip** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Tooltip.Content |
+| **Accordion** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Accordion, Accordion.Item |
+| **Alert** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Alert |
+| **AlertDialog** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | AlertDialog.Content |
+| **Autocomplete** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Autocomplete, Autocomplete.Content, Autocomplete.Control, Autocomplete.Item |
+| **Avatar** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Avatar |
+| **Badge** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Badge |
+| **Breadcrumb** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Breadcrumb, Breadcrumb.Current, Breadcrumb.Link, Breadcrumb.Separator |
+| **Button** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Button |
+| **Card** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Card |
+| **Checkbox** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Checkbox |
+| **CheckboxGroup** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | CheckboxGroup |
+| **Collapsible** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Collapsible, Collapsible.Trigger |
+| **Combobox** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Combobox, Combobox.Content, Combobox.Control, Combobox.Item |
+| **ContextMenu** | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![✓ agree](contract/agree.svg) | the same popup as Menu |
+| **Dialog** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Dialog.Content |
+| **Fieldset** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Fieldset |
+| **Form** | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![✓ agree](contract/agree.svg) | no visuals of its own |
+| **IconButton** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | IconButton |
+| **Menu** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Menu.Content, Menu.GroupLabel, Menu.Item, Menu.Separator, Menu.SubmenuTrigger |
+| **Menubar** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Menubar, Menubar.Trigger |
+| **Meter** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Meter |
+| **NavigationMenu** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | NavigationMenu, NavigationMenu.Link, NavigationMenu.Trigger |
+| **NumberField** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | NumberField |
+| **Popover** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Popover.Content |
+| **PreviewCard** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | PreviewCard.Content |
+| **Progress** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Progress |
+| **RadioGroup** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | RadioGroup, RadioGroupItem |
+| **ScrollArea** | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![not mirrored](contract/not-mirrored.svg) | ![✓ agree](contract/agree.svg) | behaviour, not something you draw |
+| **Select** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Select, Select.Content, Select.GroupLabel, Select.Item, Select.Trigger |
+| **Separator** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Separator |
+| **Slider** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Slider |
+| **Spinner** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Spinner |
+| **Switch** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Switch |
+| **Table** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Table, Table.Cell, Table.HeaderCell |
+| **Tabs** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Tabs, Tabs.Tab |
+| **TextField** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | TextField |
+| **Textarea** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Textarea |
+| **Toast** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Toast.Root |
+| **Toggle** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Toggle |
+| **ToggleGroup** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ToggleGroup |
+| **Toolbar** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Toolbar, Toolbar.Button, Toolbar.Input, Toolbar.Link, Toolbar.Separator |
+| **Tooltip** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Tooltip.Content |
 
 \* **Why the Figma key matters.** A name says *which* component to use; Figma only places a library component by its key. With every key saved in `figma/manifest.json`, Claude builds a Figma screen by looking keys up instead of searching the whole library. On the booking flow (2026-09-23) the search alone was about 59,000 characters, more than building all four screens (about 25,000); with the key map, the whole job is roughly a third. Using library instances instead of drawing components also keeps the screen linked to the system, so it cannot drift.
 

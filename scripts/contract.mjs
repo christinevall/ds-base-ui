@@ -12,7 +12,7 @@
  * last snapshot of the library, not from the live file: the overview says
  * when that snapshot was taken, so an old one is visible rather than trusted.
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdirSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const SUMMARY_ONLY = process.argv.includes('--summary');
@@ -98,8 +98,51 @@ const summary = [
   sb.length ? '' : 'Storybook manifest not built: code props are not listed (npm run build-storybook).',
 ].filter(Boolean);
 
+
+// Badges for the Markdown page. Markdown cannot use the Badge component, so
+// each one is drawn as a small SVG in the Badge's own tokens (light theme),
+// resolved from the generated CSS. Change a token and they follow.
+const cssVars = new Map();
+for (const f of ['src/tokens/primitives.css', 'src/tokens/semantic.css']) {
+  for (const m of readFileSync(f, 'utf8').matchAll(/(--sds-[\w-]+)\s*:\s*([^;]+);/g)) if (!cssVars.has(m[1])) cssVars.set(m[1], m[2].trim());
+}
+const token = (name) => { let v = cssVars.get(name); while (v?.startsWith('var(')) v = cssVars.get(v.slice(4, -1)); return v; };
+const px = (v) => (v.endsWith('rem') ? parseFloat(v) * 16 : parseFloat(v));
+const BADGE = Object.fromEntries(['success', 'danger', 'neutral'].map((variant) => {
+  const bg = variant === 'neutral' ? 'background-sunken' : `background-${variant}-subtle`;
+  const fg = variant === 'neutral' ? 'content-muted' : `content-${variant}`;
+  const bd = variant === 'neutral' ? 'border-default' : `border-${variant}`;
+  return [variant, { bg: token(`--sds-color-${bg}`), fg: token(`--sds-color-${fg}`), bd: token(`--sds-color-${bd}`) }];
+}));
+const escapeXml = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function badgeSvg(text, variant, size) {
+  const { bg, fg, bd } = BADGE[variant];
+  const type = size === 'sm' ? 'label-sm' : 'label-md';
+  const fontSize = px(token(`--sds-typography-${type}-font-size`));
+  const padX = px(token(size === 'sm' ? '--sds-space-2' : '--sds-space-3'));
+  const h = size === 'sm' ? 20 : 24;
+  const w = Math.ceil(text.length * fontSize * 0.56 + padX * 2); // no font metrics in Node: an estimate
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${escapeXml(text)}">` +
+    `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${(h - 1) / 2}" fill="${bg}" stroke="${bd}"/>` +
+    `<text x="${w / 2}" y="${h / 2}" dominant-baseline="central" text-anchor="middle" fill="${fg}" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="${fontSize}" font-weight="${token(`--sds-typography-${type}-font-weight`)}">${escapeXml(text)}</text></svg>\n`;
+}
+
 if (!SUMMARY_ONLY) {
-  const mark = (v) => (v === null ? '➖' : v ? '✅' : '❌');
+  mkdirSync('docs/contract', { recursive: true });
+  const badge = (file, text, variant, size = 'sm') => {
+    writeFileSync(`docs/contract/${file}.svg`, badgeSvg(text, variant, size));
+    return `![${text}](contract/${file}.svg)`;
+  };
+  const AGREE = badge('agree', '✓ agree', 'success');
+  const DIFFERS = badge('differs', '✗ differs', 'danger');
+  const NOT_MIRRORED_BADGE = badge('not-mirrored', 'not mirrored', 'neutral');
+  const mark = (v) => (v === null ? NOT_MIRRORED_BADGE : v ? AGREE : DIFFERS);
+  const summaryBadges = [
+    badge('summary-agree', `${count('match')} of ${rows.length - count('not mirrored')} mirrored components agree`, drift.length ? 'danger' : 'success', 'md'),
+    drift.length ? badge('summary-attention', `${drift.length} need attention`, 'danger', 'md') : null,
+    badge('summary-not-mirrored', `${count('not mirrored')} not mirrored, by decision`, 'neutral', 'md'),
+    badge('summary-snapshot', `Figma snapshot of ${snapshotDate}`, 'neutral', 'md'),
+  ].filter(Boolean).join(' ');
   const md = [
     '# Contract overview',
     '',
@@ -111,9 +154,9 @@ if (!SUMMARY_ONLY) {
     `- **Checks:** everything below comes from \`npm run validate\`. ${findings.length ? `${findings.length} finding(s) in total.` : 'No findings.'}`,
     `- **Tokens:** ${tokenCount} Figma variables, ${fm?.textStyles.length ?? 0} text styles, ${fm?.effectStyles.length ?? 0} effect styles.`,
     '',
-    `**${count('match')} match · ${drift.length} need attention · ${count('not mirrored')} not mirrored by decision**`,
+    summaryBadges,
     '',
-    '**How to read it:** every column is one thing code and Figma must agree on. ✅ they agree · ❌ they do not, the reason is under *Needs attention* · ➖ not mirrored to Figma, by decision.',
+    `**How to read it:** every column is one thing code and Figma must agree on. ${AGREE} they agree · ${DIFFERS} they do not, the reason is under *Needs attention* · ${NOT_MIRRORED_BADGE} not mirrored to Figma, by decision.`,
     '',
     ...CHECKS.map((c) => `- **${c.label}:** ${c.means}.`),
     '',
