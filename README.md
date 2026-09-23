@@ -20,6 +20,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
 | Check that Figma and the code still match, component by component | [`docs/contract.md`](docs/contract.md) (`npm run contract` updates it) |
+| See every manifest, check, command, skill and MCP, or demo them | [The toolkit](#the-toolkit-lists-checks-commands-skills) |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 
 ## In plain words
@@ -80,6 +81,76 @@ tokens/*.json ──npm run build:tokens──►  CSS variables ──►  Reac
 - **The key map.** `figma/manifest.json` also stores each Figma item's key, the handle an AI needs to place a library component in another file. With it, building a screen in Figma is a lookup instead of a search through the whole library.
 - **Where Figma cannot express the CSS**, it is written down in [`figma/GAPS.md`](figma/GAPS.md) instead of simplifying the CSS.
 - **Code Connect** is not set up: it needs an Organization or Enterprise plan.
+
+## The toolkit: lists, checks, commands, skills
+
+Everything that keeps Figma and code together, in one place. Most of it runs on
+its own; this is where to look when you want to see it, or show it.
+
+### Four files that describe the system
+
+Think of them as inventories. Each one is written by a script, never by hand,
+so it cannot go stale without a check noticing.
+
+| File | What it lists | Written by | Read by |
+| --- | --- | --- | --- |
+| **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
+| **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `contract`, Claude when building in Figma |
+| **Contract overview** · [`docs/contract.md`](docs/contract.md) | The two above **side by side**, one row per component, with ✅ / ❌ | `npm run contract` | You. Claude reads it out at the start of every session |
+| **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
+
+### The checks
+
+| Check | Answers | Run it |
+| --- | --- | --- |
+| **validate** | Does every token exist? Does any component skip the semantic layer, hard-code a colour or invent a text style? Do Figma's names, options, defaults and keys match the code? | `npm run validate` (warns) · `npm run validate -- --strict` (fails, for CI) |
+| **contract** | The same, laid out per component on one page | `npm run contract` · `npm run contract -- --summary` (the one-line version) |
+| **audit** | Inside a Figma component: is every colour, padding, gap and radius bound to a variable? | Ask Claude to run `scripts/figma/audit.figma.js` on a component (needs Figma open) |
+| **contrast** | Do the colour pairs pass WCAG contrast? | `npm run check:contrast` |
+| **Session check** | Runs `contract -- --summary` automatically when a Claude session opens, so the first reply says whether code and Figma still match | Nothing to do: [`.claude/settings.json`](.claude/settings.json) |
+
+What the checks do **not** see: values inside Figma components (a padding that drifts is found by the audit or by comparing screenshots), and the live Figma file (only its last snapshot, whose date the contract page shows).
+
+### Every command
+
+| Command | Does |
+| --- | --- |
+| `npm run storybook` | Opens Storybook on http://localhost:6001, with the MCP at http://localhost:6001/mcp |
+| `npm run build-storybook` | Builds the static Storybook and regenerates the Storybook manifest |
+| `npm run build:tokens` | `tokens/*.json` → the generated CSS. Run after editing a token |
+| `npm run validate` | The rules check above |
+| `npm run contract` | Rewrites [`docs/contract.md`](docs/contract.md) and prints the summary |
+| `npm run check:contrast` | The contrast check |
+| `npm run figma:tokens` | What the Figma variables and text styles should be, from the tokens (the `figma-mirror` skill compares it with the live file) |
+| `npm run figma:spec -- <Name>` | A component's CSS turned into a Figma build spec: bindings, text styles, gaps to decide |
+| `npx tsc -b --noEmit` · `npm run lint` | Type check and lint, before any pull request |
+
+Two scripts run **inside Figma**, not in the terminal. Ask Claude with Figma open and the Desktop Bridge plugin running: [`scripts/figma/snapshot.figma.js`](scripts/figma/snapshot.figma.js) ("take a snapshot of the library") and [`scripts/figma/audit.figma.js`](scripts/figma/audit.figma.js) ("audit the Accordion").
+
+### Skills
+
+A skill is a written procedure Claude follows for one kind of job. Call it by name (`/figma-mirror`) or just describe the job.
+
+| Skill | For | Say |
+| --- | --- | --- |
+| [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
+| [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)) | "Run the inspection" |
+| `prototype-sync` *(in progress)* | Prototypes in both directions: a Storybook story → Figma screens made of library instances, and Figma screens → a Storybook story, with a notes overview on each side | – |
+
+### The plugs (MCP)
+
+| MCP | Connects Claude to | Set up in |
+| --- | --- | --- |
+| **Storybook MCP** | The running Storybook: which components exist, their props and stories | [`.mcp.json`](.mcp.json) (Claude Code) · [`.cursor/mcp.json`](.cursor/mcp.json) (Cursor). Needs `npm run storybook` |
+| **Figma Console MCP** | The Figma desktop app: read and build in any open file | Run the *Figma Desktop Bridge* plugin in the file (Plugins → Development) |
+
+### A five-minute demo
+
+1. `npm run storybook`: the system, live.
+2. Open [`docs/contract.md`](docs/contract.md): every component, code and Figma side by side.
+3. Start a Claude session: its first line is the same check, unprompted.
+4. Open the [Figma manifest](figma/manifest.json) and search for `"keys"`: the handles that let Claude place real library components in any file.
+5. Ask Claude to put a Storybook prototype into Figma (or back): the screens come out as library instances, with a notes frame listing what is real, what was built by hand and what is missing.
 
 ### The two token tiers, in detail
 
@@ -152,6 +223,16 @@ tokens/                SOURCE OF TRUTH for design decisions (DTCG JSON)
   tier-2-usage/        roles, themed light/dark, plus composite text styles
 scripts/
   build-tokens.mjs     Style Dictionary build: tokens/ -> src/tokens/
+  validate.mjs         the rules check (npm run validate)
+  contract.mjs         writes docs/contract.md (npm run contract)
+  figma/               snapshot, audit, token and spec scripts for the Figma side
+figma/
+  manifest.json        what the Figma library contains, plus the key map
+  GAPS.md              where Figma cannot match the code, and why
+.claude/
+  skills/              figma-mirror, ds-inspection
+  settings.json        the session-start contract check
+.mcp.json              the Storybook MCP for Claude Code
 src/
   tokens/              GENERATED — do not edit
     primitives.css     from tier-1-definitions/
@@ -167,6 +248,7 @@ docs/
   architecture.md      why the repo is shaped this way
   conventions.md       how to add a component
   branching.md         the Gitflow variant, including the design branch
+  contract.md          GENERATED — code and Figma side by side
 ```
 
 ## Going further
