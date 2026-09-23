@@ -63,6 +63,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Getting started',
+          'Sync status',
           'Foundations',
           ['Colour', 'Typography', 'Space and shape', 'Motion'],
           'Components',
