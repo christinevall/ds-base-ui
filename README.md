@@ -135,7 +135,7 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 | --- | --- | --- |
 | [`figma-mirror`](.claude/skills/figma-mirror/SKILL.md) | Building or updating the Figma library from the code: a component, its variants, variables, text styles | "Mirror the Accordion to Figma", "the tokens changed, sync Figma" |
 | [`ds-inspection`](.claude/skills/ds-inspection/SKILL.md) | A health check of the whole system across ten stations, with a red/yellow/green report and a work order ([reports](ds-inspection/reports), [work orders](ds-inspection/work-orders)) | "Run the inspection" |
-| `prototype-sync` *(in progress)* | Prototypes in both directions: a Storybook story → Figma screens made of library instances, and Figma screens → a Storybook story, with a notes overview on each side | – |
+| [`storybook-figma-sync`](.claude/skills/storybook-figma-sync/SKILL.md) *(first version, being tested)* | Prototypes in both directions: a Storybook story → Figma screens made of library instances with prototype connections, and Figma screens → a Storybook story. A four-part notes overview on each side. Also shared on its own: [christinevall/skills](https://github.com/christinevall/skills) | "Put the booking flow into Figma", "bring this Figma screen back to Storybook" |
 
 ### The plugs (MCP)
 
@@ -230,7 +230,7 @@ figma/
   manifest.json        what the Figma library contains, plus the key map
   GAPS.md              where Figma cannot match the code, and why
 .claude/
-  skills/              figma-mirror, ds-inspection
+  skills/              figma-mirror, ds-inspection, storybook-figma-sync
   settings.json        the session-start sync check
 .mcp.json              the Storybook MCP for Claude Code
 src/
@@ -248,6 +248,7 @@ docs/
   architecture.md      why the repo is shaped this way
   conventions.md       how to add a component
   branching.md         the Gitflow variant, including the design branch
+  layout.md            the layout words: Stack, Cluster, Split, Columns, Grid, Page
   sync-status.md       GENERATED — code and Figma side by side (sync-status.json feeds the Storybook page)
 ```
 
