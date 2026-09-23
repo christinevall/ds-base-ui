@@ -77,7 +77,7 @@ export const Scales: Story = {
       <Group title="Families">
         <div style={{ display: 'grid', gap: 'var(--sds-space-3)' }}>
           <div style={{ fontFamily: 'var(--sds-font-sans)', fontSize: 'var(--sds-font-size-lg)' }}>
-            Sans, the system stack. Used everywhere.
+            Sans, Inter. Used everywhere.
           </div>
           <div style={{ fontFamily: 'var(--sds-font-mono)', fontSize: 'var(--sds-font-size-lg)' }}>
             Mono, for token names, code and tabular figures.
