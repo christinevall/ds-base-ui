@@ -4,11 +4,11 @@
 
 Every component, in code and in the Figma library, side by side. **Code is the source**: when the two disagree, Figma is updated (with the `figma-mirror` skill), never the other way round.
 
-- **Figma side:** the snapshot **committed 2026-09-23 14:44**, read from `figma/manifest.json`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude "take a snapshot of the library", then run npm run sync-status again.
+- **Figma side:** the snapshot **committed 2026-09-23 16:03**, read from `figma/manifest.json`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude "take a snapshot of the library", then run npm run sync-status again.
 - **Checks:** everything below comes from `npm run validate`. No findings.
 - **Tokens:** 176 Figma variables, 14 text styles, 3 effect styles.
 
-![39 of 39 mirrored components agree](sync-status/summary-agree.svg) ![3 not mirrored, by decision](sync-status/summary-not-mirrored.svg) ![Figma snapshot of 2026-09-23 14:44](sync-status/summary-snapshot.svg)
+![39 of 39 mirrored components agree](sync-status/summary-agree.svg) ![3 not mirrored, by decision](sync-status/summary-not-mirrored.svg) ![Figma snapshot of 2026-09-23 16:03](sync-status/summary-snapshot.svg)
 
 **How to read it:** every column is one thing code and Figma must agree on. ![✓ agree](sync-status/agree.svg) they agree · ![✗ differs](sync-status/differs.svg) they do not, the reason is under *Needs attention* · ![not mirrored](sync-status/not-mirrored.svg) not mirrored to Figma, by decision.
 

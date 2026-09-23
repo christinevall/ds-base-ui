@@ -11,7 +11,6 @@ import { SELECT_STORY } from 'storybook/internal/core-events';
 export const storyIds = {
   index: 'prototypes-blog-index--default',
   article: 'prototypes-article-detail--default',
-  subscribe: 'prototypes-subscribe--default',
 } as const;
 
 type StoryId = (typeof storyIds)[keyof typeof storyIds];

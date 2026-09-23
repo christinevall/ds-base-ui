@@ -8,6 +8,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Accordion/Accordion.tsx",
+      "description": "Contract — src/components/Accordion/Accordion.tsx: Accordion.Root with three exposed Accordion.Item instances, as in the Default story at 480px (none open). Open an item on its instance; coming back, the open items' values are the Root's defaultValue (multiple allows more than one).",
       "props": []
     },
     {
@@ -17,6 +18,7 @@
       "variants": 4,
       "defaultVariant": "open=false, disabled=false",
       "source": "src/components/Accordion/Accordion.tsx",
+      "description": "Contract — src/components/Accordion/Accordion.tsx: Accordion.Item > Accordion.Header > Accordion.Trigger, then Accordion.Panel. open: false | true — Base UI state: the item whose value is in the Root's value/defaultValue; turns the chevron 180°. disabled: false | true (an Item prop; the Root's disabled cascades). trigger → Accordion.Trigger (text). panel → Accordion.Panel (text). The chevron (icon/chevron-down-accordion) is drawn by the component.",
       "props": [
         {
           "name": "trigger",
@@ -55,6 +57,7 @@
       "variants": 4,
       "defaultVariant": "variant=info",
       "source": "src/components/Alert/Alert.tsx",
+      "description": "An inline message block. No Base UI primitive to wrap; the job is semantics.\nContract — src/components/Alert/Alert.tsx: variant (info | success | warning | danger, default info), title (the headline, required), children (the body copy), onDismiss (in code, passing it renders the dismiss button). Width is Fill container on the instance.",
       "props": [
         {
           "name": "title",
@@ -91,6 +94,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/AlertDialog/AlertDialog.tsx",
+      "description": "Contract — src/components/AlertDialog/AlertDialog.tsx: AlertDialog.Content — portal, backdrop and popup, centred on the viewport — as in the Default story. title: text, required (heading-xl). description → AlertDialog.Description (text). AlertDialog.Actions: the button row, end-aligned; its Buttons are exposed (AlertDialog.Close renders them). Width: min(26rem, 100vw − space/8).",
       "props": [
         {
           "name": "title",
@@ -121,6 +125,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Autocomplete/Autocomplete.tsx",
+      "description": "Contract — src/components/Autocomplete/Autocomplete.tsx: Autocomplete, a text input with suggestions, wired to a label, description and validation message, as in the stories at 320px. Unlike Combobox, any text is kept as the value. label: text, required. description → Field.Description (text, off by default). filled, open, disabled, clearable, showTrigger: on the exposed Autocomplete.Control. Not mirrored: Field.Error and the invalid border.",
       "props": [
         {
           "name": "label",
@@ -146,6 +151,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Autocomplete/Autocomplete.tsx",
+      "description": "Contract — src/components/Autocomplete/Autocomplete.tsx: Autocomplete.Content — portal, positioner, popup and list — with the first languages of the stories' list. Input-wide (--anchor-width, runtime; 320px here), below, aligned to the start, 4px away. The suggestions are exposed Autocomplete.Item instances. Autocomplete.Empty shows when nothing matches (NoSuggestions story).",
       "props": []
     },
     {
@@ -155,6 +161,7 @@
       "variants": 8,
       "defaultVariant": "filled=false, open=false, disabled=false",
       "source": "src/components/Autocomplete/Autocomplete.tsx",
+      "description": "Contract — src/components/Autocomplete/Autocomplete.tsx: Autocomplete.Control — the input with its clear and trigger buttons. filled: false | true — Base UI Field state: the placeholder, or a value. open: false | true — flips the chevron. disabled: false | true. clearable (default true): the clear button, shown on the filled variants. showTrigger (default false, unlike Combobox): the chevron button (WithTriggerButton story). placeholder and value: their texts.",
       "props": [
         {
           "name": "placeholder",
@@ -212,6 +219,7 @@
       "variants": 4,
       "defaultVariant": "highlighted=false, disabled=false",
       "source": "src/components/Autocomplete/Autocomplete.tsx",
+      "description": "Contract — src/components/Autocomplete/Autocomplete.tsx: Autocomplete.Item, one suggestion. highlighted: false | true — Base UI state, the suggestion under the pointer or keyboard. disabled: false | true. children: its text. No indicator and no selected state: a suggestion fills the input, it does not become a value.",
       "props": [
         {
           "name": "children",
@@ -245,6 +253,7 @@
       "variants": 3,
       "defaultVariant": "size=md",
       "source": "src/components/Avatar/Avatar.tsx",
+      "description": "A person’s picture, or their initials. Wraps Base UI’s Avatar.\nContract — src/components/Avatar/Avatar.tsx: size (sm | md | lg, default md), fallback (the initials). src is not mirrored, so Figma always shows the fallback.",
       "props": [
         {
           "name": "fallback",
@@ -270,6 +279,7 @@
       "variants": 10,
       "defaultVariant": "variant=neutral, size=md",
       "source": "src/components/Badge/Badge.tsx",
+      "description": "A small status or counter label. Non-interactive, so it renders a plain <span>; no Base UI primitive to wrap.\nContract — src/components/Badge/Badge.tsx: variant (neutral | accent | success | warning | danger, default neutral), size (sm | md, default md), children (the text). Property and value names are the code’s own.",
       "props": [
         {
           "name": "children",
@@ -306,6 +316,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Breadcrumb/Breadcrumb.tsx",
+      "description": "Where the current page sits in the hierarchy.\nContract — src/components/Breadcrumb/Breadcrumb.tsx: Breadcrumb.Root (aria-label, default \"Breadcrumb\") holding Breadcrumb.Item parts: Link, Separator, Current. The Link and Current instances are exposed, so their labels are editable here; hide a Link and its Separator for a shorter trail.",
       "props": []
     },
     {
@@ -315,6 +326,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Breadcrumb/Breadcrumb.tsx",
+      "description": "The page you are on. Rendered as <span aria-current=\"page\">.\nContract — src/components/Breadcrumb/Breadcrumb.tsx: Breadcrumb.Current, children (the label).",
       "props": [
         {
           "name": "children",
@@ -330,6 +342,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Breadcrumb/Breadcrumb.tsx",
+      "description": "An ancestor page in the trail. Rendered as <a>.\nContract — src/components/Breadcrumb/Breadcrumb.tsx: Breadcrumb.Link, children (the label), href. Hover colour and underline are CSS states.",
       "props": [
         {
           "name": "children",
@@ -345,6 +358,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Breadcrumb/Breadcrumb.tsx",
+      "description": "The chevron between items. Hidden from assistive tech.\nContract — src/components/Breadcrumb/Breadcrumb.tsx: Breadcrumb.Separator.",
       "props": []
     },
     {
@@ -354,6 +368,7 @@
       "variants": 24,
       "defaultVariant": "variant=primary, size=md, disabled=false",
       "source": "src/components/Button/Button.tsx",
+      "description": "The primary action trigger. Built on Base UI’s unstyled Button, styled entirely with semantic design tokens.\nContract — src/components/Button/Button.tsx: variant (primary | secondary | ghost | danger, default primary), size (sm | md | lg, default md), disabled (false | true, Base UI), children (the label). fullWidth maps to Fill container on the instance; hover and active are CSS states, not props.",
       "props": [
         {
           "name": "children",
@@ -399,6 +414,7 @@
       "variants": 2,
       "defaultVariant": "variant=outlined",
       "source": "src/components/Card/Card.tsx",
+      "description": "A surface container. Purely presentational, so no Base UI primitive to wrap.\nContract — src/components/Card/Card.tsx: variant (outlined | elevated, default outlined). The code parts map to boolean properties named after them: Card.Header, Card.Description, Card.Footer; title, description and body are the text. The footer holds real Button instances, exposed so their props are editable from the Card.",
       "props": [
         {
           "name": "Card.Header",
@@ -448,6 +464,7 @@
       "variants": 8,
       "defaultVariant": "checked=false, indeterminate=false, disabled=false",
       "source": "src/components/Checkbox/Checkbox.tsx",
+      "description": "Contract — src/components/Checkbox/Checkbox.tsx: A single tick box (Base UI Checkbox inside Field.Item).\nchecked: false | true (default false; stories set defaultChecked). indeterminate: false | true (default false) — draws the dash and wins over checked. disabled: false | true (default false).\nlabel → Field.Label (text; Field.Label off = no label, name the control with aria-label). description → Field.Description (text, off by default).\nGlyphs icon/check-checkbox and icon/dash are drawn by the component and are not swappable. Not mirrored: invalid (comes from an enclosing Field.Root), hover border, focus ring — see figma/GAPS.md.",
       "props": [
         {
           "name": "label",
@@ -505,6 +522,7 @@
       "variants": 2,
       "defaultVariant": "orientation=vertical",
       "source": "src/components/CheckboxGroup/CheckboxGroup.tsx",
+      "description": "Contract — src/components/CheckboxGroup/CheckboxGroup.tsx: a labelled group of checkboxes sharing one value array (Base UI CheckboxGroup in Field.Root), as in the Default story.\norientation: vertical | horizontal (default vertical). label: text, required. description → Field.Description (text, off by default).\nThe options are exposed Checkbox instances; the checked ones' names are the group's defaultValue. Not mirrored: Field.Error and the invalid state (validation, not a prop).",
       "props": [
         {
           "name": "label",
@@ -539,6 +557,7 @@
       "variants": 4,
       "defaultVariant": "open=false, disabled=false",
       "source": "src/components/Collapsible/Collapsible.tsx",
+      "description": "Contract — src/components/Collapsible/Collapsible.tsx: Collapsible.Root > Collapsible.Trigger + Collapsible.Panel, as in the stories at 420px. open: false | true (defaultOpen in the stories) — the panel shows when open. disabled: false | true. panel → Collapsible.Panel (the stories' three-point list). The trigger is an exposed instance.",
       "props": [
         {
           "name": "panel",
@@ -572,6 +591,7 @@
       "variants": 4,
       "defaultVariant": "open=false, disabled=false",
       "source": "src/components/Collapsible/Collapsible.tsx",
+      "description": "Contract — src/components/Collapsible/Collapsible.tsx: Collapsible.Trigger. open: false | true — a Collapsible.Root prop (the stories use defaultOpen); turns the chevron 90°. disabled: false | true. showChevron: true by default. children: its text. The chevron (icon/chevron-right-collapsible) is drawn by the component.",
       "props": [
         {
           "name": "children",
@@ -610,6 +630,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Combobox/Combobox.tsx",
+      "description": "Contract — src/components/Combobox/Combobox.tsx: Combobox, a filterable select wired to a label, description and validation message, as in the stories at 320px. label: text, required. description → Field.Description (text, off by default). filled, open, disabled, clearable, showTrigger: on the exposed Combobox.Control. Its options are a Combobox.Content of Combobox.Item. Not mirrored: Field.Error and the invalid border.",
       "props": [
         {
           "name": "label",
@@ -635,6 +656,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Combobox/Combobox.tsx",
+      "description": "Contract — src/components/Combobox/Combobox.tsx: Combobox.Content — portal, positioner, popup and list — as in the stories: the first countries of the list. Its width is the input's (--anchor-width, runtime; 320px here); it opens below, aligned to the start, 4px away. The options are exposed Combobox.Item instances. Combobox.Empty shows when nothing matches (the NoMatches story).",
       "props": []
     },
     {
@@ -644,6 +666,7 @@
       "variants": 8,
       "defaultVariant": "filled=false, open=false, disabled=false",
       "source": "src/components/Combobox/Combobox.tsx",
+      "description": "Contract — src/components/Combobox/Combobox.tsx: Combobox.Control — the input with its clear and trigger buttons (Base UI InputGroup). filled: false | true — Base UI Field state: the placeholder, or a value. open: false | true — flips the chevron. disabled: false | true. clearable (default true): the clear button, shown on the filled variants. showTrigger (default true): the chevron button. placeholder and value: their texts.",
       "props": [
         {
           "name": "placeholder",
@@ -701,6 +724,7 @@
       "variants": 8,
       "defaultVariant": "highlighted=false, selected=false, disabled=false",
       "source": "src/components/Combobox/Combobox.tsx",
+      "description": "Contract — src/components/Combobox/Combobox.tsx: Combobox.Item, one option. highlighted: false | true — Base UI state, the option under the pointer or keyboard. selected: false | true — Base UI state, the option equal to the value; draws icon/check and medium weight. disabled: false | true. children: its text.",
       "props": [
         {
           "name": "children",
@@ -743,6 +767,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Dialog/Dialog.tsx",
+      "description": "Contract — src/components/Dialog/Dialog.tsx: Dialog.Content — portal, backdrop and popup, centred on the viewport — as in the Default story. title: text, required (heading-xl). description → Dialog.Description (text). Dialog.Actions: the button row, end-aligned; its Buttons are exposed (Dialog.Close renders them). Width: min(28rem, 100vw − space/8).",
       "props": [
         {
           "name": "title",
@@ -773,6 +798,7 @@
       "variants": 2,
       "defaultVariant": "disabled=false",
       "source": "src/components/Fieldset/Fieldset.tsx",
+      "description": "Contract — src/components/Fieldset/Fieldset.tsx: Fieldset.Root with a Fieldset.Legend, grouping related controls (Base UI Fieldset), as in the Default story at 360px.\ndisabled: false | true — cascades to every control inside, so the TextFields switch to their own disabled variant too. legend → Fieldset.Legend (text).\nThe controls are exposed TextField instances; any control can go in a fieldset.",
       "props": [
         {
           "name": "legend",
@@ -797,6 +823,7 @@
       "variants": 24,
       "defaultVariant": "variant=ghost, size=md, disabled=false",
       "source": "src/components/IconButton/IconButton.tsx",
+      "description": "Contract — src/components/IconButton/IconButton.tsx: a square, icon-only action on Base UI Button.\nvariant: ghost | primary | secondary | danger (default ghost). size: md | sm | lg (default md) — 40 / 32 / 48px. disabled: false | true (default false).\nchildren: the icon, an instance swap (icon/edit by default; the stories' icons are the preferred values). label: required — it becomes aria-label; a hidden layer carries it so the frame names the action.",
       "props": [
         {
           "name": "children",
@@ -847,6 +874,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Menu/Menu.tsx",
+      "description": "Contract — src/components/Menu/Menu.tsx: Menu.Content — portal, positioner and popup in one piece — as in the Default story. At least 12rem wide; its items are exposed instances. It opens below its trigger, aligned to the start, 6px away (side, align, sideOffset defaults).",
       "props": []
     },
     {
@@ -856,6 +884,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Menu/Menu.tsx",
+      "description": "Contract — src/components/Menu/Menu.tsx: Menu.GroupLabel, the heading of a Menu.Group (WithGroups story). children: its text (typography/overline, upper case).",
       "props": [
         {
           "name": "children",
@@ -871,6 +900,7 @@
       "variants": 4,
       "defaultVariant": "highlighted=false, disabled=false",
       "source": "src/components/Menu/Menu.tsx",
+      "description": "Contract — src/components/Menu/Menu.tsx: Menu.Item, one action. highlighted: false | true — Base UI state, the item under the pointer or keyboard. disabled: false | true. children: its text. Menu.ItemShortcut: off by default (on in the WithGroups story); itemShortcut is its text.",
       "props": [
         {
           "name": "children",
@@ -914,6 +944,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Menu/Menu.tsx",
+      "description": "Contract — src/components/Menu/Menu.tsx: Menu.Separator, a 1px rule between groups of items.",
       "props": []
     },
     {
@@ -923,6 +954,7 @@
       "variants": 2,
       "defaultVariant": "open=false",
       "source": "src/components/Menu/Menu.tsx",
+      "description": "Contract — src/components/Menu/Menu.tsx: Menu.SubmenuTrigger, an item that opens a nested Menu.Content beside it (WithSubmenu story). open: false | true — the SubmenuRoot's open. children: its text. The chevron (icon/chevron-right) is drawn by the component.",
       "props": [
         {
           "name": "children",
@@ -947,6 +979,7 @@
       "variants": 2,
       "defaultVariant": "orientation=horizontal",
       "source": "src/components/Menubar/Menubar.tsx",
+      "description": "Contract — src/components/Menubar/Menubar.tsx: Menubar.Root with Menubar.Menu > Menubar.Trigger + Menubar.Content, as in the Default (File, Edit, View) and Vertical (Project, Deploy, 10rem) stories. orientation: horizontal | vertical (default horizontal). The triggers are exposed instances; their menus are Menu.Content.",
       "props": [
         {
           "name": "orientation",
@@ -966,6 +999,7 @@
       "variants": 4,
       "defaultVariant": "open=false, disabled=false",
       "source": "src/components/Menubar/Menubar.tsx",
+      "description": "Contract — src/components/Menubar/Menubar.tsx: Menubar.Trigger, a Menu trigger inside the bar. open: false | true — its Menubar.Menu's open (a Menu.Root prop). disabled: false | true. children: its text. Its menu is a Menu.Content (Menubar.Content).",
       "props": [
         {
           "name": "children",
@@ -999,6 +1033,7 @@
       "variants": 4,
       "defaultVariant": "variant=accent, size=md",
       "source": "src/components/Meter/Meter.tsx",
+      "description": "Contract — src/components/Meter/Meter.tsx: a static measurement in a known range (Base UI Meter, role=\"meter\"). A reading, not a task — use Progress for tasks.\nvariant: accent | danger (default accent) — switch to danger past the threshold that matters. size: md | sm (default md).\nlabel → Meter.Label (text). showValue: shows Meter.Value; value is its text (\"42%\" for value={42}). The indicator is drawn at the stories' 42%.",
       "props": [
         {
           "name": "label",
@@ -1047,6 +1082,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/NavigationMenu/NavigationMenu.tsx",
+      "description": "The bar. Root and List hold one Item per Trigger; the Panel is not mirrored.\nContract — src/components/NavigationMenu/NavigationMenu.tsx: NavigationMenu.Root > List > Item > Trigger + Content, then one Panel. The Trigger instances are exposed so their labels are editable here.",
       "props": []
     },
     {
@@ -1056,6 +1092,7 @@
       "variants": 2,
       "defaultVariant": "active=false",
       "source": "src/components/NavigationMenu/NavigationMenu.tsx",
+      "description": "A destination. Rendered as <a>.\nContract — src/components/NavigationMenu/NavigationMenu.tsx: NavigationMenu.Link, children (the label), href, active (false | true, default false; Base UI renders data-active). Hover is a CSS state.",
       "props": [
         {
           "name": "children",
@@ -1080,6 +1117,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/NavigationMenu/NavigationMenu.tsx",
+      "description": "Opens the shared panel on hover or click; the chevron is supplied for you.\nContract — src/components/NavigationMenu/NavigationMenu.tsx: NavigationMenu.Trigger, children (the label), disabled. Open and hover are CSS states, not mirrored.",
       "props": [
         {
           "name": "children",
@@ -1095,6 +1133,7 @@
       "variants": 2,
       "defaultVariant": "disabled=false",
       "source": "src/components/NumberField/NumberField.tsx",
+      "description": "Contract — src/components/NumberField/NumberField.tsx: Base UI NumberField in Field.Root — label (also the scrub area), decrement, input, increment, optional description.\ndisabled: false | true. label: text, required. value: the text in NumberField.Input (\"3\" for defaultValue={3}). description → Field.Description (text, off by default).\nThe glyphs icon/minus and icon/plus are drawn by the component and not swappable. Not mirrored: the scrub cursor (only while dragging), Field.Error, hover, focus.",
       "props": [
         {
           "name": "label",
@@ -1134,6 +1173,7 @@
       "variants": 4,
       "defaultVariant": "side=bottom",
       "source": "src/components/Popover/Popover.tsx",
+      "description": "Contract — src/components/Popover/Popover.tsx: Popover.Content — portal, positioner, popup and arrow. side: top | bottom | left | right (default bottom). title → Popover.Title (text, typography/title-md). description → Popover.Description (text). Both are optional; any other children follow them (the WithActions story adds Buttons).",
       "props": [
         {
           "name": "title",
@@ -1175,6 +1215,7 @@
       "variants": 4,
       "defaultVariant": "side=bottom",
       "source": "src/components/PreviewCard/PreviewCard.tsx",
+      "description": "Contract — src/components/PreviewCard/PreviewCard.tsx: PreviewCard.Content — portal, positioner, popup and arrow. side: top | bottom | left | right (default bottom). Its children are free content; this is the Default story's profile, drawn from its inline styles. Width is max-content, capped at runtime.",
       "props": [
         {
           "name": "side",
@@ -1196,6 +1237,7 @@
       "variants": 6,
       "defaultVariant": "size=md, status=progressing",
       "source": "src/components/Progress/Progress.tsx",
+      "description": "Contract — src/components/Progress/Progress.tsx: how far along a task is (Base UI Progress). For a reading that is not a task, use Meter.\nsize: md | sm (default md). status: progressing | complete | indeterminate — Base UI state (ProgressRootState.status), set by value: below max, at max, or null.\nlabel → Progress.Label (text). showValue: shows Progress.Value; value is its text (\"40%\" for value={40}). The indicator is value as a share of the track, drawn at the stories' 40%.",
       "props": [
         {
           "name": "label",
@@ -1245,6 +1287,7 @@
       "variants": 2,
       "defaultVariant": "orientation=vertical",
       "source": "src/components/RadioGroup/RadioGroup.tsx",
+      "description": "Contract — src/components/RadioGroup/RadioGroup.tsx: RadioGroup, a set of mutually exclusive options (Base UI RadioGroup in Field.Root), as in the Default story.\norientation: vertical | horizontal (default vertical). label: text, required. description → Field.Description (text, off by default).\nThe options are exposed RadioGroupItem instances; the checked one's value is the group's defaultValue. Not mirrored: Field.Error and the invalid state (validation, not a prop).",
       "props": [
         {
           "name": "label",
@@ -1279,6 +1322,7 @@
       "variants": 4,
       "defaultVariant": "checked=false, disabled=false",
       "source": "src/components/RadioGroup/RadioGroup.tsx",
+      "description": "Contract — src/components/RadioGroup/RadioGroup.tsx: RadioGroupItem, one option (Base UI Radio in Field.Item).\nchecked: false | true — Base UI state (RadioRootState.checked): the item whose value equals the group's value/defaultValue. Set it on one item; coming back, its value is the group's defaultValue. disabled: false | true.\nlabel: text, required. description → Field.Description (text, off by default).",
       "props": [
         {
           "name": "label",
@@ -1322,6 +1366,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Select/Select.tsx",
+      "description": "Contract — src/components/Select/Select.tsx: Select (also Select.Field) — a select wired to a label, description and validation message.\nlabel: text, required. description → Field.Description (text, off by default). placeholder, value, open, disabled: on the exposed Select.Trigger. Its options are a Select.Content of Select.Item — see the open example.\nNot mirrored: Field.Error and the invalid state (validation, not a prop).",
       "props": [
         {
           "name": "label",
@@ -1347,6 +1392,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Select/Select.tsx",
+      "description": "Contract — src/components/Select/Select.tsx: Select.Content — portal, positioner, popup and list in one piece.\nIts width is the trigger's (--anchor-width, computed at runtime; 320px here). Opens below the trigger, aligned to its start, 4px away (side, align, sideOffset defaults).\nThe options are exposed Select.Item instances. Scroll arrows render only while the list overflows, so they are not drawn.",
       "props": []
     },
     {
@@ -1356,6 +1402,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Select/Select.tsx",
+      "description": "Contract — src/components/Select/Select.tsx: Select.GroupLabel, the heading of a Select.Group. children: the label text (typography/overline, so it renders upper case).",
       "props": [
         {
           "name": "children",
@@ -1371,6 +1418,7 @@
       "variants": 8,
       "defaultVariant": "highlighted=false, selected=false, disabled=false",
       "source": "src/components/Select/Select.tsx",
+      "description": "Contract — src/components/Select/Select.tsx: Select.Item, one option. children: its label.\nhighlighted: false | true — Base UI state, the option under the pointer or keyboard. selected: false | true — Base UI state, the option equal to the Root value; draws icon/check and medium weight. disabled: false | true (default false), a Select.Item prop.",
       "props": [
         {
           "name": "children",
@@ -1413,6 +1461,7 @@
       "variants": 8,
       "defaultVariant": "placeholder=true, open=false, disabled=false",
       "source": "src/components/Select/Select.tsx",
+      "description": "Contract — src/components/Select/Select.tsx: Select.Trigger, the button that opens the popup.\nplaceholder: true | false — Base UI state (SelectTriggerState.placeholder), true while nothing is selected. value: the text in Select.Value — the placeholder prop while placeholder=true, the selected item's label otherwise.\nopen: false | true (default false), a Select.Root prop; flips the chevron. disabled: false | true (default false).\nThe chevron (icon/chevron-down) is drawn by the component and not swappable. Not mirrored: invalid (validation state, not a prop), hover and focus.",
       "props": [
         {
           "name": "value",
@@ -1455,6 +1504,7 @@
       "variants": 2,
       "defaultVariant": "orientation=horizontal",
       "source": "src/components/Separator/Separator.tsx",
+      "description": "A thin rule between groups. Wraps Base UI’s Separator.\nContract — src/components/Separator/Separator.tsx: orientation (horizontal | vertical, default horizontal). Horizontal is Fill container on the instance; the 1px thickness is raw in the CSS too.",
       "props": [
         {
           "name": "orientation",
@@ -1474,6 +1524,7 @@
       "variants": 4,
       "defaultVariant": "orientation=horizontal, disabled=false",
       "source": "src/components/Slider/Slider.tsx",
+      "description": "Contract — src/components/Slider/Slider.tsx: Base UI Slider in Field.Root — label, optional value output, track, optional description.\norientation: horizontal | vertical (default horizontal). disabled: false | true.\nlabel: text, required. showValue: shows Slider.Value; value is its text (\"40\" for defaultValue={40}). description → Field.Description (text, off by default).\nThe indicator and thumb sit at value as a share of the track (runtime), drawn at the stories' 40. Not mirrored: two thumbs for a range, Field.Error, dragging, hover, focus.",
       "props": [
         {
           "name": "label",
@@ -1527,6 +1578,7 @@
       "variants": 3,
       "defaultVariant": "size=md",
       "source": "src/components/Spinner/Spinner.tsx",
+      "description": "Contract — src/components/Spinner/Spinner.tsx: an indeterminate loading indicator (no Base UI primitive; role=\"status\").\nsize: md | sm | lg (default md) — 24 / 16 / 40px. aria-label: the accessible name, default \"Loading\"; not drawn.\nColour is currentcolor in code, color/content/accent by default: inside a Button it takes the button's text colour — override both strokes on the instance. Drawn at rest; the spin is not mirrored.",
       "props": [
         {
           "name": "size",
@@ -1547,6 +1599,7 @@
       "variants": 4,
       "defaultVariant": "checked=false, disabled=false",
       "source": "src/components/Switch/Switch.tsx",
+      "description": "Contract — src/components/Switch/Switch.tsx: a binary on/off control that takes effect immediately (Base UI Switch in Field.Root).\nchecked: false | true (the stories use defaultChecked). disabled: false | true.\nlabel → Field.Label (text; off = the bare control). description → Field.Description (text, off by default).\nNot mirrored: a description without a label, top alignment when a description is present, hover and focus — see figma/GAPS.md.",
       "props": [
         {
           "name": "label",
@@ -1595,6 +1648,7 @@
       "variants": 4,
       "defaultVariant": "striped=false, hideCaption=false",
       "source": "src/components/Table/Table.tsx",
+      "description": "Contract — src/components/Table/Table.tsx: Table.Root — a bordered scroll container, the table and an optional caption — as in the Default story (six invoices, five columns).\nstriped: false | true (default false). hideCaption: false | true (default false) — the caption stays for screen readers but is not drawn. caption: its text.\nRows are frames of Table.HeaderCell and Table.Cell instances. The last row's missing border and the striped rows are cell overrides (:last-child, :nth-of-type(even)). Column widths come from the default content.",
       "props": [
         {
           "name": "caption",
@@ -1628,6 +1682,7 @@
       "variants": 2,
       "defaultVariant": "numeric=false",
       "source": "src/components/Table/Table.tsx",
+      "description": "Contract — src/components/Table/Table.tsx: Table.Cell, a <td>. numeric: false | true (default false) — right-aligned, tabular figures. children: its text.",
       "props": [
         {
           "name": "children",
@@ -1652,6 +1707,7 @@
       "variants": 4,
       "defaultVariant": "scope=col, numeric=false",
       "source": "src/components/Table/Table.tsx",
+      "description": "Contract — src/components/Table/Table.tsx: Table.HeaderCell, a <th>. scope: col | row (default col) — col heads a column (bold, strong border, in Table.Head); row heads a body row (medium, as .body .headerCell styles it). numeric: false | true (default false) — right-aligned, tabular figures. children: its text.",
       "props": [
         {
           "name": "children",
@@ -1685,6 +1741,7 @@
       "variants": 2,
       "defaultVariant": "orientation=horizontal",
       "source": "src/components/Tabs/Tabs.tsx",
+      "description": "Contract — src/components/Tabs/Tabs.tsx: Tabs.Root > Tabs.List (Tabs.Tab ×3, Tabs.Indicator) + Tabs.Panel, as in the Default and Vertical stories at 32rem.\norientation: horizontal | vertical (default horizontal), a Tabs.Root prop. panel → Tabs.Panel (text).\nThe tabs are exposed Tabs.Tab instances: edit their children, set active on exactly one — its value is the Root's defaultValue.",
       "props": [
         {
           "name": "panel",
@@ -1709,6 +1766,7 @@
       "variants": 8,
       "defaultVariant": "orientation=horizontal, active=false, disabled=false",
       "source": "src/components/Tabs/Tabs.tsx",
+      "description": "Contract — src/components/Tabs/Tabs.tsx: Tabs.Tab, one tab button (Base UI Tabs.Tab).\ndisabled: false | true (default false). children: the tab label. orientation: horizontal | vertical, set on Tabs.Root and inherited.\nactive: true for the tab whose value equals Tabs.Root value/defaultValue (Base UI data-active). Set it on exactly one tab; coming back, that tab's value becomes the Root's defaultValue.\nTabs.Indicator: the Base UI part that marks the active tab. Base UI sizes and moves it at runtime (--active-tab-*); it is drawn where that lands, inside the active tab.",
       "props": [
         {
           "name": "children",
@@ -1756,6 +1814,7 @@
       "variants": 4,
       "defaultVariant": "filled=false, disabled=false",
       "source": "src/components/TextField/TextField.tsx",
+      "description": "Contract — src/components/TextField/TextField.tsx: A single-line input with a label, optional description and validation message, wired by Base UI Field so the input gets its accessible name and description from the primitive.\nfilled: false | true — Base UI Field state, true once there is a value. disabled: false | true.\nlabel: text, required. placeholder: text shown while empty. value: text shown when filled (the defaultValue). description → Field.Description (text, off by default).\nNot mirrored: Field.Error and the invalid border (validation, not a prop), hover, focus.",
       "props": [
         {
           "name": "label",
@@ -1809,6 +1868,7 @@
       "variants": 4,
       "defaultVariant": "filled=false, disabled=false",
       "source": "src/components/Textarea/Textarea.tsx",
+      "description": "Contract — src/components/Textarea/Textarea.tsx: A multi-line input with a label, optional description and validation message, wired by Base UI Field.\nfilled: false | true — Base UI Field state, true once there is a value. disabled: false | true.\nlabel: text, required. placeholder: text shown while empty. value: text shown when filled (the defaultValue). description → Field.Description (text, off by default).\nNot mirrored: Field.Error and the invalid border (validation, not a prop), hover, focus. rows (default 4) sets the height: four body-md lines here; resize the control on an instance for more. The resize grip is the browser's, so resize=vertical|none is not drawn.",
       "props": [
         {
           "name": "label",
@@ -1862,6 +1922,7 @@
       "variants": 3,
       "defaultVariant": "type=none",
       "source": "src/components/Toast/Toast.tsx",
+      "description": "Contract — src/components/Toast/Toast.tsx: Toast.Root, one notification, as Toast.useToastManager().add() renders it. type: none | success | error — the toast's type option (none = not given); success and error colour the border. title → Toast.Title. description → Toast.Description. action → Toast.Action's text, from actionProps (off unless given). The close button (icon/close, aria-label \"Close notification\") is drawn by the component.",
       "props": [
         {
           "name": "title",
@@ -1907,6 +1968,7 @@
       "variants": 48,
       "defaultVariant": "variant=secondary, size=md, pressed=false, disabled=false, iconOnly=false",
       "source": "src/components/Toggle/Toggle.tsx",
+      "description": "Contract — src/components/Toggle/Toggle.tsx: a button that stays pressed (Base UI Toggle). Wrap several in ToggleGroup for a set.\nvariant: secondary | ghost (default secondary). size: md | sm | lg (default md). pressed: false | true (a Base UI prop; the stories use defaultPressed). disabled: false | true. iconOnly: false | true (default false) squares it off.\nchildren: the label text. With iconOnly, the icon — swap the nested icon layer (icon/bold by default). aria-label: the name an icon-only toggle needs; a hidden layer carries it.\nNot mirrored: an icon beside a label (WithIcon story), hover.",
       "props": [
         {
           "name": "children",
@@ -1973,6 +2035,7 @@
       "variants": 8,
       "defaultVariant": "segmented=false, orientation=horizontal, disabled=false",
       "source": "src/components/ToggleGroup/ToggleGroup.tsx",
+      "description": "Contract — src/components/ToggleGroup/ToggleGroup.tsx: a set of Toggles sharing one value (Base UI ToggleGroup), as in the Default story (List pressed).\nsegmented: false | true (default false) — one joined track, the pressed segment lifted onto the surface. orientation: horizontal | vertical. disabled: false | true, cascading to each Toggle.\nThe options are exposed Toggle instances; the pressed ones' values are the group's defaultValue. In segmented groups the group restyles its Toggles (.segmented > button): here that look is an override on each instance — see figma/GAPS.md before moving the selection.",
       "props": [
         {
           "name": "segmented",
@@ -2010,6 +2073,7 @@
       "variants": 2,
       "defaultVariant": "orientation=horizontal",
       "source": "src/components/Toolbar/Toolbar.tsx",
+      "description": "Contract — src/components/Toolbar/Toolbar.tsx: Toolbar.Root with Toolbar.Group, Toolbar.Button, Toolbar.Separator and Toolbar.Link, as in the Grouped story. orientation: horizontal | vertical (default horizontal). The buttons and the link are exposed instances.",
       "props": [
         {
           "name": "orientation",
@@ -2029,6 +2093,7 @@
       "variants": 2,
       "defaultVariant": "disabled=false",
       "source": "src/components/Toolbar/Toolbar.tsx",
+      "description": "Contract — src/components/Toolbar/Toolbar.tsx: Toolbar.Button. disabled: false | true. children: an icon (icon/bold here — swap the icon layer) or text (show the children layer, hide the icon). aria-label: the name an icon button needs; a hidden layer carries it. The pressed / open tint applies only when it renders a Toggle or a Menu trigger — see figma/GAPS.md.",
       "props": [
         {
           "name": "children",
@@ -2058,6 +2123,7 @@
       "variants": 2,
       "defaultVariant": "disabled=false",
       "source": "src/components/Toolbar/Toolbar.tsx",
+      "description": "Contract — src/components/Toolbar/Toolbar.tsx: Toolbar.Input, an input in the toolbar's roving tab stop (WithInput story). disabled: false | true. placeholder: its text.",
       "props": [
         {
           "name": "placeholder",
@@ -2082,6 +2148,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Toolbar/Toolbar.tsx",
+      "description": "Contract — src/components/Toolbar/Toolbar.tsx: Toolbar.Link, a link inside the toolbar's roving tab stop. children: its text. Underlined on hover (a CSS state).",
       "props": [
         {
           "name": "children",
@@ -2097,6 +2164,7 @@
       "variants": 2,
       "defaultVariant": "orientation=vertical",
       "source": "src/components/Toolbar/Toolbar.tsx",
+      "description": "Contract — src/components/Toolbar/Toolbar.tsx: Toolbar.Separator, a 1px rule. orientation: vertical | horizontal — vertical in a horizontal toolbar. Its length is the toolbar's (align-self: stretch); 32px here.",
       "props": [
         {
           "name": "orientation",
@@ -2116,6 +2184,7 @@
       "variants": 4,
       "defaultVariant": "side=top",
       "source": "src/components/Tooltip/Tooltip.tsx",
+      "description": "Contract — src/components/Tooltip/Tooltip.tsx: Tooltip.Content — portal, positioner, popup and arrow. side: top | bottom | left | right (default top) — which side of the trigger it opens on; the arrow points back at the trigger. children: its text. align (default center) and sideOffset place it at runtime.",
       "props": [
         {
           "name": "children",
@@ -2142,6 +2211,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Alert/Alert.tsx",
+      "description": "Glyph drawn by Alert — src/components/Alert/Alert.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2151,6 +2221,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Alert/Alert.tsx",
+      "description": "Glyph drawn by Alert — src/components/Alert/Alert.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2160,6 +2231,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/ToggleGroup/ToggleGroup.stories.tsx",
+      "description": "Example icon from src/components/ToggleGroup/ToggleGroup.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2169,6 +2241,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/ToggleGroup/ToggleGroup.stories.tsx",
+      "description": "Example icon from src/components/ToggleGroup/ToggleGroup.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2178,6 +2251,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/ToggleGroup/ToggleGroup.stories.tsx",
+      "description": "Example icon from src/components/ToggleGroup/ToggleGroup.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2187,6 +2261,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Toggle/Toggle.stories.tsx",
+      "description": "Example icon from src/components/Toggle/Toggle.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2196,6 +2271,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Select/Select.tsx",
+      "description": "Glyph drawn by Select — src/components/Select/Select.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2205,6 +2281,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Select/Select.tsx",
+      "description": "Glyph drawn by Select — src/components/Select/Select.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2214,6 +2291,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Combobox/Combobox.tsx",
+      "description": "Glyph drawn by Combobox, Select — src/components/Combobox/Combobox.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2223,6 +2301,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Checkbox/Checkbox.tsx",
+      "description": "Glyph drawn by Checkbox — src/components/Checkbox/Checkbox.tsx. Nested inside its component and not swappable: the code has no prop to change it. A second drawing of icon/check (see figma/GAPS.md).",
       "props": []
     },
     {
@@ -2232,6 +2311,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Alert/Alert.tsx",
+      "description": "Glyph drawn by Alert — src/components/Alert/Alert.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2241,6 +2321,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Autocomplete/Autocomplete.tsx",
+      "description": "Glyph drawn by Autocomplete, Combobox, NavigationMenu, Select, Toolbar — src/components/Autocomplete/Autocomplete.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2250,6 +2331,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Accordion/Accordion.tsx",
+      "description": "Glyph drawn by Accordion — src/components/Accordion/Accordion.tsx. Nested inside its component and not swappable: the code has no prop to change it. A second drawing of icon/chevron-down (see figma/GAPS.md).",
       "props": []
     },
     {
@@ -2259,6 +2341,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Breadcrumb/Breadcrumb.tsx",
+      "description": "Glyph drawn by Breadcrumb, Menu — src/components/Breadcrumb/Breadcrumb.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2268,6 +2351,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Collapsible/Collapsible.tsx",
+      "description": "Glyph drawn by Collapsible — src/components/Collapsible/Collapsible.tsx. Nested inside its component and not swappable: the code has no prop to change it. A second drawing of icon/chevron-right (see figma/GAPS.md).",
       "props": []
     },
     {
@@ -2277,6 +2361,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Alert/Alert.tsx",
+      "description": "Glyph drawn by Alert, Autocomplete, Combobox, Toast — src/components/Alert/Alert.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2286,6 +2371,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Checkbox/Checkbox.tsx",
+      "description": "Glyph drawn by Checkbox — src/components/Checkbox/Checkbox.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2295,6 +2381,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/IconButton/IconButton.stories.tsx",
+      "description": "Example icon from src/components/IconButton/IconButton.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2304,6 +2391,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Alert/Alert.tsx",
+      "description": "Glyph drawn by Alert — src/components/Alert/Alert.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2313,6 +2401,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/ToggleGroup/ToggleGroup.stories.tsx",
+      "description": "Example icon from src/components/ToggleGroup/ToggleGroup.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2322,6 +2411,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/NumberField/NumberField.tsx",
+      "description": "Glyph drawn by NumberField — src/components/NumberField/NumberField.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2331,6 +2421,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/AlertDialog/AlertDialog.stories.tsx",
+      "description": "Example icon from src/components/AlertDialog/AlertDialog.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2340,6 +2431,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Avatar/Avatar.tsx",
+      "description": "Glyph drawn by Avatar — src/components/Avatar/Avatar.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2349,6 +2441,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/NumberField/NumberField.tsx",
+      "description": "Glyph drawn by NumberField — src/components/NumberField/NumberField.tsx. Nested inside its component and not swappable: the code has no prop to change it.",
       "props": []
     },
     {
@@ -2358,6 +2451,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/NumberField/NumberField.tsx",
+      "description": "Glyph drawn by NumberField — src/components/NumberField/NumberField.tsx. Nested inside its component and not swappable: the code has no prop to change it. Fill from the CSS (currentcolor) with a background/surface halo stroke.",
       "props": []
     },
     {
@@ -2367,6 +2461,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/Toggle/Toggle.stories.tsx",
+      "description": "Example icon from src/components/Toggle/Toggle.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2376,6 +2471,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/IconButton/IconButton.stories.tsx",
+      "description": "Example icon from src/components/IconButton/IconButton.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     },
     {
@@ -2385,6 +2481,7 @@
       "variants": 1,
       "defaultVariant": null,
       "source": "src/components/ToggleGroup/ToggleGroup.stories.tsx",
+      "description": "Example icon from src/components/ToggleGroup/ToggleGroup.stories.tsx: content passed as children. The default of an INSTANCE_SWAP property named children.",
       "props": []
     }
   ],
