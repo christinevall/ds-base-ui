@@ -65,8 +65,8 @@
   --sds-space-8: 2rem;
   --sds-space-10: 2.5rem;
   --sds-space-12: 3rem;
-  --sds-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --sds-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --sds-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sds-font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --sds-font-size-xs: 0.75rem;
   --sds-font-size-sm: 0.875rem;
   --sds-font-size-md: 1rem;
