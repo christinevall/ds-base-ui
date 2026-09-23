@@ -23,7 +23,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Prototype with Claude from Figma alone, before there is a Storybook | *Figma only* in Storybook, or [`docs/figma-only.md`](docs/figma-only.md) |
 | See how a page is laid out: the six layout words and the page anatomy | *Layout* in Storybook, or [`docs/layout.md`](docs/layout.md) |
 | See every manifest, check, command, skill and MCP, or demo them | *Toolkit* in Storybook, or [The toolkit](#the-toolkit-lists-checks-commands-skills) below |
-| Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
+| Know where Figma and the code differ on purpose, and what is still open | *Gaps* in Storybook, or [`figma/GAPS.md`](figma/GAPS.md) |
 
 ## In plain words
 

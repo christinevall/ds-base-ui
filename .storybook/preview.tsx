@@ -67,6 +67,7 @@ const preview: Preview = {
           'Toolkit',
           'Layout',
           'Figma only',
+          'Gaps',
           'Foundations',
           ['Colour', 'Typography', 'Space and shape', 'Motion'],
           'Components',
