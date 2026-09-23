@@ -99,7 +99,7 @@ Build straight away and show the plan with the result.
 
 The Figma library mirrors the code; it is never the source. To add or change
 anything in it — a component, a variable, a text style — use the
-`figma-mirror` skill (`.claude/skills/figma-mirror/`). `figma/manifest.json`
+`figma-library-from-code` skill (`.claude/skills/figma-library-from-code/`). `figma/manifest.json`
 records what the library contains and `npm run validate` checks it against the
 tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.

@@ -92,10 +92,10 @@ export function Skills() {
       head={['Skill', 'For', 'Say', 'Needs']}
       rows={[
         [
-          link(`${REPO}.claude/skills/figma-mirror/SKILL.md`, 'figma-mirror'),
+          link(`${REPO}.claude/skills/figma-library-from-code/SKILL.md`, 'figma-library-from-code'),
           'Build or update the Figma library from the code: components, variables, text styles',
           '"Mirror the Accordion to Figma" · "the tokens changed, sync Figma"',
-          <>Figma Console MCP · shared at {link(`${SKILLS}figma-mirror`, 'christinevall/skills')}</>,
+          <>Figma Console MCP · shared at {link(`${SKILLS}figma-library-from-code`, 'christinevall/skills')}</>,
         ],
         [
           link(`${REPO}.claude/skills/storybook-figma-sync/SKILL.md`, 'storybook-figma-sync'),

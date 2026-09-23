@@ -14,7 +14,7 @@ without guessing. Nothing is invented on the way: a missing component is
 built as a plain frame, marked, and listed as a suggestion.
 
 This skill **never changes the library or a component**. The library file is
-read only here; library changes go through `figma-mirror`, component changes
+read only here; library changes go through `figma-library-from-code`, component changes
 through a `feature/*` branch. Prototypes live on the `design` branch.
 
 ## Setup (once per design system)
@@ -41,7 +41,7 @@ no way back yet. See `docs/figma-only.md` in ds-base-ui.
 Figma property with its prop in code. `variant=primary` in Figma must be
 `variant="primary"` in code. If Figma says `Size=Medium` where code says
 `size="md"`, stop: this skill reads names, not intentions. Bring the Figma
-library in line with the code first (in ds-base-ui: the `figma-mirror` skill).
+library in line with the code first (in ds-base-ui: the `figma-library-from-code` skill).
 
 **Your own key map.** A duplicated library gets new keys. Run
 `snapshot.figma.js` in *your* library file (through the Figma Console MCP)
