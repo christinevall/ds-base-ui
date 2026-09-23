@@ -58,10 +58,17 @@ components in someone else's file.
    search the library to find one (that cost ~59k characters on 2026-09-23;
    the lookup costs a few lines). A missing key means the snapshot is stale:
    say so.
-3. **Sync status.** Run `npm run sync-status -- --summary`. If a component you
-   need shows ✗, say so before building with it.
-4. **Figma.** `figma_list_open_files`: the **target** file (the Playground)
-   must be connected; the library file is not needed. Place new work in a
+3. **Sync status, live if you can.** `figma_list_open_files` first. If the
+   library file is connected, run `snapshot.figma.js` in it and compare the
+   result with `figma/manifest.json`. If it is not connected, ask once: "Open
+   the library in Figma and run the Desktop Bridge plugin to check live, or
+   build from the snapshot of <date, time>?" and name what that snapshot's
+   status says. Then report: every ✗, what to do about it, and ask yes or no
+   (save the new snapshot? fix it? build anyway?). Change nothing, in Figma
+   or in the repo, before a yes. Never build without saying which of the two
+   (live or snapshot) it was.
+4. **Figma.** The **target** file (the Playground) must be connected; the
+   library file is only needed for the live check. Place new work in a
    Section below everything on the page (`section(name)` in the helpers), never
    on top of someone's frames. A failed call can leave half-built layers:
    remove them before retrying.

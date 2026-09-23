@@ -109,6 +109,20 @@ its output is in your context. Open your first reply with it in one line,
 including when the Figma snapshot was taken, or say it did not run. The full
 table is `docs/sync-status.md`, or *Sync status* in Storybook.
 
+**Report, flag, suggest, then ask.** Never change anything on your own: no
+file, no Figma node, no rule or skill, no regenerated report. After any check,
+give the result, flag every ✗, suggest the fix for each, and ask yes or no.
+Act only on a yes.
+
+**Before building anything in Figma**, check sync first, live if you can. If
+the library file is connected (`figma_list_open_files`), read a live snapshot
+and compare it with `figma/manifest.json`. If it is not, ask: "Open the library
+in Figma and run the Desktop Bridge plugin so I can check live, or shall we
+work from the snapshot of <date, time>?", and say what that snapshot's status
+is. Then report as above: every ✗, with what to do about it, and ask whether
+to save the new snapshot, fix it, or build anyway. Say which of the two
+(live or snapshot) the build used.
+
 **When asked to run the check**, the Figma side is only as fresh as the last
 snapshot: `npm run sync-status` cannot reach Figma. So first call
 `figma_list_open_files`. If the library file is connected, run
