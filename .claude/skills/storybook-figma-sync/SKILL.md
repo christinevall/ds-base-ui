@@ -1,6 +1,6 @@
 ---
 name: storybook-figma-sync
-description: Move a prototype between Storybook and Figma in either direction, using only real components. Storybook → Figma builds screens from Figma library instances, with prototype connections and a notes overview; Figma → Storybook rebuilds a Figma screen as a story from the real components. Use when asked to put a prototype, story or screen into Figma, to bring a Figma screen or change back to Storybook or code, or to "sync" a prototype. Needs the Storybook MCP, the Figma Console MCP and a Figma library whose names match the code. Not for changing the library itself.
+description: Move a prototype between Storybook and Figma in either direction, or design a new one in Figma from a brief, using only real components. Storybook → Figma and brief → Figma build screens from Figma library instances, with prototype connections and a notes overview; Figma → Storybook rebuilds a Figma screen as a story from the real components. Use when asked to design, build or prototype a screen in Figma, to put a prototype or story into Figma, to bring a Figma screen or change back to Storybook or code, or to "sync" a prototype. Needs the Storybook MCP, the Figma Console MCP and a Figma library whose names match the code. Not for changing the library itself.
 ---
 
 # Storybook ⇄ Figma sync — prototypes from real components
@@ -93,6 +93,26 @@ components in someone else's file.
 8. **Verify**: screenshot each screen and the story at the same width. Fix
    your mistakes; list the component's.
 9. **Notes frame** beside the flow — see *The notes* below.
+
+## A brief → Figma (no story yet)
+
+When the user describes a screen instead of pointing to a story ("build a
+checkout in Figma"), the source is the brief. The rules are the same as
+above; only steps 1–2 change.
+
+1. **Compose from what exists.** Read the brief, then pick components from
+   the code manifest by what they are for, and a pattern from `src/patterns/`
+   if one fits (compose downward, as CLAUDE.md says). Neutral demo content:
+   fictional names, `example.com` emails.
+2. **Show the plan before building**: one screen per step of the flow, and for
+   each the layout words and the components with their options, e.g.
+   `Page › Columns · space/8 › Stack: Card (elevated), Button (primary)`.
+   Anything the brief needs that no component covers is a `GAP:` frame, named
+   in the plan. Wait for a yes.
+3. Build, connect, annotate, verify and add the notes exactly as in
+   *Storybook → Figma* steps 3–9. The notes start with "Source: a brief".
+4. Offer the way back: the screens can come into Storybook with
+   *Figma → Storybook*, so the design exists in code too.
 
 ## Figma → Storybook
 
