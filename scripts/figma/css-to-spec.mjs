@@ -2,7 +2,7 @@
  * A component's stylesheet → the Figma bindings it needs.
  *
  * Maps every declaration in src/components/<Name>/<Name>.module.css through the
- * naming contract: var(--sds-…) becomes the Figma variable, text style or
+ * naming contract: var(--<prefix>-…) becomes the Figma variable, text style or
  * effect style with that code syntax. Nothing is transcribed by hand.
  *
  *   node scripts/figma/css-to-spec.mjs Button            readable
@@ -15,10 +15,12 @@
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { buildPayload, allTokens } from './tokens-to-figma.mjs';
+import { CONFIG } from './config.mjs';
 
-const ROOT = fileURLToPath(new URL('../..', import.meta.url));
+const ROOT = process.cwd(); // the project root: run from there (npm run …)
+const P = CONFIG.prefix;
 
 /**
  * Base UI exposes state as data attributes. State a consumer chooses through a
@@ -35,10 +37,10 @@ export const RUNTIME_ATTRS = new Set([
   'side', 'align', 'direction', 'limited', 'hovering', 'touched', 'dirty', 'focused', 'expanded', 'filled',
 ]);
 
-const TEXT_PROP = /^--sds-typography-([a-z0-9-]+?)-(font-family|font-size|font-weight|line-height|letter-spacing|text-transform)$/;
+const TEXT_PROP = new RegExp(`^--${P}-typography-([a-z0-9-]+?)-(font-family|font-size|font-weight|line-height|letter-spacing|text-transform)$`);
 
 export function specFor(component) {
-  const file = join(ROOT, 'src/components', component, `${component}.module.css`);
+  const file = join(ROOT, CONFIG.components, component, `${component}.module.css`);
   if (!existsSync(file)) throw new Error(`css-to-spec: ${file} not found`);
 
   const contract = new Map();
@@ -56,12 +58,12 @@ export function specFor(component) {
 
   const mapValue = (value) => {
     // A computed value is raw as a whole, whatever tokens it uses:
-    // Dialog's width is min(28rem, calc(100vw - var(--sds-space-8))), not space/8.
+    // Dialog's width is min(28rem, calc(100vw - var(--<prefix>-space-8))), not space/8.
     if (/\b(?:min|max|calc|clamp)\(/.test(value)) return [{ raw: value }];
     const refs = [...value.matchAll(/var\((--[\w-]+)\)/g)].map((m) => m[1]);
     if (!refs.length) return [{ raw: value }];
     return refs.map((ref) => {
-      if (!ref.startsWith('--sds-')) return { runtime: ref };
+      if (!ref.startsWith(`--${P}-`)) return { runtime: ref };
       const text = ref.match(TEXT_PROP);
       if (text) return { textStyle: `typography/${text[1]}` };
       return contract.get(ref) ?? (values.has(ref) ? { valueOnly: values.get(ref), css: ref } : { undefined: ref });
@@ -99,7 +101,7 @@ export function specFor(component) {
       decls,
     });
   }
-  return { component, file: `src/components/${component}/${component}.module.css`, rules,
+  return { component, file: `${CONFIG.components}/${component}/${component}.module.css`, rules,
     gaps: { ...gaps, runtime: [...gaps.runtime], reviewStates: [...gaps.reviewStates] } };
 }
 

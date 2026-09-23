@@ -86,6 +86,17 @@ Then look at the story in a browser. Markup that compiles and renders nothing st
 
 ## Figma
 
+**Prototyping in Figma** — "prototype / design / build a screen in Figma", a
+Storybook story into Figma, or a Figma screen back into Storybook — always
+follows the `storybook-figma-sync` skill (`.claude/skills/storybook-figma-sync/`),
+even when it is not invoked by name. In short: only instances from the Figma
+library, placed by their keys in `figma/manifest.json`; layout as named
+auto-layout frames (Stack, Cluster, Split, Columns, Grid, Page) with every gap
+bound to a space variable; the page anatomy and text-style roles in
+`docs/layout.md`; prototype connections; the four-part notes beside the flow.
+Build straight away and show the plan with the result.
+
+
 The Figma library mirrors the code; it is never the source. To add or change
 anything in it — a component, a variable, a text style — use the
 `figma-mirror` skill (`.claude/skills/figma-mirror/`). `figma/manifest.json`
@@ -94,8 +105,18 @@ tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
 
 **At the start of a session** a hook runs `npm run sync-status -- --summary` and
-its output is in your context. Open your first reply with it in one line, or
-say it did not run. The full table is `docs/sync-status.md`, or *Sync status* in Storybook.
+its output is in your context. Open your first reply with it in one line,
+including when the Figma snapshot was taken, or say it did not run. The full
+table is `docs/sync-status.md`, or *Sync status* in Storybook.
+
+**When asked to run the check**, the Figma side is only as fresh as the last
+snapshot: `npm run sync-status` cannot reach Figma. So first call
+`figma_list_open_files`. If the library file is connected, run
+`scripts/figma/snapshot.figma.js` in it, save the result as
+`figma/manifest.json`, then run the check. If it is not connected, run the
+check anyway and say plainly: "this is the snapshot of <date, time>, not the
+live library; to check live, open the library in Figma and run the Desktop
+Bridge plugin". Never present an old snapshot as the current state.
 
 **To place a library item in another Figma file**, take its key from
 `figma/manifest.json` → `keys` (components with their variants, text styles,

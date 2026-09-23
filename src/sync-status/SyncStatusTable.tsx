@@ -17,6 +17,7 @@ type Row = {
 };
 type SyncData = {
   snapshotDate: string;
+  howToRefresh: string;
   checks: { id: string; label: string; means: string }[];
   rows: Row[];
   systemWide: { message: string; rule: string; file: string }[];
@@ -44,7 +45,10 @@ export function SyncSummary() {
       </Badge>
       {attention.length ? <Badge variant="danger">{attention.length} need attention</Badge> : null}
       <Badge variant="neutral">{rows.length - mirrored.length} not mirrored, by decision</Badge>
-      <Badge variant="neutral">Figma snapshot of {sync.snapshotDate}</Badge>
+      <Badge variant="neutral">Figma snapshot: {sync.snapshotDate}</Badge>
+      <p className={styles.note}>
+        <strong>Figma side:</strong> the last snapshot of the library, not the live file. {sync.howToRefresh}
+      </p>
     </div>
   );
 }

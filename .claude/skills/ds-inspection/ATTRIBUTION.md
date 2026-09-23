@@ -8,6 +8,13 @@ It is bundled here, unmodified, so that anyone who opens this repository can run
 the health check without installing anything. Claude Code picks up skills in
 `.claude/skills/` automatically.
 
+**Customised, not changed.** The skill's files are as Brad published them.
+What is specific to this system lives outside this folder, in
+[`ds-inspection/GARAGE.md`](../../../ds-inspection/GARAGE.md), the profile the
+skill reads: the system, its sources, and how the report is written — one
+report for a designer and a developer, with a 🎨 Design and a 🛠️ Dev column per
+station and every fix tagged 🎨 / 🛠️ / 🤝.
+
 It is redistributed under the MIT licence — see `LICENSE` in this folder.
 Copyright (c) 2026 Brad Frost Web LLC.
 
