@@ -88,12 +88,12 @@ What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
 - **2026-09-23, found by rebuilding the booking flow in Figma.**
-  - **Accordion.Item panel padding: fixed in the library, not yet published.**
+  - **Accordion.Item panel padding: fixed in the library and published (2026-09-23).**
     The `content` frame had left/right `space/4` and top/bottom `space/2`, the
     CSS shorthand `padding: 0 space-2 space-4` read the wrong way round. Now top
     0, left/right `space/2`, bottom `space/4`, checked against Storybook (text
-    at 8px, panel 58px). Publish the library and accept the update in files
-    that use it.
+    at 8px, panel 58px). Files that use the library still have to accept the
+    update (the Playground: not checked).
   - **Meter and Progress: the bar length is not a property.** `Meter.Indicator`
     is a fixed-width rectangle (42% by default) and an instance cannot resize
     it, so an instance shows the default fill whatever its `value` text says.
