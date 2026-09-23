@@ -13,6 +13,11 @@ Every component exists twice: here in code, and in the Figma library. This page 
 
 Every column is one thing code and Figma must agree on.
 
+**The data behind this page**, on GitHub:
+
+- [`figma/manifest.json`](https://github.com/christinevall/ds-base-ui/blob/main/figma/manifest.json): what the Figma library contains, from the last snapshot. Components, properties, variables, styles and the key map.
+- [`docs/sync-status.md`](https://github.com/christinevall/ds-base-ui/blob/main/docs/sync-status.md): this page as plain text, with the reason for every ✗.
+
 - **Figma key \*:** the handle an AI needs to find this component and place it in another Figma file is recorded.
 - **Same name:** the Figma component is called what the code calls it. `Accordion` in Figma is `Accordion` in code, so people recognise it and a screen can come back into code. (The key alone would survive a rename; the name would not.)
 - **Same property names:** every property in Figma is a real prop, part or text in code. `variant` in Figma is `variant` in code.
