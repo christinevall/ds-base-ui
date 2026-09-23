@@ -20,6 +20,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
 | Check that Figma and the code are still in sync, component by component | *Sync status* in Storybook, or [`docs/sync-status.md`](docs/sync-status.md) (`npm run sync-status` updates both) |
+| See how a page is laid out: the six layout words and the page anatomy | *Layout* in Storybook, or [`docs/layout.md`](docs/layout.md) |
 | See every manifest, check, command, skill and MCP, or demo them | *Toolkit* in Storybook, or [The toolkit](#the-toolkit-lists-checks-commands-skills) below |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 

@@ -76,6 +76,7 @@ export function Commands() {
         [cmd('npm run check:contrast'), 'The contrast check'],
         [cmd('npm run figma:tokens'), 'What the Figma variables and text styles should be'],
         [cmd('npm run figma:spec -- Button'), "A component's CSS as a Figma build spec"],
+        ['Layout rules', 'The six layout words and the page anatomy: open Layout in this sidebar (docs/layout.md)'],
         ['snapshot (in Figma)', 'Ask Claude: "take a snapshot of the library". Writes figma/manifest.json with the key map'],
       ]}
     />
