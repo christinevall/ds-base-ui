@@ -20,6 +20,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
 | Check that Figma and the code are still in sync, component by component | *Sync status* in Storybook, or [`docs/sync-status.md`](docs/sync-status.md) (`npm run sync-status` updates both) |
+| Prototype with Claude from Figma alone, before there is a Storybook | *Figma only* in Storybook, or [`docs/figma-only.md`](docs/figma-only.md) |
 | See how a page is laid out: the six layout words and the page anatomy | *Layout* in Storybook, or [`docs/layout.md`](docs/layout.md) |
 | See every manifest, check, command, skill and MCP, or demo them | *Toolkit* in Storybook, or [The toolkit](#the-toolkit-lists-checks-commands-skills) below |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
@@ -96,7 +97,7 @@ so it cannot go stale without a check noticing.
 | File | What it lists | Written by | Read by |
 | --- | --- | --- | --- |
 | **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
-| **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `sync-status`, Claude when building in Figma |
+| **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components with their options and **descriptions** (the text of Figma's description box, so *use when* written in Figma reaches Claude), variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `sync-status`, Claude when building in Figma |
 | **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (Figma key, same name, same property names, same options, same defaults, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
 | **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
 
