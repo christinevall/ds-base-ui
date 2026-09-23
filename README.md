@@ -19,7 +19,8 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Understand how it is built, no code knowledge needed | [In plain words](#in-plain-words), then [the stack](#the-stack-tool-by-tool) |
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
-| Know where Figma and the code differ | [`figma/GAPS.md`](figma/GAPS.md) |
+| Check that Figma and the code still match, component by component | [`docs/contract.md`](docs/contract.md) (`npm run contract` updates it) |
+| Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 
 ## In plain words
 
@@ -75,6 +76,8 @@ tokens/*.json ──npm run build:tokens──►  CSS variables ──►  Reac
 ```
 
 - **Names match on purpose.** `color/background/accent` in Figma is `--sds-color-background-accent` in CSS, and a Figma layer `Button · variant=primary` resolves to `<Button variant="primary">` through `figma/manifest.json`.
+- **One page shows the whole contract.** [`docs/contract.md`](docs/contract.md) lists every component with its props in code, its options in Figma and a ✅ or ❌. `npm run contract` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
+- **The key map.** `figma/manifest.json` also stores each Figma item's key, the handle an AI needs to place a library component in another file. With it, building a screen in Figma is a lookup instead of a search through the whole library.
 - **Where Figma cannot express the CSS**, it is written down in [`figma/GAPS.md`](figma/GAPS.md) instead of simplifying the CSS.
 - **Code Connect** is not set up: it needs an Organization or Enterprise plan.
 

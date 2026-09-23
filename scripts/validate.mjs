@@ -183,7 +183,7 @@ if (existsSync(MANIFEST)) {
       `${c.id} has no resolvable component, so agents cannot ground against it`);
   }
 } else {
-  console.log(`note: ${MANIFEST} not found — run \`npm run build-storybook\` to check manifest coverage\n`);
+  console.error(`note: ${MANIFEST} not found — run \`npm run build-storybook\` to check manifest coverage\n`);
 }
 
 // --------------------------------------------- the Figma library mirrors the code
@@ -305,9 +305,30 @@ if (existsSync(FIGMA_MANIFEST)) {
       }
     }
   }
+
+  // Keys: the key map an agent places library items by. Every component,
+  // variant, text style, effect style and variable the manifest names has one,
+  // so building a screen is a lookup, not a search through the library.
+  if (!fm.keys) {
+    report(F, 0, 'figma-keys', 'no key map — run scripts/figma/snapshot.figma.js on the library to add one');
+  } else {
+    for (const c of fm.components) {
+      const k = fm.keys.components?.[c.name];
+      if (!k?.key) report(F, 0, 'figma-keys', `${c.name} has no key`);
+      else if (c.kind === 'set' && Object.keys(k.variants ?? {}).length !== c.variants) report(F, 0, 'figma-keys', `${c.name}: ${Object.keys(k.variants ?? {}).length} variant keys for ${c.variants} variants`);
+    }
+    for (const s of fm.textStyles) if (!fm.keys.textStyles?.[s.name]) report(F, 0, 'figma-keys', `text style ${s.name} has no key`);
+    for (const s of fm.effectStyles) if (!fm.keys.effectStyles?.[s]) report(F, 0, 'figma-keys', `effect style ${s} has no key`);
+    for (const n of figmaVars.keys()) if (!fm.keys.variables?.[n]) report(F, 0, 'figma-keys', `variable ${n} has no key`);
+  }
 }
 
 // ------------------------------------------------------------------- report
+// --json: the findings as data, for scripts/contract.mjs. Never fails.
+if (process.argv.includes('--json')) {
+  console.log(JSON.stringify(findings));
+  process.exit(0);
+}
 const byRule = findings.reduce((a, f) => ((a[f.rule] ??= []).push(f), a), {});
 if (!findings.length) {
   console.log('validate: no findings.');
