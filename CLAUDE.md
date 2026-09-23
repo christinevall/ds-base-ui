@@ -93,6 +93,16 @@ records what the library contains and `npm run validate` checks it against the
 tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
 
+**At the start of a session** a hook runs `npm run sync-status -- --summary` and
+its output is in your context. Open your first reply with it in one line, or
+say it did not run. The full table is `docs/sync-status.md`, or *Sync status* in Storybook.
+
+**To place a library item in another Figma file**, take its key from
+`figma/manifest.json` → `keys` (components with their variants, text styles,
+effect styles, variables). Never search or list the whole library to find a
+key. If a key is missing, the snapshot is stale: say so and run
+`scripts/figma/snapshot.figma.js` on the library.
+
 ## Further reading
 
 - `docs/decisions.md` — what this project is for, the thesis, and every decision with its reason
