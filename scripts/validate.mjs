@@ -192,7 +192,7 @@ if (existsSync(MANIFEST)) {
 // against the tokens and the components, so a Figma name that drifts from its
 // token or its prop fails CI like any other rule. This is the contract a frame
 // coming back from Figma resolves through. Values are not compared here: the
-// figma-mirror skill's token sync does that against the live file.
+// figma-library-from-code skill's token sync does that against the live file.
 const FIGMA_MANIFEST = 'figma/manifest.json';
 if (existsSync(FIGMA_MANIFEST)) {
   const F = FIGMA_MANIFEST;

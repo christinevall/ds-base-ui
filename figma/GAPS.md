@@ -1,7 +1,7 @@
 # Where Figma cannot mirror the code exactly
 
 Every entry here is a decision, not an oversight: what the code does, what
-Figma does instead, and why. Add an entry whenever the `figma-mirror` skill
+Figma does instead, and why. Add an entry whenever the `figma-library-from-code` skill
 meets something it cannot express. Anything not listed is expected to match.
 
 ## Tokens
@@ -87,6 +87,13 @@ meets something it cannot express. Anything not listed is expected to match.
 What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
+- **Accordion named "Accordion1": fixed (2026-09-23, 16:40).** A live snapshot
+  at 16:29 found the library's Accordion renamed to "Accordion1" (same key, same
+  description, only the name), most likely by accident; not checked who or why.
+  Renamed back by hand in Figma. A new live snapshot is byte-identical to the
+  committed 16:03 one, and sync status is 39 of 39. Not checked: whether the
+  library was published after the rename back, so files using it may still
+  offer "Accordion1" until it is.
 - **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
   `Checkbox` renders a `Field.Item`, which needs an enclosing `Field.Root`; on
   its own Base UI throws "FieldRootContext is missing". Every Checkbox story
@@ -119,7 +126,7 @@ when it is resolved.
   Roboto Mono, so no text in the library changes. The descriptions on the
   `font/sans` and `font/mono` variables still say "system font stack … stands
   in"; `npm run figma:tokens` now produces the new text, but the library was
-  not updated because Figma was not connected. Run `figma-mirror` on the
+  not updated because Figma was not connected. Run `figma-library-from-code` on the
   Typography collection to refresh them.
 - **Not checked:** text widths in Storybook against Figma, component by
   component, after the switch. They should now match on any machine where

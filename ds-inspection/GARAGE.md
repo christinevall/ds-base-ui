@@ -21,7 +21,7 @@ _Checked in: 2026-09-11 (re-inspection, then a second pass in the afternoon on t
   - `figma/manifest.json`: what the library contains.
   - `figma/GAPS.md`: every gap between Figma and the code, each with its reason.
   - `scripts/figma/`: generators, the audit and the snapshot.
-  - `.claude/skills/figma-mirror/SKILL.md`: the build process.
+  - `.claude/skills/figma-library-from-code/SKILL.md`: the build process.
 - Docs: Storybook 10 with autodocs, the a11y addon and the MCP addon, plus `docs/*.md` and `docs/project-brief.md`. Storybook is not published; Chromatic is planned and blocked on a token.
 - Process: GitHub `christinevall/sample-design-system`. Two branches:
   - `feature/*` → `main` by PR, with CI.
@@ -33,7 +33,7 @@ _Checked in: 2026-09-11 (re-inspection, then a second pass in the afternoon on t
   - The Storybook component manifest.
   - `@storybook/addon-mcp` 10.6.0: 7 tools on `main`, verified live on 2026-09-11. It serves only from a dev server, and no agent config registers it.
   - `scripts/validate.mjs`, strict in CI. It now also checks the Figma manifest against the code.
-  - One project skill in the repo: `figma-mirror`. (`ds-inspection` and `ds-ascii` are user-level skills in `~/.claude/skills`; students don't get them.)
+  - One project skill in the repo: `figma-library-from-code`. (`ds-inspection` and `ds-ascii` are user-level skills in `~/.claude/skills`; students don't get them.)
   - No `llms.txt`. No Code Connect, by decision.
 
 ## Evidence access map

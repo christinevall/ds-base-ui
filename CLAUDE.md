@@ -99,7 +99,7 @@ Build straight away and show the plan with the result.
 
 The Figma library mirrors the code; it is never the source. To add or change
 anything in it — a component, a variable, a text style — use the
-`figma-mirror` skill (`.claude/skills/figma-mirror/`). `figma/manifest.json`
+`figma-library-from-code` skill (`.claude/skills/figma-library-from-code/`). `figma/manifest.json`
 records what the library contains and `npm run validate` checks it against the
 tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
@@ -108,6 +108,24 @@ prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
 its output is in your context. Open your first reply with it in one line,
 including when the Figma snapshot was taken, or say it did not run. The full
 table is `docs/sync-status.md`, or *Sync status* in Storybook.
+
+**Report, flag, suggest, then ask.** Never change anything on your own: no
+file, no Figma node, no rule or skill. After any check, give the result, flag
+every ✗, suggest the fix for each, and ask yes or no. Act only on a yes.
+
+**One exception: keep Storybook's sync status current, without asking.**
+Whenever `figma/manifest.json` has just been saved from a live snapshot, run
+`npm run sync-status` (not `--summary`) straight away, so `docs/sync-status.*`
+and the badge in Storybook show the same state as the check. Say that you did.
+
+**Before building anything in Figma**, check sync first, live if you can. If
+the library file is connected (`figma_list_open_files`), read a live snapshot
+and compare it with `figma/manifest.json`. If it is not, ask: "Open the library
+in Figma and run the Desktop Bridge plugin so I can check live, or shall we
+work from the snapshot of <date, time>?", and say what that snapshot's status
+is. Then report as above: every ✗, with what to do about it, and ask whether
+to save the new snapshot, fix it, or build anyway. Say which of the two
+(live or snapshot) the build used.
 
 **When asked to run the check**, the Figma side is only as fresh as the last
 snapshot: `npm run sync-status` cannot reach Figma. So first call
