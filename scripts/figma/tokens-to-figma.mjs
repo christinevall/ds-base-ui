@@ -19,10 +19,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const read = (p) => JSON.parse(readFileSync(join(ROOT, 'tokens', p), 'utf8'));
 
-/**
- * The family Figma uses for each font token. Sans is Inter in code too; mono is
- * a system stack in code, so Roboto Mono stands in. See figma/GAPS.md.
- */
+/** The family Figma uses for each font token: the first family the code names. */
 export const FIGMA_FONTS = { sans: 'Inter', mono: 'Roboto Mono' };
 const STYLE_BY_WEIGHT = {
   sans: { 400: 'Regular', 500: 'Medium', 600: 'Semi Bold', 700: 'Bold' },
@@ -145,7 +142,7 @@ export function buildPayload() {
   for (const t of leaves({ font: { weight: tier1.font.weight } })) add('Typography', t.path, 'FLOAT', ['FONT_WEIGHT'], { Value: Number(t.value) });
   for (const family of ['sans', 'mono']) {
     add('Typography', ['font', family], 'STRING', ['FONT_FAMILY'], { Value: FIGMA_FONTS[family] }, {
-      description: tier1.font[family].$value.startsWith(FIGMA_FONTS[family])
+      description: tier1.font[family].$value.replace(/"/g, '').startsWith(FIGMA_FONTS[family])
         ? `${FIGMA_FONTS[family]}, as in code: ${tier1.font[family].$value}.`
         : `Code value is a system font stack: ${tier1.font[family].$value}. Figma needs one real family, so ${FIGMA_FONTS[family]} stands in.`,
     });
