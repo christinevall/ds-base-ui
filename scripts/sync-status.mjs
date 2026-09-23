@@ -70,7 +70,7 @@ for (const f of findings) {
 // What "agree" means, one check per column. Each is a question validate
 // already answers; a finding moves that column to ❌ for that component.
 const CHECKS = [
-  { id: 'both', label: 'Exists in both', means: 'A Figma component exists and names this code file as its source' },
+  { id: 'both', label: 'Exists in both', means: 'A Figma component with the same name exists and names this code file as its source' },
   { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
   { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
   { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
@@ -78,7 +78,7 @@ const CHECKS = [
   { id: 'rules', label: 'Code follows the rules', means: 'Its CSS uses existing semantic tokens and whole text styles, no raw colours' },
 ];
 const checkOf = (f) => {
-  if (f.rule === 'figma-orphan') return 'both';
+  if (f.rule === 'figma-orphan' || f.rule === 'figma-unknown-name') return 'both';
   if (f.rule === 'figma-unknown-prop') return 'names';
   if (f.rule === 'figma-drift' && f.message.includes(' default ')) return 'defaults';
   if (f.rule === 'figma-drift') return 'options';

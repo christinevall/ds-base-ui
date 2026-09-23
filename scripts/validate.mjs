@@ -272,6 +272,17 @@ if (existsSync(FIGMA_MANIFEST)) {
     const src = readFileSync(c.source, 'utf8');
     const baseUi = baseUiTypes(component, src);
     const parts = new Set([...src.matchAll(/^(?:export )?function (\w+)\(/gm)].map((m) => m[1]));
+    // The name itself: what a Figma screen hands back to code. `Accordion` or
+    // `RadioGroupItem` must be exported by the source, and `.Item` must be a
+    // part of it. A renamed component (Accordion1) no longer resolves.
+    if (!c.name.startsWith('icon/')) {
+      const [base, part] = c.name.split('.');
+      if (!new RegExp(`export (?:function|const) ${base}\\b`).test(src)) {
+        report(F, 0, 'figma-unknown-name', `${c.name}: "${base}" is not a component exported by ${c.source}, so a screen using it cannot come back into code`);
+      } else if (part && !new RegExp(`\\b${part}\\b`).test(src)) {
+        report(F, 0, 'figma-unknown-name', `${c.name}: "${part}" is not a part of ${base} in ${c.source}`);
+      }
+    }
     const isProp = (p) => new RegExp(`\\b${p}\\??\\s*:`).test(src) || new RegExp(`\\b${p}\\??\\s*:`).test(baseUi);
     const capitalised = (s) => s[0].toUpperCase() + s.slice(1);
     // HTML attributes a component forwards to its element, inherited by its types
