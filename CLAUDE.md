@@ -86,6 +86,17 @@ Then look at the story in a browser. Markup that compiles and renders nothing st
 
 ## Figma
 
+**Prototyping in Figma** — "prototype / design / build a screen in Figma", a
+Storybook story into Figma, or a Figma screen back into Storybook — always
+follows the `storybook-figma-sync` skill (`.claude/skills/storybook-figma-sync/`),
+even when it is not invoked by name. In short: only instances from the Figma
+library, placed by their keys in `figma/manifest.json`; layout as named
+auto-layout frames (Stack, Cluster, Split, Columns, Grid, Page) with every gap
+bound to a space variable; the page anatomy and text-style roles in
+`docs/layout.md`; prototype connections; the four-part notes beside the flow.
+Build straight away and show the plan with the result.
+
+
 The Figma library mirrors the code; it is never the source. To add or change
 anything in it — a component, a variable, a text style — use the
 `figma-mirror` skill (`.claude/skills/figma-mirror/`). `figma/manifest.json`
