@@ -80,7 +80,7 @@ export const Scales: Story = {
             Sans, Inter. Used everywhere.
           </div>
           <div style={{ fontFamily: 'var(--sds-font-mono)', fontSize: 'var(--sds-font-size-lg)' }}>
-            Mono, for token names, code and tabular figures.
+            Mono, Roboto Mono. For token names, code and tabular figures.
           </div>
         </div>
       </Group>

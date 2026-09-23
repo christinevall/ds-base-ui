@@ -6,7 +6,8 @@
       "$type": "fontFamily"
     },
     "mono": {
-      "$value": "ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace",
+      "$value": "\"Roboto Mono\", ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace",
+      "$description": "Roboto Mono, self-hosted in src/fonts/. The system stack behind it only shows while Roboto Mono loads or if it fails.",
       "$type": "fontFamily"
     },
     "size": {

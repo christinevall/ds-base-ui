@@ -8,7 +8,6 @@ meets something it cannot express. Anything not listed is expected to match.
 
 | Code | Figma | Why |
 | --- | --- | --- |
-| Mono font family is a system stack (`ui-monospace, SFMono-Regular, …`) | `Roboto Mono` stands in | Figma needs one real family. On macOS Storybook renders SF Mono, so code samples and token names differ slightly in width. Sans is Inter in both since 2026-09-23 (`src/fonts/`); naming a real mono font in code the same way would close this too |
 | Line height is unitless (`1.2`), letter spacing is `em` | Resolved pixels (24 × 1.2 = 28.8px) in `typography/<style>/line-height` and `letter-spacing` | Figma reads a bound line-height or letter-spacing variable as pixels (tested). Renders the same, but does not follow a font-size change on its own |
 | `text-transform` is part of a text style | Case on the Figma text style | Figma has no case variable |
 | A shadow is one token, `--sds-elevation-*`, different in Light and Dark | An effect style whose colour is bound to `elevation/<level>/color` (Light/Dark) | Effect styles have no modes. The geometry is the same in both themes in code; only the alpha changes. The colour variables are Figma-only and carry no code syntax |
@@ -88,16 +87,17 @@ meets something it cannot express. Anything not listed is expected to match.
 What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
-- **2026-09-23, Inter.** Code now names Inter (`src/fonts/`), so the sans row
-  above is gone. Figma already used Inter, so no text in the library changes.
-  The description on the `font/sans` variable still says "system font stack …
-  Inter stands in"; `npm run figma:tokens` now produces the new text, but the
-  library was not updated because Figma was not connected. Run `figma-mirror`
-  on the Typography collection to refresh it.
+- **2026-09-23, Inter and Roboto Mono.** Code now names both fonts
+  (`src/fonts/`), so the font rows above are gone. Figma already used Inter and
+  Roboto Mono, so no text in the library changes. The descriptions on the
+  `font/sans` and `font/mono` variables still say "system font stack … stands
+  in"; `npm run figma:tokens` now produces the new text, but the library was
+  not updated because Figma was not connected. Run `figma-mirror` on the
+  Typography collection to refresh them.
 - **Not checked:** text widths in Storybook against Figma, component by
   component, after the switch. They should now match on any machine where
   Inter loads, but that was not measured.
-- **Fallback:** until Inter loads (`font-display: swap`), text shows in the
-  system font and can shift slightly when Inter arrives. Only Latin and Latin
+- **Fallback:** until a font loads (`font-display: swap`), text shows in the
+  system font and can shift slightly when it arrives. Only Latin and Latin
   Extended are bundled; Cyrillic, Greek and Vietnamese fall back to the system
   font.
