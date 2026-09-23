@@ -22,7 +22,7 @@ import { TextField } from '../components/TextField';
 import { Textarea } from '../components/Textarea';
 import { Toast } from '../components/Toast';
 import { BookingTopBar } from './booking/BookingTopBar';
-import { guest, included, languages, tabs, tags, times, tour } from './booking/tour';
+import { articles, guest, included, languages, tabs, tags, times, tour } from './booking/tour';
 import topBarSource from './booking/BookingTopBar.tsx?raw';
 import source from './BookingFlow.stories.tsx?raw';
 import booking from './booking/Booking.module.css';
@@ -66,7 +66,10 @@ function TourPage({ booked, onBook }: { booked: boolean; onBook: () => void }) {
         </Alert>
       ) : null}
 
+      {/* V2: the badges moved below the title and lead. */}
       <div className={booking.header}>
+        <h1 className={booking.title}>{tour.name}</h1>
+        <p className={booking.lead}>{tour.lead}</p>
         <div className={booking.cluster}>
           {tags.map((tag) => (
             <Badge key={tag.label} variant={tag.variant} size="sm">
@@ -77,8 +80,6 @@ function TourPage({ booked, onBook }: { booked: boolean; onBook: () => void }) {
             {left === 1 ? '1 spot left' : `${left} spots left`}
           </Badge>
         </div>
-        <h1 className={booking.title}>{tour.name}</h1>
-        <p className={booking.lead}>{tour.lead}</p>
       </div>
 
       <div className={booking.columns}>
@@ -148,6 +149,19 @@ function TourPage({ booked, onBook }: { booked: boolean; onBook: () => void }) {
 
           <Meter label={`${taken} of ${tour.capacity} spots taken`} value={taken} max={tour.capacity} />
         </aside>
+      </div>
+
+      {/* V2: a row of three outlined cards. Placeholder copy — see tour.ts. */}
+      <div className={booking.articles}>
+        {articles.map((article) => (
+          <Card.Root key={article.title} variant="outlined">
+            <Card.Header>
+              <Card.Title render={<h2 />}>{article.title}</Card.Title>
+              <Card.Description>{article.description}</Card.Description>
+            </Card.Header>
+            <Card.Body>{article.body}</Card.Body>
+          </Card.Root>
+        ))}
       </div>
     </>
   );
@@ -347,6 +361,8 @@ function BookingFlow({ initialStep = 'tour' }: { initialStep?: Step }) {
  * | Top bar frame | `AppShell` classes, `space-between` | **Gap** — no top bar component yet; fourth copy in the repo |
  * | Nav links in a frame | `NavigationMenu` with flat `Link`s | **Gap** — Figma’s `NavigationMenu` has no flat-link variant |
  * | Titles, lead, section heading, guide name | Plain `h1` / `h2` / `p`, each on a whole text style | **Gap** — no text component; same as every pattern |
+ * | **V2:** badges under the title and lead | Same `Badge`s, moved after the `p` | Match |
+ * | **V2:** three outlined `Card`s, 323px wide, 47px apart, outside the content column | `Card.Root variant="outlined"` ×3 in an `articles` grid | **Swap** — 47px is not a token, so `space-12` (48px); the cards share the content column's width. Copy is Card's sample text, a placeholder |
  *
  * A form cannot sit inside Figma’s `Dialog.Content` (it has no slot), so the
  * form is its own step and the dialog only confirms — kept that way here so

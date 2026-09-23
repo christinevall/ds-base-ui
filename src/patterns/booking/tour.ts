@@ -59,6 +59,17 @@ export const times = [
   { value: 'sun-10', label: 'Sun 19 October · 10:00 · sold out', disabled: true },
 ];
 
+/*
+ * Figma "1 · Tour V2": a row of three outlined cards under the columns.
+ * PLACEHOLDER: the copy is Card's sample text from the library, carried over
+ * as drawn. Replace it once the row has real content.
+ */
+export const articles = [1, 2, 3].map((n) => ({
+  title: `Article ${n}`,
+  description: 'Team members can view dashboards and comment, but cannot change billing.',
+  body: 'Seats are billed per active member. You currently have 3 of 10 seats in use.',
+}));
+
 export const languages = { en: 'English', de: 'German' };
 
 export const guest = { name: 'Alex Morgan', email: 'alex@example.com', people: 2 };

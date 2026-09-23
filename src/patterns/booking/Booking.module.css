@@ -117,6 +117,17 @@
   color: var(--sds-color-content-muted);
 }
 
+/*
+ * Figma "1 · Tour V2" › "Frame 1": three cards in a row. Figma draws them at a
+ * fixed 323px with a 47px gap, outside the content column; here they share the
+ * content column's width and the gap is the nearest token, space-12 (48px).
+ */
+.articles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sds-space-12);
+}
+
 /* Figma "Actions": Back and Continue. */
 .actions {
   display: flex;
