@@ -49,16 +49,41 @@ for (const f of findings) {
   else systemWide.push(f);
 }
 
+// What "agree" means, one check per column. Each is a question validate
+// already answers; a finding moves that column to ❌ for that component.
+const CHECKS = [
+  { id: 'both', label: 'In both', means: 'A Figma component exists and names this code file as its source' },
+  { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
+  { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
+  { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
+  { id: 'keys', label: 'Figma key', means: 'The Figma manifest has the key needed to place it in another file' },
+  { id: 'rules', label: 'Code follows the rules', means: 'Its CSS uses existing semantic tokens and whole text styles, no raw colours' },
+];
+const checkOf = (f) => {
+  if (f.rule === 'figma-orphan') return 'both';
+  if (f.rule === 'figma-unknown-prop') return 'names';
+  if (f.rule === 'figma-drift' && f.message.includes(' default ')) return 'defaults';
+  if (f.rule === 'figma-drift') return 'options';
+  if (f.rule === 'figma-keys') return 'keys';
+  return 'rules';
+};
+
 const components = readdirSync('src/components').filter((d) => statSync(`src/components/${d}`).isDirectory()).sort();
 const rows = components.map((name) => {
   const items = figmaItems.filter((c) => folderOf(c.source) === name);
   const figmaProps = [...new Set(items.flatMap((c) => c.props.filter((p) => p.type === 'VARIANT').map((p) => p.name)))];
   const doc = sb.find((d) => d.path?.startsWith(`./src/components/${name}/`))?.reactDocgen?.props ?? {};
   const codeProps = Object.keys(doc);
-  const keyed = items.length > 0 && items.every((c) => fm.keys?.components?.[c.name]?.key);
   const issues = byComponent[name] ?? [];
-  const status = NOT_MIRRORED[name] && !items.length ? 'not mirrored' : !items.length ? 'missing in Figma' : issues.length ? 'drift' : 'match';
-  return { name, items, figmaProps, codeProps, keyed, issues, status };
+  const notMirrored = NOT_MIRRORED[name] && !items.length;
+  const checks = Object.fromEntries(CHECKS.map(({ id }) => {
+    if (notMirrored) return [id, id === 'rules' ? !issues.length : null];
+    if (!items.length) return [id, id === 'rules' ? !issues.some((f) => checkOf(f) === 'rules') : false];
+    if (id === 'keys' && !items.every((c) => fm.keys?.components?.[c.name]?.key)) return [id, false];
+    return [id, !issues.some((f) => checkOf(f) === id)];
+  }));
+  const status = notMirrored ? 'not mirrored' : !items.length ? 'missing in Figma' : issues.length ? 'drift' : 'match';
+  return { name, figma: items.filter((c) => !c.name.startsWith('icon/')).map((c) => c.name), figmaProps, codeProps, checks, issues: issues.map((f) => ({ check: checkOf(f), message: f.message, rule: f.rule })), status, why: notMirrored ? NOT_MIRRORED[name] : null };
 });
 
 const count = (s) => rows.filter((r) => r.status === s).length;
@@ -74,8 +99,7 @@ const summary = [
 ].filter(Boolean);
 
 if (!SUMMARY_ONLY) {
-  const icon = { match: '✅', drift: '❌', 'missing in Figma': '❌', 'not mirrored': '➖' };
-  const cell = (list) => (list.length ? list.map((p) => `\`${p}\``).join(' ') : '–');
+  const mark = (v) => (v === null ? '➖' : v ? '✅' : '❌');
   const md = [
     '# Contract overview',
     '',
@@ -89,24 +113,34 @@ if (!SUMMARY_ONLY) {
     '',
     `**${count('match')} match · ${drift.length} need attention · ${count('not mirrored')} not mirrored by decision**`,
     '',
-    '| | Component | In Figma (icons left out) | Variant options in Figma | Props in code (main part, from Storybook) | Keys |',
-    '| --- | --- | --- | --- | --- | --- |',
-    ...rows.map((r) => `| ${icon[r.status]} | **${r.name}** | ${r.items.length ? r.items.filter((c) => !c.name.startsWith('icon/')).map((c) => c.name).join(', ') : NOT_MIRRORED[r.name] ?? '–'} | ${cell(r.figmaProps)} | ${cell(r.codeProps)} | ${r.items.length ? (r.keyed ? '✅' : '❌') : '–'} |`),
+    '**How to read it:** every column is one thing code and Figma must agree on. ✅ they agree · ❌ they do not, the reason is under *Needs attention* · ➖ not mirrored to Figma, by decision.',
+    '',
+    ...CHECKS.map((c) => `- **${c.label}:** ${c.means}.`),
+    '',
+    `| Component | ${CHECKS.map((c) => c.label).join(' | ')} | In Figma |`,
+    `| --- | ${CHECKS.map(() => ':---:').join(' | ')} | --- |`,
+    ...rows.map((r) => `| **${r.name}** | ${CHECKS.map((c) => mark(r.checks[c.id])).join(' | ')} | ${r.figma.length ? r.figma.join(', ') : r.why ?? '–'} |`),
     '',
     '## Needs attention',
     '',
-    ...(drift.length ? drift.flatMap((r) => [`**${r.name}**`, ...(r.issues.length ? r.issues.map((f) => `- ${f.message} (\`${f.rule}\`)`) : ['- No Figma component yet.']), '']) : ['Nothing. Code and Figma agree.', '']),
+    ...(drift.length ? drift.flatMap((r) => [`**${r.name}**`, ...(r.issues.length ? r.issues.map((f) => `- ${CHECKS.find((c) => c.id === f.check).label}: ${f.message} (\`${f.rule}\`)`) : ['- No Figma component yet.']), '']) : ['Nothing. Code and Figma agree.', '']),
     '## System-wide',
     '',
     ...(systemWide.length ? systemWide.map((f) => `- ${f.message} (\`${f.rule}\`, ${f.file})`) : ['No findings outside single components.']),
     '',
     '## What this page does not check',
     '',
-    '- **Values.** Names, props, options, defaults and keys are compared; paddings, colours and sizes are not. A value that drifts (the Accordion panel padding, 2026-09-23) is found by the `figma-mirror` audit or by comparing screenshots.',
+    '- **The look.** Names, props, options, defaults and keys are compared: the API. Auto layout, paddings, colours and radii inside a Figma component are not, so changing them does not turn anything red. The `figma-mirror` audit checks that they are bound to *a* variable (not the right one), and comparing screenshots finds the rest (the Accordion panel padding, 2026-09-23).',
     '- **The live Figma file.** Only its last snapshot.',
     '- **Known differences.** Where Figma cannot match the code on purpose, `figma/GAPS.md` explains why.',
     '',
   ].join('\n');
   writeFileSync('docs/contract.md', md);
+  // The same, as data, for the Contract page in Storybook (src/Contract.mdx).
+  writeFileSync('docs/contract.json', JSON.stringify({
+    snapshotDate, findings: findings.length, checks: CHECKS, rows,
+    systemWide: systemWide.map((f) => ({ message: f.message, rule: f.rule, file: f.file })),
+    tokens: { variables: tokenCount, textStyles: fm?.textStyles.length ?? 0, effectStyles: fm?.effectStyles.length ?? 0 },
+  }, null, 2) + '\n');
 }
 console.log(summary.join('\n'));

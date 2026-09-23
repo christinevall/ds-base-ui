@@ -10,50 +10,59 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 
 **39 match · 0 need attention · 3 not mirrored by decision**
 
-| | Component | In Figma (icons left out) | Variant options in Figma | Props in code (main part, from Storybook) | Keys |
-| --- | --- | --- | --- | --- | --- |
-| ✅ | **Accordion** | Accordion, Accordion.Item | `open` `disabled` | `className` | ✅ |
-| ✅ | **Alert** | Alert | `variant` | `variant` `title` `onDismiss` `dismissLabel` | ✅ |
-| ✅ | **AlertDialog** | AlertDialog.Content | – | `title` `description` | ✅ |
-| ✅ | **Autocomplete** | Autocomplete, Autocomplete.Content, Autocomplete.Control, Autocomplete.Item | `filled` `open` `disabled` `highlighted` | `items` `label` `description` `placeholder` `className` `children` `empty` `controlProps` `contentProps` | ✅ |
-| ✅ | **Avatar** | Avatar | `size` | `src` `alt` `fallback` `size` `fallbackDelay` `className` | ✅ |
-| ✅ | **Badge** | Badge | `variant` `size` | `variant` `size` | ✅ |
-| ✅ | **Breadcrumb** | Breadcrumb, Breadcrumb.Current, Breadcrumb.Link, Breadcrumb.Separator | – | `aria-label` `listProps` | ✅ |
-| ✅ | **Button** | Button | `variant` `size` `disabled` | `variant` `size` `fullWidth` `render` | ✅ |
-| ✅ | **Card** | Card | `variant` | `variant` | ✅ |
-| ✅ | **Checkbox** | Checkbox | `checked` `indeterminate` `disabled` | `label` `description` `className` | ✅ |
-| ✅ | **CheckboxGroup** | CheckboxGroup | `orientation` | `label` `description` `orientation` `name` `className` | ✅ |
-| ✅ | **Collapsible** | Collapsible, Collapsible.Trigger | `open` `disabled` | `className` | ✅ |
-| ✅ | **Combobox** | Combobox, Combobox.Content, Combobox.Control, Combobox.Item | `filled` `open` `disabled` `highlighted` `selected` | `label` `description` `placeholder` `className` `children` `empty` `controlProps` `contentProps` | ✅ |
-| ➖ | **ContextMenu** | the same popup as Menu | – | `side` `align` `sideOffset` `positionerClassName` | – |
-| ✅ | **Dialog** | Dialog.Content | – | `title` `description` | ✅ |
-| ✅ | **Fieldset** | Fieldset | `disabled` | – | ✅ |
-| ➖ | **Form** | no visuals of its own | – | `errors` `validationMode` `onFormSubmit` | – |
-| ✅ | **IconButton** | IconButton | `variant` `size` `disabled` | `label` `variant` `size` `render` | ✅ |
-| ✅ | **Menu** | Menu.Content, Menu.GroupLabel, Menu.Item, Menu.Separator, Menu.SubmenuTrigger | `highlighted` `disabled` `open` | `side` `align` `sideOffset` `positionerClassName` | ✅ |
-| ✅ | **Menubar** | Menubar, Menubar.Trigger | `orientation` `open` `disabled` | – | ✅ |
-| ✅ | **Meter** | Meter | `variant` `size` | `label` `showValue` `size` `variant` `className` | ✅ |
-| ✅ | **NavigationMenu** | NavigationMenu, NavigationMenu.Link, NavigationMenu.Trigger | `active` | – | ✅ |
-| ✅ | **NumberField** | NumberField | `disabled` | `label` `description` `className` | ✅ |
-| ✅ | **Popover** | Popover.Content | `side` | `title` `description` `side` `align` `sideOffset` | ✅ |
-| ✅ | **PreviewCard** | PreviewCard.Content | `side` | `side` `align` `sideOffset` | ✅ |
-| ✅ | **Progress** | Progress | `size` `status` | `label` `showValue` `size` `className` | ✅ |
-| ✅ | **RadioGroup** | RadioGroup, RadioGroupItem | `orientation` `checked` `disabled` | `label` `description` `orientation` `className` | ✅ |
-| ➖ | **ScrollArea** | behaviour, not something you draw | – | `className` `orientation` `viewportClassName` | – |
-| ✅ | **Select** | Select, Select.Content, Select.GroupLabel, Select.Item, Select.Trigger | `highlighted` `selected` `disabled` `placeholder` `open` | `label` `description` `placeholder` `className` `children` `contentProps` | ✅ |
-| ✅ | **Separator** | Separator | `orientation` | `className` `orientation` | ✅ |
-| ✅ | **Slider** | Slider | `orientation` `disabled` | `label` `description` `showValue` `className` | ✅ |
-| ✅ | **Spinner** | Spinner | `size` | `size` `aria-label` | ✅ |
-| ✅ | **Switch** | Switch | `checked` `disabled` | `label` `description` | ✅ |
-| ✅ | **Table** | Table, Table.Cell, Table.HeaderCell | `striped` `hideCaption` `numeric` `scope` | `caption` `hideCaption` `striped` `containerProps` | ✅ |
-| ✅ | **Tabs** | Tabs, Tabs.Tab | `orientation` `active` `disabled` | – | ✅ |
-| ✅ | **TextField** | TextField | `filled` `disabled` | `label` `description` `name` | ✅ |
-| ✅ | **Textarea** | Textarea | `filled` `disabled` | `label` `description` `name` `rows` `resize` `className` | ✅ |
-| ✅ | **Toast** | Toast.Root | `type` | – | ✅ |
-| ✅ | **Toggle** | Toggle | `variant` `size` `pressed` `disabled` `iconOnly` | `variant` `size` `iconOnly` `className` | ✅ |
-| ✅ | **ToggleGroup** | ToggleGroup | `segmented` `orientation` `disabled` | `segmented` `className` | ✅ |
-| ✅ | **Toolbar** | Toolbar, Toolbar.Button, Toolbar.Input, Toolbar.Link, Toolbar.Separator | `orientation` `disabled` | – | ✅ |
-| ✅ | **Tooltip** | Tooltip.Content | `side` | `side` `align` `sideOffset` | ✅ |
+**How to read it:** every column is one thing code and Figma must agree on. ✅ they agree · ❌ they do not, the reason is under *Needs attention* · ➖ not mirrored to Figma, by decision.
+
+- **In both:** A Figma component exists and names this code file as its source.
+- **Same property names:** Every Figma property is a real prop, part or text of the code component.
+- **Same options:** Every variant option in Figma is an allowed value in code.
+- **Same defaults:** The default Figma variant uses the code defaults.
+- **Figma key:** The Figma manifest has the key needed to place it in another file.
+- **Code follows the rules:** Its CSS uses existing semantic tokens and whole text styles, no raw colours.
+
+| Component | In both | Same property names | Same options | Same defaults | Figma key | Code follows the rules | In Figma |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: | --- |
+| **Accordion** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Accordion, Accordion.Item |
+| **Alert** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Alert |
+| **AlertDialog** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | AlertDialog.Content |
+| **Autocomplete** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Autocomplete, Autocomplete.Content, Autocomplete.Control, Autocomplete.Item |
+| **Avatar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Avatar |
+| **Badge** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Badge |
+| **Breadcrumb** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Breadcrumb, Breadcrumb.Current, Breadcrumb.Link, Breadcrumb.Separator |
+| **Button** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Button |
+| **Card** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Card |
+| **Checkbox** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Checkbox |
+| **CheckboxGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | CheckboxGroup |
+| **Collapsible** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Collapsible, Collapsible.Trigger |
+| **Combobox** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Combobox, Combobox.Content, Combobox.Control, Combobox.Item |
+| **ContextMenu** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | the same popup as Menu |
+| **Dialog** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Dialog.Content |
+| **Fieldset** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Fieldset |
+| **Form** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | no visuals of its own |
+| **IconButton** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | IconButton |
+| **Menu** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Menu.Content, Menu.GroupLabel, Menu.Item, Menu.Separator, Menu.SubmenuTrigger |
+| **Menubar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Menubar, Menubar.Trigger |
+| **Meter** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Meter |
+| **NavigationMenu** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | NavigationMenu, NavigationMenu.Link, NavigationMenu.Trigger |
+| **NumberField** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | NumberField |
+| **Popover** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Popover.Content |
+| **PreviewCard** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | PreviewCard.Content |
+| **Progress** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Progress |
+| **RadioGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | RadioGroup, RadioGroupItem |
+| **ScrollArea** | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ | behaviour, not something you draw |
+| **Select** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Select, Select.Content, Select.GroupLabel, Select.Item, Select.Trigger |
+| **Separator** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Separator |
+| **Slider** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Slider |
+| **Spinner** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Spinner |
+| **Switch** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Switch |
+| **Table** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Table, Table.Cell, Table.HeaderCell |
+| **Tabs** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Tabs, Tabs.Tab |
+| **TextField** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | TextField |
+| **Textarea** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Textarea |
+| **Toast** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toast.Root |
+| **Toggle** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toggle |
+| **ToggleGroup** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ToggleGroup |
+| **Toolbar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toolbar, Toolbar.Button, Toolbar.Input, Toolbar.Link, Toolbar.Separator |
+| **Tooltip** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Tooltip.Content |
 
 ## Needs attention
 
@@ -65,6 +74,6 @@ No findings outside single components.
 
 ## What this page does not check
 
-- **Values.** Names, props, options, defaults and keys are compared; paddings, colours and sizes are not. A value that drifts (the Accordion panel padding, 2026-09-23) is found by the `figma-mirror` audit or by comparing screenshots.
+- **The look.** Names, props, options, defaults and keys are compared: the API. Auto layout, paddings, colours and radii inside a Figma component are not, so changing them does not turn anything red. The `figma-mirror` audit checks that they are bound to *a* variable (not the right one), and comparing screenshots finds the rest (the Accordion panel padding, 2026-09-23).
 - **The live Figma file.** Only its last snapshot.
 - **Known differences.** Where Figma cannot match the code on purpose, `figma/GAPS.md` explains why.

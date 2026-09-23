@@ -96,7 +96,7 @@ so it cannot go stale without a check noticing.
 | --- | --- | --- | --- |
 | **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
 | **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `contract`, Claude when building in Figma |
-| **Contract overview** · [`docs/contract.md`](docs/contract.md) | The two above **side by side**, one row per component, with ✅ / ❌ | `npm run contract` | You. Claude reads it out at the start of every session |
+| **Contract overview** · in Storybook under *Contract* · [`docs/contract.md`](docs/contract.md) | The two above **side by side**: one row per component, one column per check (in both, same property names, same options, same defaults, Figma key, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
 | **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
 
 ### The checks
@@ -147,7 +147,7 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 ### A five-minute demo
 
 1. `npm run storybook`: the system, live.
-2. Open [`docs/contract.md`](docs/contract.md): every component, code and Figma side by side.
+2. Open *Contract* in the Storybook sidebar: every component, code and Figma side by side, one column per check.
 3. Start a Claude session: its first line is the same check, unprompted.
 4. Open the [Figma manifest](figma/manifest.json) and search for `"keys"`: the handles that let Claude place real library components in any file.
 5. Ask Claude to put a Storybook prototype into Figma (or back): the screens come out as library instances, with a notes frame listing what is real, what was built by hand and what is missing.
@@ -248,7 +248,7 @@ docs/
   architecture.md      why the repo is shaped this way
   conventions.md       how to add a component
   branching.md         the Gitflow variant, including the design branch
-  contract.md          GENERATED — code and Figma side by side
+  contract.md          GENERATED — code and Figma side by side (contract.json feeds the Storybook page)
 ```
 
 ## Going further
