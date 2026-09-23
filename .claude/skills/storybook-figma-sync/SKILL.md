@@ -74,8 +74,9 @@ components in someone else's file.
 3. **Build one screen per call**, 1280 wide unless the story says otherwise:
    - instances by key, options and texts set by their code names (`props`),
      exposed nested instances set too (Card's buttons, Fieldset's fields);
-   - layout from the pattern CSS as vocabulary frames (`layout('Stack',
-     'space/6')`), every gap and padding bound;
+   - layout from the pattern CSS, or from `docs/layout.md` → Page anatomy,
+     as vocabulary frames (`layout('Stack', 'space/6')`), every gap and
+     padding bound;
    - text only with whole library text styles; colours only with variables.
 4. **Never detach, never resize a layer inside an instance.** If an instance
    cannot show what the story shows (the Meter bar is not a property), leave
@@ -100,15 +101,28 @@ When the user describes a screen instead of pointing to a story ("build a
 checkout in Figma"), the source is the brief. The rules are the same as
 above; only steps 1–2 change.
 
-1. **Compose from what exists.** Read the brief, then pick components from
-   the code manifest by what they are for, and a pattern from `src/patterns/`
-   if one fits (compose downward, as CLAUDE.md says). Neutral demo content:
-   fictional names, `example.com` emails.
+1. **Build it the way the code builds pages.** A brief says *what*; the
+   codebase says *how*. Before planning, read:
+   - `docs/layout.md` → **Page anatomy**: the shell, the width, the gaps
+     between sections, the page header, columns, forms, overlays, and which
+     text style is for what;
+   - `src/patterns/`: if a pattern already does what the brief asks (a
+     settings page, a sign-up form, a data table), start from it — compose
+     downward, as CLAUDE.md says;
+   - the code manifest: pick components by what they are for, with their
+     real props and defaults;
+   - CLAUDE.md's rules: semantic tokens, whole text styles, wrap, don't
+     rebuild.
+   Neutral demo content: fictional names, `example.com` emails.
 2. **Show the plan before building**: one screen per step of the flow, and for
-   each the layout words and the components with their options, e.g.
-   `Page › Columns · space/8 › Stack: Card (elevated), Button (primary)`.
-   Anything the brief needs that no component covers is a `GAP:` frame, named
-   in the plan. Wait for a yes.
+   each the anatomy with layout words, components with their options, and
+   text styles, e.g.
+   `Page › Page header (heading-xl, body-md) › Columns · space/8 › Stack: Card
+   (elevated), Button (primary)`.
+   Say which pattern or anatomy rule each part follows. Anything the brief
+   needs that no component covers is a `GAP:` frame, named in the plan; a
+   spacing or style the anatomy does not cover is a question, not a guess.
+   Wait for a yes.
 3. Build, connect, annotate, verify and add the notes exactly as in
    *Storybook → Figma* steps 3–9. The notes start with "Source: a brief".
 4. Offer the way back: the screens can come into Storybook with

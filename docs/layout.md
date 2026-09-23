@@ -29,6 +29,74 @@ all ("Frame 1"). This page gives both sides the same six words.
 Every gap and padding is a space token (`space/2`, `space/4`, …). A layout never
 has a number of its own: 47px is not a word in this vocabulary, `space/12` is.
 
+## Page anatomy: how this codebase builds a screen
+
+The words say *how* things are arranged; this says *which* arrangement a page
+uses, with which gaps and text styles. It is read from the code
+(`Patterns.module.css`'s app shell and the booking flow, the newest and
+cleanest source) so a screen designed in Figma by these rules comes back into
+code unchanged. Where the code disagrees with itself, it is listed at the end.
+
+```
+Page
+├─ Top bar ········· Split · padding space/3 × space/6 · surface, bottom border   GAP: no component
+│   ├─ wordmark (heading-md)
+│   └─ Cluster · space/2: NavigationMenu.Link …, Avatar sm
+└─ main ············ padding space/8 × space/6, content centred, max 1024px
+    └─ Stack · space/6 ··· the page's sections, top to bottom
+        ├─ Breadcrumb (if the page sits in a hierarchy)
+        ├─ Page header ···· Stack · space/2
+        │   ├─ title (heading-xl, content/default) · one per screen
+        │   ├─ lead (body-md, content/muted)
+        │   └─ Cluster · space/2: Badge sm … (optional)
+        ├─ Columns · space/8 ··· main (Fill) + aside (320px), if there is a side panel
+        │   ├─ Stack · space/6: sections
+        │   └─ Stack · space/4: Card, Meter, Alert …
+        └─ Section ········ Stack · space/4: title (heading-lg), then its content
+```
+
+| Part | Rule | From |
+| --- | --- | --- |
+| Screen width in Figma | 1280px; content max 1024px, centred | `.main`, `.mainInner` |
+| Between sections | `space/6` | `.mainInner`, booking `.column` |
+| Page header | title `heading-xl`, lead `body-md` muted, `space/2` apart | booking `.header` |
+| Section | title `heading-lg`, content `space/4` below | `.sectionTitle`, `.stack` |
+| Side panel | 320px, `space/8` from the main column | booking `.columns` |
+| Forms | the `Form` component: fields `space/4` apart; related fields in a `Fieldset`; two short fields side by side in a Grid (`space/4`, each at least 240px); `FormActions` last, right-aligned, secondary before primary | `Form`, `.fieldGrid` |
+| Cards | a Card owns its insides; cards side by side in a Grid | `Card` |
+| Overlays | Dialog centred over a backdrop (`color/background/overlay`); Toast bottom-right, `space/4` from the edges | `Dialog`, `Toast` |
+
+### Which text style for what
+
+Every text is one whole style from `tokens/tier-2-usage/text-style.json`, never
+a size set by hand. The file says what each is for:
+
+| Style | For |
+| --- | --- |
+| `heading-xl` | The page title. One per screen |
+| `heading-lg` | Section headings, and card titles that head a section |
+| `heading-md` | Sub-section headings inside a section |
+| `title-md` · `title-sm` | Titles of overlays (popover, toast) · titles in compact surfaces (alert) |
+| `body-md` · `body-sm` | Default reading text · secondary text: descriptions, table cells |
+| `label-xl` … `label-sm` | Control labels, from large buttons to badges |
+| `caption` | Hints, helper text and errors under fields |
+| `overline` · `code-sm` | Group labels in menus · inline code |
+
+Colour of text: `content/default`, or `content/muted` for secondary text.
+Content is neutral demo content: fictional names, `example.com` emails.
+
+### Where the code disagrees with itself (open)
+
+- **Page width:** `.page` (settings, sign-up) is 62rem (992px); `.mainInner`
+  (app shell, booking) is 64rem (1024px). This page uses 1024px.
+- **Pattern titles:** `.pageTitle`, `.pageLead` and `.sectionTitle` in
+  `Patterns.module.css` set size and weight by hand instead of a whole text
+  style, which CLAUDE.md does not allow; `validate` only checks components, so
+  it never flagged them. The booking flow uses whole styles; this page follows
+  it.
+- **Cards in a row:** no rule for the gap yet (the booking flow's article row
+  took `space/12` from a Figma frame).
+
 ## In Figma
 
 A layout is an **auto-layout frame named after its word and its gap**:
