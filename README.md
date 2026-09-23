@@ -19,7 +19,7 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | Understand how it is built, no code knowledge needed | [In plain words](#in-plain-words), then [the stack](#the-stack-tool-by-tool) |
 | Try the workflow with AI | [How I use this playground](#how-i-use-this-playground) |
 | Run it on your computer | [Run it on your computer](#run-it-on-your-computer) |
-| Check that Figma and the code still match, component by component | *Contract* in Storybook, or [`docs/contract.md`](docs/contract.md) (`npm run contract` updates both) |
+| Check that Figma and the code are still in sync, component by component | *Sync status* in Storybook, or [`docs/sync-status.md`](docs/sync-status.md) (`npm run sync-status` updates both) |
 | See every manifest, check, command, skill and MCP, or demo them | [The toolkit](#the-toolkit-lists-checks-commands-skills) |
 | Know where Figma and the code differ on purpose | [`figma/GAPS.md`](figma/GAPS.md) |
 
@@ -77,7 +77,7 @@ tokens/*.json ──npm run build:tokens──►  CSS variables ──►  Reac
 ```
 
 - **Names match on purpose.** `color/background/accent` in Figma is `--sds-color-background-accent` in CSS, and a Figma layer `Button · variant=primary` resolves to `<Button variant="primary">` through `figma/manifest.json`.
-- **One page shows the whole contract.** *Contract* in Storybook (and [`docs/contract.md`](docs/contract.md)) lists every component with one column per check: in both, same property names, same options, same defaults, Figma key, code follows the rules. It checks names, not the look. `npm run contract` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
+- **One page shows whether code and Figma are in sync.** *Sync status* in Storybook (and [`docs/sync-status.md`](docs/sync-status.md)) lists every component with one column per check: in both, same property names, same options, same defaults, Figma key, code follows the rules. It checks names, not the look. `npm run sync-status` regenerates it, and Claude runs the same check at the start of every session and tells you the result.
 - **The key map.** `figma/manifest.json` also stores each Figma item's key, the handle an AI needs to place a library component in another file. With it, building a screen in Figma is a lookup instead of a search through the whole library.
 - **Where Figma cannot express the CSS**, it is written down in [`figma/GAPS.md`](figma/GAPS.md) instead of simplifying the CSS.
 - **Code Connect** is not set up: it needs an Organization or Enterprise plan.
@@ -95,8 +95,8 @@ so it cannot go stale without a check noticing.
 | File | What it lists | Written by | Read by |
 | --- | --- | --- | --- |
 | **Storybook manifest** · [live](https://christinevall.github.io/ds-base-ui/manifests/components.json) · `storybook-static/manifests/components.json` | Every component **in code**: its props, their allowed values, defaults and stories | `npm run build-storybook` | Claude, through the Storybook MCP; `validate` |
-| **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `contract`, Claude when building in Figma |
-| **Contract overview** · in Storybook under *Contract* · [`docs/contract.md`](docs/contract.md) | The two above **side by side**: one row per component, one column per check (in both, same property names, same options, same defaults, Figma key, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
+| **Figma manifest** · [`figma/manifest.json`](figma/manifest.json) | Everything **in the Figma library**: components and their options, variables, text styles, plus the **key map** (the handle an AI needs to place each item in another file) | `scripts/figma/snapshot.figma.js`, run in Figma through the Figma Console MCP | `validate`, `sync-status`, Claude when building in Figma |
+| **Sync status** · in Storybook under *Sync status* · [`docs/sync-status.md`](docs/sync-status.md) | The two above **side by side**: one row per component, one column per check (in both, same property names, same options, same defaults, Figma key, code follows the rules). It checks the names, not the look: a changed padding or auto layout in Figma does not show here | `npm run contract` | You. Claude reads it out at the start of every session |
 | **Known differences** · [`figma/GAPS.md`](figma/GAPS.md) | Where Figma cannot match the code **on purpose**, and why | People and Claude, by hand | Anyone wondering "is this a bug or a decision?" |
 
 ### The checks
@@ -104,10 +104,10 @@ so it cannot go stale without a check noticing.
 | Check | Answers | Run it |
 | --- | --- | --- |
 | **validate** | Does every token exist? Does any component skip the semantic layer, hard-code a colour or invent a text style? Do Figma's names, options, defaults and keys match the code? | `npm run validate` (warns) · `npm run validate -- --strict` (fails, for CI) |
-| **contract** | The same, laid out per component on one page | `npm run contract` · `npm run contract -- --summary` (the one-line version) |
+| **sync-status** | The same, laid out per component on one page | `npm run sync-status` · `npm run sync-status -- --summary` (the one-line version) |
 | **audit** | Inside a Figma component: is every colour, padding, gap and radius bound to a variable? | Ask Claude to run `scripts/figma/audit.figma.js` on a component (needs Figma open) |
 | **contrast** | Do the colour pairs pass WCAG contrast? | `npm run check:contrast` |
-| **Session check** | Runs `contract -- --summary` automatically when a Claude session opens, so the first reply says whether code and Figma still match | Nothing to do: [`.claude/settings.json`](.claude/settings.json) |
+| **Session check** | Runs `sync-status -- --summary` automatically when a Claude session opens, so the first reply says whether code and Figma still match | Nothing to do: [`.claude/settings.json`](.claude/settings.json) |
 
 What the checks do **not** see: values inside Figma components (a padding that drifts is found by the audit or by comparing screenshots), and the live Figma file (only its last snapshot, whose date the contract page shows).
 
@@ -119,7 +119,7 @@ What the checks do **not** see: values inside Figma components (a padding that d
 | `npm run build-storybook` | Builds the static Storybook and regenerates the Storybook manifest |
 | `npm run build:tokens` | `tokens/*.json` → the generated CSS. Run after editing a token |
 | `npm run validate` | The rules check above |
-| `npm run contract` | Rewrites [`docs/contract.md`](docs/contract.md) and prints the summary |
+| `npm run sync-status` | Rewrites [`docs/sync-status.md`](docs/sync-status.md) and the Storybook page, and prints the summary |
 | `npm run check:contrast` | The contrast check |
 | `npm run figma:tokens` | What the Figma variables and text styles should be, from the tokens (the `figma-mirror` skill compares it with the live file) |
 | `npm run figma:spec -- <Name>` | A component's CSS turned into a Figma build spec: bindings, text styles, gaps to decide |
@@ -147,7 +147,7 @@ A skill is a written procedure Claude follows for one kind of job. Call it by na
 ### A five-minute demo
 
 1. `npm run storybook`: the system, live.
-2. Open *Contract* in the Storybook sidebar: every component, code and Figma side by side, one column per check.
+2. Open *Sync status* in the Storybook sidebar: every component, code and Figma side by side, one column per check.
 3. Start a Claude session: its first line is the same check, unprompted.
 4. Open the [Figma manifest](figma/manifest.json) and search for `"keys"`: the handles that let Claude place real library components in any file.
 5. Ask Claude to put a Storybook prototype into Figma (or back): the screens come out as library instances, with a notes frame listing what is real, what was built by hand and what is missing.
@@ -224,14 +224,14 @@ tokens/                SOURCE OF TRUTH for design decisions (DTCG JSON)
 scripts/
   build-tokens.mjs     Style Dictionary build: tokens/ -> src/tokens/
   validate.mjs         the rules check (npm run validate)
-  contract.mjs         writes docs/contract.md (npm run contract)
+  sync-status.mjs      writes docs/sync-status.md (npm run sync-status)
   figma/               snapshot, audit, token and spec scripts for the Figma side
 figma/
   manifest.json        what the Figma library contains, plus the key map
   GAPS.md              where Figma cannot match the code, and why
 .claude/
   skills/              figma-mirror, ds-inspection
-  settings.json        the session-start contract check
+  settings.json        the session-start sync check
 .mcp.json              the Storybook MCP for Claude Code
 src/
   tokens/              GENERATED — do not edit
@@ -248,7 +248,7 @@ docs/
   architecture.md      why the repo is shaped this way
   conventions.md       how to add a component
   branching.md         the Gitflow variant, including the design branch
-  contract.md          GENERATED — code and Figma side by side (contract.json feeds the Storybook page)
+  sync-status.md       GENERATED — code and Figma side by side (sync-status.json feeds the Storybook page)
 ```
 
 ## Going further

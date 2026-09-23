@@ -93,9 +93,9 @@ records what the library contains and `npm run validate` checks it against the
 tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
 
-**At the start of a session** a hook runs `npm run contract -- --summary` and
+**At the start of a session** a hook runs `npm run sync-status -- --summary` and
 its output is in your context. Open your first reply with it in one line, or
-say it did not run. The full table is `docs/contract.md`.
+say it did not run. The full table is `docs/sync-status.md`, or *Sync status* in Storybook.
 
 **To place a library item in another Figma file**, take its key from
 `figma/manifest.json` → `keys` (components with their variants, text styles,

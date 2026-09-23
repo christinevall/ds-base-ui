@@ -18,7 +18,7 @@
     "figma:tokens": "node scripts/figma/tokens-to-figma.mjs",
     "figma:spec": "node scripts/figma/css-to-spec.mjs",
     "check:contrast": "node ds-inspection/checks/contrast-pairs.mjs",
-    "contract": "node scripts/contract.mjs"
+    "sync-status": "node scripts/sync-status.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

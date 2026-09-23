@@ -324,7 +324,7 @@ if (existsSync(FIGMA_MANIFEST)) {
 }
 
 // ------------------------------------------------------------------- report
-// --json: the findings as data, for scripts/contract.mjs. Never fails.
+// --json: the findings as data, for scripts/sync-status.mjs. Never fails.
 if (process.argv.includes('--json')) {
   console.log(JSON.stringify(findings));
   process.exit(0);

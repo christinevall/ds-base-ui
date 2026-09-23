@@ -1,13 +1,13 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { ContractIssues, ContractSummary, ContractTable } from './contract/ContractTable';
+import { SyncIssues, SyncSummary, SyncTable } from './sync-status/SyncStatusTable';
 
-<Meta title="Contract" />
+<Meta title="Sync status" />
 
-# Contract: code and Figma, side by side
+# Sync status: code and Figma, side by side
 
 Every component exists twice: here in code, and in the Figma library. This page shows whether the two still agree. **Code is the source**: when they disagree, Figma is updated (with the `figma-mirror` skill), never the code.
 
-<ContractSummary />
+<SyncSummary />
 
 ## How to read it
 
@@ -20,13 +20,13 @@ Every column is one thing code and Figma must agree on.
 - **Figma key \*:** the handle an AI needs to place this component in another Figma file is recorded.
 - **Code follows the rules:** the component's CSS uses real semantic tokens and whole text styles, and no raw colours.
 
-<ContractTable />
+<SyncTable />
 
 \* **Why the Figma key matters.** A name says *which* component to use; Figma only places a library component by its key. With every key saved in `figma/manifest.json`, Claude builds a Figma screen by looking keys up instead of searching the whole library. On the booking flow (2026-09-23) the search alone was about 59,000 characters, more than building all four screens (about 25,000). With the key map, the whole job is roughly a third. And because the screen is made of library instances, not drawn copies, it stays linked to the system and cannot drift.
 
 ## Needs attention
 
-<ContractIssues />
+<SyncIssues />
 
 ## What it checks, and what it does not
 
@@ -48,7 +48,7 @@ Two other things catch that:
 ## Update it
 
 ```bash
-npm run contract
+npm run sync-status
 ```
 
-It rewrites this page's data and `docs/contract.md`. Claude runs the same check at the start of every session and says the result in its first line.
+It rewrites this page's data and `docs/sync-status.md`. Claude runs the same check at the start of every session and says the result in its first line.
