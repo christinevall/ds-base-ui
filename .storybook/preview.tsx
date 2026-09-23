@@ -66,6 +66,8 @@ const preview: Preview = {
           'Sync status',
           'Toolkit',
           'Layout',
+          'Figma only',
+          'Gaps',
           'Foundations',
           ['Colour', 'Typography', 'Space and shape', 'Motion'],
           'Components',
