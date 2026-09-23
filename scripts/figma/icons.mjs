@@ -16,10 +16,11 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
+import { CONFIG } from './config.mjs';
 
-const ROOT = fileURLToPath(new URL('../..', import.meta.url));
-const COMPONENTS = join(ROOT, 'src/components');
+const ROOT = process.cwd(); // the project root: run from there (npm run …)
+const COMPONENTS = join(ROOT, CONFIG.components);
 
 /**
  * Shape names, matched against a drawing's geometry signature. A suffix marks a
@@ -174,7 +175,7 @@ export function buildIcons() {
   const icons = new Map();
   const skipped = [];
   const files = readdirSync(COMPONENTS).flatMap((dir) =>
-    readdirSync(join(COMPONENTS, dir)).filter((f) => f.endsWith('.tsx')).map((f) => ({ dir, f, path: `src/components/${dir}/${f}` })));
+    readdirSync(join(COMPONENTS, dir)).filter((f) => f.endsWith('.tsx')).map((f) => ({ dir, f, path: `${CONFIG.components}/${dir}/${f}` })));
   // Components first, then stories: a glyph a component draws outranks the same shape in an example.
   files.sort((a, b) => a.f.endsWith('.stories.tsx') - b.f.endsWith('.stories.tsx') || a.path.localeCompare(b.path));
   for (const { dir, f, path } of files) {

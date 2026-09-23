@@ -5,16 +5,43 @@ description: Build or update the Figma library so it mirrors the code — a comp
 
 # Figma mirror — code → Figma
 
-The Figma library (file `PvLNUW3xI3A9kTumVi7O3d`, "sample-design-system") mirrors
-this repo. It is never the source. Every name, property and value in it comes
-from `tokens/*.json`, a component's `.tsx` and its `.module.css`, through the
-scripts in `scripts/figma/`, and `npm run validate` checks the result against
-the code through `figma/manifest.json`.
+The Figma library mirrors the code. It is never the source. Every name,
+property and value in it comes from the token files, a component's `.tsx` and
+its stylesheet, through the scripts that ship with this skill, and the Figma
+manifest records the result so a check can compare it with the code.
 
 That manifest is also what the return trip will use: a Figma frame names
 `Button · variant=primary, size=md`, and the manifest is how that resolves to
 `<Button variant="primary" size="md">` in a story. So the rules below are not
 style preferences. Break one and a frame coming back from Figma stops resolving.
+
+## Setup (once per design system)
+
+The steps below use these names. In the `ds-base-ui` template they are
+already right; for another system, change them here and in `config.mjs`.
+
+| Setting | In ds-base-ui | What it is |
+| --- | --- | --- |
+| Library file | `sample-design-system` (`PvLNUW3xI3A9kTumVi7O3d`) | The Figma file that holds the library |
+| Scripts | `scripts/figma/`, settings in `config.mjs` | This skill's scripts: token prefix, token files, component folder, fonts |
+| Tokens | `tokens/` (DTCG): `tier-1-definitions/`, `tier-2-usage/semantic.light.json` and `.dark.json`, `text-style.json` | Where design decisions live |
+| Components | `src/components/<Name>/<Name>.tsx` and `<Name>.module.css` | One folder per component |
+| Figma manifest | `figma/manifest.json` | What the library contains, with the key map |
+| Code manifest | Storybook MCP, or `storybook-static/manifests/components.json` | Props, values and defaults in code |
+| Check | `npm run validate` (and `npm run sync-status`) | Compares the Figma manifest with the code |
+| Known differences | `figma/GAPS.md` | Where Figma cannot match the code, and why |
+
+**What the scripts expect.** Tokens in DTCG JSON with a light and a dark file
+for the roles; CSS custom properties named `--<prefix>-<token path>`; one
+stylesheet per component that uses them. Component state as data attributes
+(Base UI's `data-checked`, `data-disabled`): if your library uses other
+attributes or class names for state, extend `STATE_ATTRS` in
+`css-to-spec.mjs` first. Run the node scripts from the project root.
+
+**First check.** `node <scripts>/tokens-to-figma.mjs --summary` must list your
+variables and text styles, and `node <scripts>/css-to-spec.mjs Button` must
+show every declaration bound to a variable or marked raw. If either shows
+nothing or `undefined`, fix `config.mjs` before building anything in Figma.
 
 ## Before you start
 
@@ -107,6 +134,12 @@ commit that with the component.
 - Boolean and text defaults come from the **Default story's** args
   (`showValue` on for Progress), the same composition Storybook opens on.
 - `search_design_system` answers one query per call; batching is clamped.
+  Once the manifest has keys, place library items by key instead of searching.
+- **CSS shorthand is read clockwise.** `padding: 0 space-2 space-4` is top 0,
+  left and right `space-2`, bottom `space-4`; two values are vertical then
+  horizontal. `css-to-spec` prints the values without naming the sides, so set
+  each side on purpose and compare the result with the story. Swapping them is
+  how the Accordion panel sat 16px in instead of 8px (2026-09-23).
 - A story can be broken. Standalone `Checkbox` crashes (`Field.Item` outside a
   `Field.Root`); compare against a story that renders and flag the crash.
 
@@ -132,8 +165,12 @@ sub-element into its own component (`Select.Item`, `Tabs.Tab`) and compose it.
    no unbound values. Fix, do not explain away.
 8. Screenshot the component set (`node.screenshot()` inside the call, or the
    console's `figma_capture_screenshot`) and compare with the Storybook story.
-9. Run `scripts/figma/snapshot.figma.js` and save the result, pretty-printed
-   with two-space indentation, as `figma/manifest.json`.
+9. Run `snapshot.figma.js` in the library file and save the result, pretty-printed
+   with two-space indentation, as `figma/manifest.json`. It also writes the
+   **key map** (`keys`): the handle every other file uses to place this
+   component. A key only changes when a component is deleted and rebuilt, and
+   then every file using it loses the link — so update, never rebuild, and
+   treat a changed key in the diff as a warning.
 10. `npm run validate` — the Figma checks must pass. Fix the library or the
     spec, never the check.
 11. Commit the manifest, any `STATE_ATTRS` change and any `figma/GAPS.md` entry
@@ -191,10 +228,11 @@ not a thing you draw), **ContextMenu** (the same popup as `Menu`).
 
 | Script | Runs | Does |
 | --- | --- | --- |
+| `scripts/figma/config.mjs` | – | The settings: token prefix, token files, component folder, fonts |
 | `scripts/figma/tokens-to-figma.mjs` | Node | tokens → Figma variables and styles; imported by `validate` |
 | `scripts/figma/css-to-spec.mjs` | Node | a component's CSS → bindings, text styles, gaps |
 | `scripts/figma/icons.mjs` | Node | every inline SVG in components and stories → the icon list; imported by `validate` |
-| `scripts/figma/snapshot.figma.js` | Figma MCP | what the library contains → `figma/manifest.json` |
+| `scripts/figma/snapshot.figma.js` | Figma MCP | what the library contains, with the key map → `figma/manifest.json` |
 | `scripts/figma/audit.figma.js` | Figma MCP | every hand-set value in a component |
 
 Known gaps and their reasons live in `figma/GAPS.md`. A decision that changes
