@@ -87,6 +87,15 @@ meets something it cannot express. Anything not listed is expected to match.
 What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
+- **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
+  `Checkbox` renders a `Field.Item`, which needs an enclosing `Field.Root`; on
+  its own Base UI throws "FieldRootContext is missing". Every Checkbox story
+  and the *Patterns › Sign-up form* story fail to render. Inside a
+  `CheckboxGroup` it works. The Figma component is right (it shows the intended
+  render); the code needs a fix on a `feature/*` branch. Until then prototypes
+  put a single checkbox in a one-option `CheckboxGroup` (the workshop sign-up
+  does).
+
 - **2026-09-23, Inter and Roboto Mono.** Code now names both fonts
   (`src/fonts/`), so the font rows above are gone. Figma already used Inter and
   Roboto Mono, so no text in the library changes. The descriptions on the
