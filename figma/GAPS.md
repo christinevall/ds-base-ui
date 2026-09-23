@@ -87,6 +87,14 @@ meets something it cannot express. Anything not listed is expected to match.
 What is known to be out of date, done by hand, or not checked. Clear an entry
 when it is resolved.
 
+- **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
+  `Checkbox` renders a `Field.Item`, which needs an enclosing `Field.Root`; on
+  its own Base UI throws "FieldRootContext is missing". Every Checkbox story
+  and the *Patterns › Sign-up form* story fail to render. Inside a
+  `CheckboxGroup` it works. The Figma component is right (it shows the intended
+  render); the code needs a fix on a `feature/*` branch. Until then prototypes
+  put a single checkbox in a one-option `CheckboxGroup` (the workshop sign-up
+  does).
 - **2026-09-23, found by rebuilding the booking flow in Figma.**
   - **Accordion.Item panel padding: fixed in the library and published (2026-09-23).**
     The `content` frame had left/right `space/4` and top/bottom `space/2`, the
