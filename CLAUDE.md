@@ -94,8 +94,18 @@ tokens and the components, so a Figma name that drifts from its token or its
 prop fails CI. What cannot be mirrored exactly, and why, is in `figma/GAPS.md`.
 
 **At the start of a session** a hook runs `npm run sync-status -- --summary` and
-its output is in your context. Open your first reply with it in one line, or
-say it did not run. The full table is `docs/sync-status.md`, or *Sync status* in Storybook.
+its output is in your context. Open your first reply with it in one line,
+including when the Figma snapshot was taken, or say it did not run. The full
+table is `docs/sync-status.md`, or *Sync status* in Storybook.
+
+**When asked to run the check**, the Figma side is only as fresh as the last
+snapshot: `npm run sync-status` cannot reach Figma. So first call
+`figma_list_open_files`. If the library file is connected, run
+`scripts/figma/snapshot.figma.js` in it, save the result as
+`figma/manifest.json`, then run the check. If it is not connected, run the
+check anyway and say plainly: "this is the snapshot of <date, time>, not the
+live library; to check live, open the library in Figma and run the Desktop
+Bridge plugin". Never present an old snapshot as the current state.
 
 **To place a library item in another Figma file**, take its key from
 `figma/manifest.json` → `keys` (components with their variants, text styles,

@@ -26,8 +26,25 @@ const findings = JSON.parse(execSync('node scripts/validate.mjs --json', { encod
 const fm = existsSync(FIGMA) ? JSON.parse(readFileSync(FIGMA, 'utf8')) : null;
 const sb = existsSync(STORYBOOK) ? Object.values(JSON.parse(readFileSync(STORYBOOK, 'utf8')).components) : [];
 const git = (cmd) => { try { return execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } };
-const snapshotDate = git(`git log -1 --format=%cs -- ${FIGMA}`) || 'never committed';
+// When the Figma side was last read. The check never reaches Figma itself:
+// only Claude can, through the Figma Console MCP, by taking a snapshot. So
+// every output says when that was, and how to take a new one.
+// A snapshot not committed yet is dated by when the file was saved; a
+// committed one by its commit (a checkout rewrites the file's time).
 const snapshotDirty = git(`git status --porcelain -- ${FIGMA}`) !== '';
+const snapshotAt = snapshotDirty
+  ? (existsSync(FIGMA) ? statSync(FIGMA).mtime : null)
+  : new Date(git(`git log -1 --format=%cI -- ${FIGMA}`) || NaN);
+const pad = (n) => String(n).padStart(2, '0');
+const stamp = (d) => (d && !isNaN(d) ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}` : 'never');
+const ago = (d) => {
+  if (!d || isNaN(d)) return '';
+  const min = Math.round((Date.now() - d) / 60000);
+  return min < 60 ? `${min} min ago` : min < 60 * 48 ? `${Math.round(min / 60)} h ago` : `${Math.round(min / 1440)} days ago`;
+};
+const snapshotDate = stamp(snapshotAt);
+const snapshotNote = `${snapshotDate}${snapshotDirty ? ', not committed yet' : ''}`;
+const HOW_TO_REFRESH = 'To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude "take a snapshot of the library", then run npm run sync-status again.';
 
 // Which component a finding belongs to: Figma findings name the Figma item
 // first ("Card.Header: …", "Meter has no key"); code findings sit in its folder.
@@ -94,9 +111,10 @@ const summary = [
   `Sync status: ${count('match')} of ${rows.length - count('not mirrored')} mirrored components match` +
     (drift.length ? `, ${drift.length} need attention: ${drift.map((r) => `${r.name} (${r.issues[0]?.message ?? r.status})`).join('; ')}` : '') +
     (systemWide.length ? `. ${systemWide.length} system-wide finding(s): ${[...new Set(systemWide.map((f) => f.rule))].join(', ')}` : '') + '.',
-  `Figma side read from the snapshot of ${snapshotDate}${snapshotDirty ? ' (plus an uncommitted newer snapshot)' : ''}, not the live file.` +
+  `Figma side: the snapshot saved ${snapshotNote} (${ago(snapshotAt)}), not the live file.` +
     (fm?.keys ? ` Key map: ${Object.keys(fm.keys.components).length} components, ${Object.keys(fm.keys.textStyles).length} text styles, ${Object.keys(fm.keys.variables).length} variables.` : ' No key map yet.'),
   sb.length ? '' : 'Storybook manifest not built: code props are not listed (npm run build-storybook).',
+  HOW_TO_REFRESH,
 ].filter(Boolean);
 
 
@@ -151,7 +169,7 @@ if (!SUMMARY_ONLY) {
     '',
     'Every component, in code and in the Figma library, side by side. **Code is the source**: when the two disagree, Figma is updated (with the `figma-mirror` skill), never the other way round.',
     '',
-    `- **Figma side:** read from \`figma/manifest.json\`, the snapshot of **${snapshotDate}**, not the live file. If the library changed since, run \`scripts/figma/snapshot.figma.js\` again.`,
+    `- **Figma side:** the snapshot saved **${snapshotNote}**, read from \`figma/manifest.json\`, not the live file. This check cannot reach Figma; only Claude can, through the Figma Console MCP. ${HOW_TO_REFRESH}`,
     `- **Checks:** everything below comes from \`npm run validate\`. ${findings.length ? `${findings.length} finding(s) in total.` : 'No findings.'}`,
     `- **Tokens:** ${tokenCount} Figma variables, ${fm?.textStyles.length ?? 0} text styles, ${fm?.effectStyles.length ?? 0} effect styles.`,
     '',
@@ -190,7 +208,7 @@ if (!SUMMARY_ONLY) {
   writeFileSync('docs/sync-status.md', md);
   // The same, as data, for the Sync status page in Storybook (src/SyncStatus.mdx).
   writeFileSync('docs/sync-status.json', JSON.stringify({
-    snapshotDate, findings: findings.length, checks: CHECKS, rows,
+    snapshotDate: snapshotNote, howToRefresh: HOW_TO_REFRESH, findings: findings.length, checks: CHECKS, rows,
     systemWide: systemWide.map((f) => ({ message: f.message, rule: f.rule, file: f.file })),
     tokens: { variables: tokenCount, textStyles: fm?.textStyles.length ?? 0, effectStyles: fm?.effectStyles.length ?? 0 },
   }, null, 2) + '\n');
