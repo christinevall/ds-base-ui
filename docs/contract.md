@@ -16,10 +16,10 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 - **Same property names:** Every Figma property is a real prop, part or text of the code component.
 - **Same options:** Every variant option in Figma is an allowed value in code.
 - **Same defaults:** The default Figma variant uses the code defaults.
-- **Figma key:** The Figma manifest has the key needed to place it in another file.
+- **Figma key *:** The Figma manifest has the key needed to place it in another file (see * below the table).
 - **Code follows the rules:** Its CSS uses existing semantic tokens and whole text styles, no raw colours.
 
-| Component | In both | Same property names | Same options | Same defaults | Figma key | Code follows the rules | In Figma |
+| Component | In both | Same property names | Same options | Same defaults | Figma key * | Code follows the rules | In Figma |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | **Accordion** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Accordion, Accordion.Item |
 | **Alert** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Alert |
@@ -64,6 +64,8 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 | **Toolbar** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Toolbar, Toolbar.Button, Toolbar.Input, Toolbar.Link, Toolbar.Separator |
 | **Tooltip** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Tooltip.Content |
 
+\* **Why the Figma key matters.** A name says *which* component to use; Figma only places a library component by its key. With every key saved in `figma/manifest.json`, Claude builds a Figma screen by looking keys up instead of searching the whole library. On the booking flow (2026-09-23) the search alone was about 59,000 characters, more than building all four screens (about 25,000); with the key map, the whole job is roughly a third. Using library instances instead of drawing components also keeps the screen linked to the system, so it cannot drift.
+
 ## Needs attention
 
 Nothing. Code and Figma agree.
@@ -77,3 +79,7 @@ No findings outside single components.
 - **The look.** Names, props, options, defaults and keys are compared: the API. Auto layout, paddings, colours and radii inside a Figma component are not, so changing them does not turn anything red. The `figma-mirror` audit checks that they are bound to *a* variable (not the right one), and comparing screenshots finds the rest (the Accordion panel padding, 2026-09-23).
 - **The live Figma file.** Only its last snapshot.
 - **Known differences.** Where Figma cannot match the code on purpose, `figma/GAPS.md` explains why.
+
+## Not yet (parked)
+
+- **A "Same look" column.** Compare what each Figma layer is bound to (padding, gap, radius, colour, text style, shadow) with what the CSS says, matching `.header` to `Card.Header` and `size=md` to `.md`. Tested on Card, Button and Accordion: all three match. Known differences (Card body padding) would carry a mark on the Figma layer, with `figma/GAPS.md` as the explanation. Parked until the prototype skill is done; the first full run needs decisions on what is drift and what is a known gap.

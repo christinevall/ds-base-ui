@@ -24,8 +24,8 @@
     },
     {
       "id": "keys",
-      "label": "Figma key",
-      "means": "The Figma manifest has the key needed to place it in another file"
+      "label": "Figma key *",
+      "means": "The Figma manifest has the key needed to place it in another file (see * below the table)"
     },
     {
       "id": "rules",

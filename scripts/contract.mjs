@@ -56,7 +56,7 @@ const CHECKS = [
   { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
   { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
   { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
-  { id: 'keys', label: 'Figma key', means: 'The Figma manifest has the key needed to place it in another file' },
+  { id: 'keys', label: 'Figma key *', means: 'The Figma manifest has the key needed to place it in another file (see * below the table)' },
   { id: 'rules', label: 'Code follows the rules', means: 'Its CSS uses existing semantic tokens and whole text styles, no raw colours' },
 ];
 const checkOf = (f) => {
@@ -121,6 +121,8 @@ if (!SUMMARY_ONLY) {
     `| --- | ${CHECKS.map(() => ':---:').join(' | ')} | --- |`,
     ...rows.map((r) => `| **${r.name}** | ${CHECKS.map((c) => mark(r.checks[c.id])).join(' | ')} | ${r.figma.length ? r.figma.join(', ') : r.why ?? '–'} |`),
     '',
+    '\\* **Why the Figma key matters.** A name says *which* component to use; Figma only places a library component by its key. With every key saved in `figma/manifest.json`, Claude builds a Figma screen by looking keys up instead of searching the whole library. On the booking flow (2026-09-23) the search alone was about 59,000 characters, more than building all four screens (about 25,000); with the key map, the whole job is roughly a third. Using library instances instead of drawing components also keeps the screen linked to the system, so it cannot drift.',
+    '',
     '## Needs attention',
     '',
     ...(drift.length ? drift.flatMap((r) => [`**${r.name}**`, ...(r.issues.length ? r.issues.map((f) => `- ${CHECKS.find((c) => c.id === f.check).label}: ${f.message} (\`${f.rule}\`)`) : ['- No Figma component yet.']), '']) : ['Nothing. Code and Figma agree.', '']),
@@ -133,6 +135,10 @@ if (!SUMMARY_ONLY) {
     '- **The look.** Names, props, options, defaults and keys are compared: the API. Auto layout, paddings, colours and radii inside a Figma component are not, so changing them does not turn anything red. The `figma-mirror` audit checks that they are bound to *a* variable (not the right one), and comparing screenshots finds the rest (the Accordion panel padding, 2026-09-23).',
     '- **The live Figma file.** Only its last snapshot.',
     '- **Known differences.** Where Figma cannot match the code on purpose, `figma/GAPS.md` explains why.',
+    '',
+    '## Not yet (parked)',
+    '',
+    '- **A "Same look" column.** Compare what each Figma layer is bound to (padding, gap, radius, colour, text style, shadow) with what the CSS says, matching `.header` to `Card.Header` and `size=md` to `.md`. Tested on Card, Button and Accordion: all three match. Known differences (Card body padding) would carry a mark on the Figma layer, with `figma/GAPS.md` as the explanation. Parked until the prototype skill is done; the first full run needs decisions on what is drift and what is a known gap.',
     '',
   ].join('\n');
   writeFileSync('docs/contract.md', md);
