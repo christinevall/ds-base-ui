@@ -52,7 +52,7 @@ for (const f of findings) {
 // What "agree" means, one check per column. Each is a question validate
 // already answers; a finding moves that column to ❌ for that component.
 const CHECKS = [
-  { id: 'both', label: 'In both', means: 'A Figma component exists and names this code file as its source' },
+  { id: 'both', label: 'Exists in both', means: 'A Figma component exists and names this code file as its source' },
   { id: 'names', label: 'Same property names', means: 'Every Figma property is a real prop, part or text of the code component' },
   { id: 'options', label: 'Same options', means: 'Every variant option in Figma is an allowed value in code' },
   { id: 'defaults', label: 'Same defaults', means: 'The default Figma variant uses the code defaults' },
@@ -160,7 +160,9 @@ if (!SUMMARY_ONLY) {
     '',
     ...CHECKS.map((c) => `- **${c.label}:** ${c.means}.`),
     '',
-    `| Component | ${CHECKS.map((c) => c.label).join(' | ')} | In Figma |`,
+    // GitHub squeezes the narrowest column and scales its badge images down;
+    // a header that cannot wrap keeps every column at least a badge wide.
+    `| Component | ${CHECKS.map((c) => c.label.replace(/ /g, '&nbsp;')).join(' | ')} | In Figma |`,
     `| --- | ${CHECKS.map(() => ':---:').join(' | ')} | --- |`,
     ...rows.map((r) => `| **${r.name}** | ${CHECKS.map((c) => mark(r.checks[c.id])).join(' | ')} | ${r.figma.length ? r.figma.join(', ') : r.why ?? '–'} |`),
     '',

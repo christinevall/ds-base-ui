@@ -4,7 +4,7 @@
   "checks": [
     {
       "id": "both",
-      "label": "In both",
+      "label": "Exists in both",
       "means": "A Figma component exists and names this code file as its source"
     },
     {

@@ -12,14 +12,14 @@ Every component, in code and in the Figma library, side by side. **Code is the s
 
 **How to read it:** every column is one thing code and Figma must agree on. ![✓ agree](contract/agree.svg) they agree · ![✗ differs](contract/differs.svg) they do not, the reason is under *Needs attention* · ![not mirrored](contract/not-mirrored.svg) not mirrored to Figma, by decision.
 
-- **In both:** A Figma component exists and names this code file as its source.
+- **Exists in both:** A Figma component exists and names this code file as its source.
 - **Same property names:** Every Figma property is a real prop, part or text of the code component.
 - **Same options:** Every variant option in Figma is an allowed value in code.
 - **Same defaults:** The default Figma variant uses the code defaults.
 - **Figma key *:** The Figma manifest has the key needed to place it in another file (see * below the table).
 - **Code follows the rules:** Its CSS uses existing semantic tokens and whole text styles, no raw colours.
 
-| Component | In both | Same property names | Same options | Same defaults | Figma key * | Code follows the rules | In Figma |
+| Component | Exists&nbsp;in&nbsp;both | Same&nbsp;property&nbsp;names | Same&nbsp;options | Same&nbsp;defaults | Figma&nbsp;key&nbsp;* | Code&nbsp;follows&nbsp;the&nbsp;rules | In Figma |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: | --- |
 | **Accordion** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Accordion, Accordion.Item |
 | **Alert** | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | ![✓ agree](contract/agree.svg) | Alert |
