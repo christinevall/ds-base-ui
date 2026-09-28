@@ -133,7 +133,7 @@ export function FigmaAndCode() {
         <Tile title="Toolkit" text="Every check, command, skill and MCP, and a five-minute demo." href={page('toolkit--docs')} label="Open" />
         <Tile title="Layout" text="The six layout words and how this code builds a page, so a Figma screen comes back into code unchanged." href={page('layout--docs')} label="Open" />
         <Tile title="Figma only" text="Prototyping with Claude from a Figma library alone, before there is a Storybook." href={page('figma-only--docs')} label="Open" />
-        <Tile title="Gaps" text="Where Figma cannot match the code, and why, plus what is still open." href={page('gaps--docs')} label="Open" />
+        <Tile title="Gaps" text="Where Figma and the code differ, and why, plus what is open or not checked yet." href={page('gaps--docs')} label="Open" />
         <Tile title="The skills" text="figma-library-from-code and storybook-figma-sync, shared for other design systems, MIT licensed." href={LINKS.skills} label="On GitHub" />
       </div>
     </div>

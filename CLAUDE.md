@@ -148,4 +148,4 @@ key. If a key is missing, the snapshot is stale: say so and run
 - `docs/architecture.md` — why the repo is shaped this way
 - `docs/conventions.md` — how to add a component
 - `docs/branching.md` — the branch model
-- `figma/GAPS.md` — where Figma cannot match the code, and why
+- `figma/GAPS.md` — where Figma and the code differ and why, plus what is open or not checked
