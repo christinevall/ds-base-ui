@@ -1,10 +1,31 @@
-# Where Figma cannot mirror the code exactly
+# Gaps between Figma and the code
 
-Every entry here is a decision, not an oversight: what the code does, what
-Figma does instead, and why. Add an entry whenever the `figma-library-from-code` skill
-meets something it cannot express. Anything not listed is expected to match.
+Where the Figma library and the code do not match, and what is not known yet.
+It is where "in sync" stops being a claim: anything not listed here is
+expected to match, so a difference that is not written down is a bug.
 
-## Tokens
+**Write an entry whenever** you skip something, build something by hand, find
+a mismatch, or cannot check something. Rule of thumb: if a designer opening
+the file would be surprised, it belongs here. Never fake a match in Figma to
+avoid an entry. Both skills, `figma-library-from-code` and
+`storybook-figma-sync`, write here, and read it first.
+
+**Five kinds:**
+
+| Mark | Kind | Where it goes | Until |
+| --- | --- | --- | --- |
+| 🎨 | **Figma limit**: Figma cannot express what the code does | *Different on purpose* | For good, or until Figma can |
+| 🔄 | **Figma behind**: the code changed, the library has not caught up | *Open*, with the step that updates it | The library is updated |
+| 🐞 | **Code bug**: found while mirroring; the code is wrong, not Figma | *Open*, and fix it in the code | The fix is merged |
+| ❓ | **Not decided**: the code does not answer the question | *Open*, with the question | Someone decides; then *Different on purpose* or fixed |
+| 👁 | **Not checked**: done, but not verified | *Open*, with what would check it | It is checked |
+
+## Different on purpose
+
+Permanent. Each row is a decision: what the code does, what Figma does
+instead, and why.
+
+### Tokens
 
 | Code | Figma | Why |
 | --- | --- | --- |
@@ -13,8 +34,9 @@ meets something it cannot express. Anything not listed is expected to match.
 | A shadow is one token, `--sds-elevation-*`, different in Light and Dark | An effect style whose colour is bound to `elevation/<level>/color` (Light/Dark) | Effect styles have no modes. The geometry is the same in both themes in code; only the alpha changes. The colour variables are Figma-only and carry no code syntax |
 | Tier-1 `shadow.*`, `line.height.*`, `letter.spacing.*`, `text.transform.*` | Not mirrored as variables | Internal to the text and effect styles above |
 | `TIMING` and `EASING` variables | `ALL_SCOPES` | Figma has no motion scopes; these types can only fill a timing or easing field anyway |
+| Inter and Roboto Mono load as web fonts (`font-display: swap`); until they arrive, text shows in the system font. Only Latin and Latin Extended are bundled | Always Inter and Roboto Mono, in every script | Figma has the fonts installed. Text can shift slightly in the browser as the font arrives; Cyrillic, Greek and Vietnamese fall back to the system font |
 
-## Components
+### Components
 
 | Component | Code | Figma | Why |
 | --- | --- | --- | --- |
@@ -82,56 +104,56 @@ meets something it cannot express. Anything not listed is expected to match.
 | Combobox, Autocomplete | `.inputWithActions` adds `space/12` end padding only when a clear or trigger button renders | The padding stays when both booleans are off | One layer, one binding: padding cannot follow two booleans |
 | Avatar | With no `fallback`, it draws the person glyph (`GlyphFallback` story) | Not mirrored as a state: the Figma set has `fallback` as text and `size` | The glyph state is "no fallback given", not a prop value a designer picks. `icon/person` exists on the Icons page for when it is modelled |
 
-## Status, open points and uncertainties
+## Left out on purpose
 
-What is known to be out of date, done by hand, or not checked. Clear an entry
-when it is resolved.
+Code that has no Figma counterpart at all, and why.
 
-- **Accordion named "Accordion1": fixed (2026-09-23, 16:40).** A live snapshot
-  at 16:29 found the library's Accordion renamed to "Accordion1" (same key, same
-  description, only the name), most likely by accident; not checked who or why.
-  Renamed back by hand in Figma. A new live snapshot is byte-identical to the
-  committed 16:03 one, and sync status is 39 of 39. Not checked: whether the
-  library was published after the rename back, so files using it may still
-  offer "Accordion1" until it is.
-- **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
+| Code | Why |
+| --- | --- |
+| `Form` | No visuals of its own: it only groups fields and runs validation |
+| `ScrollArea` | Behaviour, not a thing you draw |
+| `ContextMenu` | The same popup as `Menu`; use `Menu` in Figma |
+
+## Open
+
+Temporary. Dated, one mark each, with what would close it. Delete an entry
+when it is closed; git keeps the history.
+
+- 🐞 **2026-09-23, a standalone Checkbox crashes in code, and it breaks a pattern.**
   `Checkbox` renders a `Field.Item`, which needs an enclosing `Field.Root`; on
   its own Base UI throws "FieldRootContext is missing". Every Checkbox story
   and the *Patterns › Sign-up form* story fail to render. Inside a
   `CheckboxGroup` it works. The Figma component is right (it shows the intended
-  render); the code needs a fix on a `feature/*` branch. Until then prototypes
-  put a single checkbox in a one-option `CheckboxGroup` (the workshop sign-up
-  does).
-- **2026-09-23, found by rebuilding the booking flow in Figma.**
-  - **Accordion.Item panel padding: fixed in the library and published (2026-09-23).**
-    The `content` frame had left/right `space/4` and top/bottom `space/2`, the
-    CSS shorthand `padding: 0 space-2 space-4` read the wrong way round. Now top
-    0, left/right `space/2`, bottom `space/4`, checked against Storybook (text
-    at 8px, panel 58px). Files that use the library still have to accept the
-    update (the Playground: not checked).
-  - **Meter and Progress: the bar length is not a property.** `Meter.Indicator`
-    is a fixed-width rectangle (42% by default) and an instance cannot resize
-    it, so an instance shows the default fill whatever its `value` text says.
-    Open: a variant per step, or a width bound to a number variable.
-  - **Dialog.Content: its description says "portal, backdrop and popup"**, but
-    the component is the popup only. A page draws the backdrop itself with
-    `color/background/overlay` (as the rows above say). Open: fix the
-    description, or add the backdrop.
-  - **Not checked:** Collapsible was compared for the same padding mistake and
-    matches; no other component's padding was compared. The parked "Same look"
-    check on the Sync status page would do that.
-
-- **2026-09-23, Inter and Roboto Mono.** Code now names both fonts
-  (`src/fonts/`), so the font rows above are gone. Figma already used Inter and
-  Roboto Mono, so no text in the library changes. The descriptions on the
-  `font/sans` and `font/mono` variables still say "system font stack … stands
-  in"; `npm run figma:tokens` now produces the new text, but the library was
-  not updated because Figma was not connected. Run `figma-library-from-code` on the
-  Typography collection to refresh them.
-- **Not checked:** text widths in Storybook against Figma, component by
-  component, after the switch. They should now match on any machine where
-  Inter loads, but that was not measured.
-- **Fallback:** until a font loads (`font-display: swap`), text shows in the
-  system font and can shift slightly when it arrives. Only Latin and Latin
-  Extended are bundled; Cyrillic, Greek and Vietnamese fall back to the system
-  font.
+  render). **Closes when** the code is fixed on a `feature/*` branch. Until
+  then prototypes put a single checkbox in a one-option `CheckboxGroup` (the
+  workshop sign-up does).
+- 🔄 **2026-09-23, the font variables' descriptions are out of date.** Code now
+  names Inter and Roboto Mono (`src/fonts/`); the descriptions on `font/sans`
+  and `font/mono` in Figma still say "system font stack … stands in". The
+  fonts themselves already match. **Closes when** `figma-library-from-code`
+  runs on the Typography collection (`npm run figma:tokens` already produces
+  the new text).
+- ❓ **2026-09-23, Meter and Progress: the bar length is not a property.**
+  `Meter.Indicator` is a fixed-width rectangle (42% by default) and an instance
+  cannot resize it, so an instance shows the default fill whatever its `value`
+  text says. Found by rebuilding the booking flow. **Decide:** a variant per
+  step, or a width bound to a number variable.
+- ❓ **2026-09-23, Dialog.Content: its description says "portal, backdrop and
+  popup"**, but the component is the popup only. A page draws the backdrop
+  itself with `color/background/overlay` (as the rows above say). **Decide:**
+  fix the description, or add the backdrop.
+- 👁 **2026-09-23, not checked: was the library published after "Accordion1"
+  was renamed back?** A live snapshot found the Accordion renamed by accident
+  (same key); it was renamed back by hand and sync status is 39 of 39. Files
+  using the library may still offer "Accordion1". **Check** the library's
+  publish history.
+- 👁 **2026-09-23, not checked: has the Playground accepted the Accordion
+  padding fix?** The library's `Accordion.Item` panel padding was read the
+  wrong way round from the CSS shorthand; fixed and published, checked against
+  Storybook. **Check** the Playground's library updates.
+- 👁 **2026-09-23, not checked: other components' padding.** Only Collapsible
+  was compared for the same shorthand mistake (it matches). **Check** with the
+  parked "Same look" column on the Sync status page.
+- 👁 **2026-09-23, not checked: text widths after the font switch.** They
+  should match wherever Inter loads, but were not measured component by
+  component in Storybook against Figma.
