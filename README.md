@@ -8,7 +8,8 @@ It is a teaching repo, not a production system. 42 components, 4 foundations pag
 | --- | --- |
 | **Live Storybook** | [christinevall.github.io/ds-base-ui](https://christinevall.github.io/ds-base-ui/), no install needed. Updates on every merge to `main` |
 | **Figma library** | [Figma Community](https://www.figma.com/community/file/1681312616396112992): the same system as Figma variables, text styles and components, generated from this code. Duplicate it to explore |
-| **Code** | this repository. Use the green **Code** button → *Download ZIP*, or **Use this template** |
+| **Download** | [⬇ Download the whole project (ZIP)](https://github.com/christinevall/ds-base-ui/archive/refs/heads/main.zip). One click, no GitHub account needed. Unzip it, then see [Run it on your computer](#run-it-on-your-computer) |
+| **Code** | this repository. Or **Use this template** to get your own copy on GitHub |
 
 ## Start here
 
@@ -191,7 +192,7 @@ This is the workflow I'm exploring with it, and it will keep changing while I bu
    installer. Node 22 or newer (this repo is developed on Node 24). To check
    whether you already have it, open Terminal and type `node -v`.
 
-Then download this repository (green **Code** button → **Download ZIP**),
+Then [download this repository as a ZIP](https://github.com/christinevall/ds-base-ui/archive/refs/heads/main.zip),
 unzip it, open the folder in Claude Code, and say:
 
 > Show me Storybook
