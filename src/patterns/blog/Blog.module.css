@@ -1,6 +1,6 @@
 /*
- * Layout for the blog prototypes only (Prototypes/Blog index, Prototypes/Article
- * detail). Kept out of Patterns.module.css so the design system's own pattern
+ * Layout for the blog prototypes only (Prototypes/Blog index, Article detail,
+ * Blog subscribe). Kept out of Patterns.module.css so the design system's own pattern
  * CSS carries nothing a prototype needed. Semantic tokens only; page layout,
  * no surfaces.
  */
@@ -134,4 +134,12 @@
 .prose code {
   font-family: var(--sds-font-mono);
   font-size: var(--sds-font-size-sm);
+}
+
+/* ---------------------------------------------------------------- Subscribe */
+
+/* Centres the form card under the top bar. Page layout only; the card is `Card`. */
+.subscribePage {
+  display: flex;
+  justify-content: center;
 }
