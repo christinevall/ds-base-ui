@@ -8,6 +8,10 @@
  * and "Show code" and "Components used" are derived from it — never written by
  * hand, so they cannot disagree with what the page is actually made of.
  *
+ * A component made inside a prototype (a `BookingTopBar` in `./booking/`) is
+ * listed on its own, as not in the library: it is the piece a designer cannot
+ * find in Figma, and the first candidate to become a real component.
+ *
  * A file with several stories: put `source` on the meta's `parameters.docs` so
  * every story's "Show code" gets it (a story without it falls back to the
  * one-line `<Component prop=… />`), and `description` on the first story only.
@@ -23,6 +27,9 @@ type Entry = {
 /** Named imports from the design system's own components folder. */
 const DS_IMPORT = /import\s*\{([^}]+)\}\s*from\s*'(?:\.\.\/)+components\/[A-Za-z]+'/g;
 
+/** Named imports from the prototype's own folder (`./booking/BookingTopBar`). */
+const LOCAL_IMPORT = /import\s*\{([^}]+)\}\s*from\s*'\.\/([\w-]+\/[\w./-]+)'/g;
+
 /** Elements a page renders itself rather than through a component. */
 const HTML_TAG = /<(h[1-6]|p|span|div|section|article|header|main|nav|ol|ul|li|a|strong|em|code)\b/g;
 
@@ -37,17 +44,29 @@ function functionSource(source: string, fn: string) {
 export function prototypeDocs(entries: Entry[]) {
   const used = new Map<string, { places: number; parts: Set<string> }>();
   const html = new Map<string, number>();
+  /** Invented components the page renders, with the file they come from. */
+  const local = new Map<string, string>();
+  /** For each function passed in, the library components it renders. */
+  const builtFrom = new Map<string, Set<string>>();
 
   for (const { source, fn } of entries) {
     const ds = new Set<string>();
     for (const m of source.matchAll(DS_IMPORT)) {
       for (const name of m[1].split(',')) if (name.trim()) ds.add(name.trim());
     }
+    const imported = new Map<string, string>();
+    for (const m of source.matchAll(LOCAL_IMPORT)) {
+      for (const name of m[1].split(',')) if (/^[A-Z]/.test(name.trim())) imported.set(name.trim(), m[2]);
+    }
 
     const body = functionSource(source, fn);
+    const own = new Set<string>();
+    builtFrom.set(fn, own);
     for (const m of body.matchAll(/<([A-Z]\w*)(?:\.(\w+))?[\s/>]/g)) {
       const [, name, part] = m;
+      if (imported.has(name)) local.set(name, imported.get(name)!);
       if (!ds.has(name)) continue;
+      own.add(name);
       const entry = used.get(name) ?? { places: 0, parts: new Set<string>() };
       // One place per root: `<Card.Root>` or a bare `<Button>`; parts are listed, not counted.
       if (!part || part === 'Root') entry.places += 1;
@@ -69,6 +88,16 @@ export function prototypeDocs(entries: Entry[]) {
     .map(([tag, n]) => `\`<${tag}>\` ×${n}`)
     .join(', ');
 
+  const localRows = [...local.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, path]) => {
+      const parts = builtFrom.get(name);
+      const from = parts
+        ? [...parts].sort().map((p) => `\`${p}\``).join(', ') || 'plain HTML only'
+        : 'not known — its source is not passed in';
+      return `| \`${name}\` | \`src/patterns/${path}\` | ${from} |`;
+    });
+
   const summary = [
     '**Components used** — generated from the code under “Show code”, so it cannot drift from it. A repeated item (a card in a list) counts once.',
     '',
@@ -79,6 +108,16 @@ export function prototypeDocs(entries: Entry[]) {
     htmlList
       ? `**Plain HTML, not a component:** ${htmlList}. Each should be page layout or a gap listed in the table above.`
       : '**Plain HTML, not a component:** none.',
+    '',
+    ...(localRows.length
+      ? [
+          '**⚠️ Made in this prototype, not in the library:** a component invented for this page. It is not in `src/components/` and has no Figma component; the library parts inside it are counted in the table above.',
+          '',
+          '| Component | Defined in | Built from |',
+          '| --- | --- | --- |',
+          ...localRows,
+        ]
+      : ['**Made in this prototype, not in the library:** none.']),
   ].join('\n');
 
   return {

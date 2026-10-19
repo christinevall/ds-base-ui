@@ -202,3 +202,11 @@ when it is closed; git keeps the history.
   narrow window the form gets squeezed next to the aside (seen on *Course
   sign-up*, width not measured; the booking flow has the same CSS). A breakpoint token exists (`md`, 48rem) but no pattern
   uses one. **Decide:** stack below `md`, and write it into the page anatomy.
+- 👁 **2026-10-19, not checked: what *Made in this prototype* misses.** The
+  block in `prototypeDocs.ts` finds an invented component only when the page
+  imports it from its own folder (`./booking/…`). One defined inside the story
+  file itself, or imported from somewhere else, is not listed; its library
+  parts still show in *Components used*. Screen sections written in the
+  story file (`TourPage`, `BookingForm`) are left out on purpose. Not checked
+  whether any of those sections is really a reusable component in disguise.
+  **Check** when a new prototype adds a component a different way.
