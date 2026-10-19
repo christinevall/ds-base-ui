@@ -127,7 +127,7 @@ when it is closed; git keeps the history.
   `CheckboxGroup` it works. The Figma component is right (it shows the intended
   render). **Closes when** the code is fixed on a `feature/*` branch. Until
   then prototypes put a single checkbox in a one-option `CheckboxGroup` (the
-  workshop sign-up does).
+  course sign-up does).
 - 🔄 **2026-09-23, the font variables' descriptions are out of date.** Code now
   names Inter and Roboto Mono (`src/fonts/`); the descriptions on `font/sans`
   and `font/mono` in Figma still say "system font stack … stands in". The
@@ -165,3 +165,40 @@ when it is closed; git keeps the history.
 - 👁 **2026-09-23, not checked: text widths after the font switch.** They
   should match wherever Inter loads, but were not measured component by
   component in Storybook against Figma.
+- 🐞 **2026-10-19, RadioGroup and NumberField: the description keeps the
+  browser's paragraph margin.** Their `.description` is a `<p>` with no
+  `margin` reset, so it gets 12px above and below (measured on a workshop sign-up
+  prototype, since removed). Figma has none, which is the intended look: there
+  a group label sat 24px closer to its options and a field hint 12px higher. **Closes
+  when** the margin is reset in code on a `feature/*` branch.
+- 🔄 **2026-10-19, Fieldset: the legend is taller in Figma.** In code
+  `Fieldset.Legend` is 22px tall with `margin-bottom: -4px`; in Figma it is
+  26px with no offset, so a Figma Fieldset runs about 8px taller. **Closes
+  when** `figma-library-from-code` re-reads the Fieldset CSS.
+- ❓ **2026-10-19, NavigationMenu in Figma holds two Triggers, no Links.** A
+  nav of plain links (a top bar with Events, Workshops, Help) cannot be placed
+  as one NavigationMenu, because an instance cannot change its children; a
+  Figma screen has to use separate `NavigationMenu.Link` instances in a
+  Cluster instead (the booking top bar says the same in code). **Decide:** a variant with Link items, or a slot.
+- 👁 **2026-10-19, not checked: the same `<p>` margin in other fields.**
+  TextField, Select, Textarea, CheckboxGroup and Slider descriptions were not
+  measured. **Check** each story with a
+  description against its Figma component at the same width.
+- 🐞 **2026-10-19, Badge `success` fails colour contrast.** At `size="sm"` the
+  text is #16a34a on #dcfce7, a ratio of 3:1 where text needs 4.5:1 (the
+  Accessibility panel flags it as serious, found on *Prototypes › Course
+  sign-up*). `accent` and `neutral` pass. The page now uses `neutral`.
+  **Closes when** the success badge's content colour is darkened in the tokens
+  or the component, then mirrored to Figma. Not checked: `warning`, `danger`
+  and size `md`.
+- 🐞 **2026-10-19, CheckboxGroup logs a Base UI error on every render.**
+  "`<Field.Label>` expected a `<label>` element because the `nativeLabel` prop
+  is true": the group label is rendered on an element that is not a `<label>`,
+  so native label association is off. The page still works and passes the
+  accessibility check. **Closes when** `CheckboxGroup` sets `nativeLabel={false}`
+  or renders a real label, on a `feature/*` branch.
+- ❓ **2026-10-19, no narrow-screen rule for Columns.** `docs/layout.md` gives
+  the main column and the 320px aside, but no width at which they stack. In a
+  narrow window the form gets squeezed next to the aside (seen on *Course
+  sign-up*, width not measured; the booking flow has the same CSS). A breakpoint token exists (`md`, 48rem) but no pattern
+  uses one. **Decide:** stack below `md`, and write it into the page anatomy.
