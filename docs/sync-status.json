@@ -1,5 +1,5 @@
 {
-  "snapshotDate": "committed 2026-09-23 16:03",
+  "snapshotDate": "saved 2026-10-18 17:49, not committed yet",
   "howToRefresh": "To check the live library: open it in Figma, run the Desktop Bridge plugin, ask Claude \"take a snapshot of the library\", then run npm run sync-status again.",
   "findings": 0,
   "checks": [
