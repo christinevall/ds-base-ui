@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Prototypes/About prototypes" />
+
+# Prototypes
+
+Screens built to try an idea, from the library's real components. A prototype
+is not part of the library: it is where you find out what the library is
+missing.
+
+**What you see on each prototype's docs page**
+
+- **Try it:** what to click, and which states the stories show.
+- **Components used:** generated from the page's own code, so it cannot
+  disagree with what the screen is made of.
+- **⚠️ Made in this prototype, not in the library:** any piece the library did
+  not have and the prototype built for itself. It has no Figma component. Each
+  one is a gap, and the first candidate to become a real component.
+
+**How a prototype is made**
+
+1. Look up every component and prop in the Storybook MCP before using it.
+2. Build the screen in a story under `src/patterns/`, titled `Prototypes/…`.
+3. Anything the library lacks goes in the prototype's own folder
+   (`src/patterns/<prototype>/`) and is written down in `figma/GAPS.md`.
+
+Content is neutral demo content: fictional names, `example.com` addresses.

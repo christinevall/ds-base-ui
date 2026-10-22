@@ -16,54 +16,43 @@ import type { FormProps } from '../components/Form';
 import { RadioGroup, RadioGroupItem } from '../components/RadioGroup';
 import { Select } from '../components/Select';
 import { TextField } from '../components/TextField';
-import { Textarea } from '../components/Textarea';
 import { Toast } from '../components/Toast';
-import { cohorts, course, enrolledEmail, formats, questions, tags } from './course/course';
-import type { Format } from './course/course';
+import { CourseTopBar } from './course-signup/CourseTopBar';
+import { course, plans, questions, startDates, tags, takenEmail } from './course-signup/course';
+import type { Plan } from './course-signup/course';
 import source from './CourseSignUp.stories.tsx?raw';
-import layout from './course/Course.module.css';
+import topBarSource from './course-signup/CourseTopBar.tsx?raw';
+import layout from './course-signup/CourseSignUp.module.css';
 import styles from './Patterns.module.css';
 import { prototypeDocs } from './prototypeDocs';
 
 type FieldErrors = NonNullable<FormProps['errors']>;
 
-/** Stands in for the enrolment service. One address is already on the course. */
-function fakeEnrol(values: Record<string, unknown>): FieldErrors {
+/** Stands in for the sign-up service. One address is already signed up. */
+function fakeSignUp(values: Record<string, unknown>): FieldErrors {
   const email = String(values.email ?? '')
     .trim()
     .toLowerCase();
-  if (email === enrolledEmail) {
-    return { email: 'This address is already enrolled. Check your inbox for the joining link.' };
+  if (email === takenEmail) {
+    return { email: 'This address is already signed up. Check your inbox for the joining link.' };
   }
   return {};
 }
 
-/* GAP: no top bar component; this is the shell's bar from the App shell pattern. */
-function CourseTopBar() {
-  return (
-    <header className={`${styles.topBar} ${layout.topBar}`}>
-      <span className={layout.wordmark}>{course.school}</span>
-      <Button variant="ghost" size="sm">
-        Sign in
-      </Button>
-    </header>
-  );
-}
-
-function CoursePage() {
+function SignUpPage() {
   const toasts = Toast.useToastManager();
-  const [format, setFormat] = useState<Format>('cohort');
+  const [plan, setPlan] = useState<Plan>('live');
   const [errors, setErrors] = useState<FieldErrors>({});
-  const chosen = formats.find((f) => f.value === format) ?? formats[0];
+  const chosen = plans.find((p) => p.value === plan) ?? plans[0];
 
-  // Checks the required fields first (Form), then the fake service; on success a toast.
-  const reserve = (values: Record<string, unknown>) => {
-    const result = fakeEnrol(values);
+  // Form checks the required fields first, then the fake service; on success a toast.
+  const signUp = (values: Record<string, unknown>) => {
+    const result = fakeSignUp(values);
     setErrors(result);
     if (Object.keys(result).length === 0) {
       toasts.add({
         type: 'success',
-        title: 'Your place is reserved',
+        title: 'You’re signed up',
         description: `We sent the details to ${String(values.email)}.`,
       });
     }
@@ -71,7 +60,7 @@ function CoursePage() {
 
   return (
     <div className={styles.shell}>
-      <CourseTopBar />
+      <CourseTopBar school={course.school} />
 
       <main className={styles.main}>
         {/* "Stack · space/6 — content, max 1024" */}
@@ -82,10 +71,11 @@ function CoursePage() {
             </Breadcrumb.Item>
             <Breadcrumb.Separator />
             <Breadcrumb.Item>
-              <Breadcrumb.Current>{course.crumb}</Breadcrumb.Current>
+              <Breadcrumb.Current>{course.title}</Breadcrumb.Current>
             </Breadcrumb.Item>
           </Breadcrumb.Root>
 
+          {/* "Stack · space/2 — Page header" */}
           <div className={layout.header}>
             <h1 className={layout.title}>{course.title}</h1>
             <p className={layout.lead}>{course.lead}</p>
@@ -100,7 +90,7 @@ function CoursePage() {
 
           {/* "Columns · space/8" */}
           <div className={layout.columns}>
-            <Form errors={errors} onFormSubmit={reserve}>
+            <Form errors={errors} onFormSubmit={signUp}>
               <Fieldset.Root>
                 <Fieldset.Legend>About you</Fieldset.Legend>
                 <TextField label="Full name" name="name" autoComplete="name" required />
@@ -110,32 +100,32 @@ function CoursePage() {
                   type="email"
                   autoComplete="email"
                   placeholder="you@example.com"
-                  description="The joining link and the invoice go here."
+                  description="The joining link and the receipt go here."
                   required
                 />
               </Fieldset.Root>
 
               <RadioGroup
                 label="How do you want to take it?"
-                name="format"
-                value={format}
-                onValueChange={(value) => setFormat(value as Format)}
+                name="plan"
+                value={plan}
+                onValueChange={(value) => setPlan(value as Plan)}
               >
-                {formats.map((f) => (
-                  <RadioGroupItem key={f.value} value={f.value} label={f.label} description={f.description} />
+                {plans.map((p) => (
+                  <RadioGroupItem key={p.value} value={p.value} label={p.label} description={p.description} />
                 ))}
               </RadioGroup>
 
-              {/* Only the live cohort has a start date; self-paced starts any time. */}
-              {format === 'cohort' ? (
+              {/* Only the live group has a start date; self-paced starts any time. */}
+              {plan === 'live' ? (
                 <Select.Field
-                  label="Cohort start"
-                  name="cohort"
-                  items={cohorts}
-                  defaultValue="nov-3"
-                  description="Live sessions on Tuesdays, 17:00 to 18:30 CET."
+                  label="Start date"
+                  name="start"
+                  items={startDates}
+                  defaultValue="nov-10"
+                  description="Live sessions on Wednesdays, 18:00 to 19:30 CET."
                 >
-                  {Object.entries(cohorts).map(([value, label]) => (
+                  {Object.entries(startDates).map(([value, label]) => (
                     <Select.Item key={value} value={value}>
                       {label}
                     </Select.Item>
@@ -143,20 +133,13 @@ function CoursePage() {
                 </Select.Field>
               ) : null}
 
-              <Textarea
-                label="Anything we should know?"
-                name="notes"
-                placeholder="Your role, your team, what you want to get out of it…"
-                rows={3}
-              />
-
               {/* A Checkbox on its own crashes in code (figma/GAPS.md), so it sits in a group. */}
               <CheckboxGroup label="Updates" name="updates">
-                <Checkbox name="next-cohort" value="next-cohort" label="Email me when the next cohort opens" />
+                <Checkbox name="next-course" value="next-course" label="Email me when new courses open" />
               </CheckboxGroup>
 
               <FormActions>
-                <Button type="submit">Reserve my place</Button>
+                <Button type="submit">Sign up</Button>
               </FormActions>
             </Form>
 
@@ -171,7 +154,7 @@ function CoursePage() {
               </Card.Root>
 
               <Alert variant="info" title="Your employer can pay">
-                We send the invoice in your company’s name. Add the details after you reserve.
+                We make the receipt out in your company’s name. Add the details after you sign up.
               </Alert>
             </aside>
           </div>
@@ -199,18 +182,17 @@ function CoursePage() {
 }
 
 /**
- * **Prototype.** A course sign-up page, built from the design system's real
- * components through the Storybook MCP: every component and prop was looked up
- * in the MCP's docs before it was used.
+ * **Prototype.** A sign-up page for a course, built from the design system's
+ * real components. Every component and prop was looked up in the Storybook
+ * MCP before it was used.
  *
- * **Try it:** switch between *Live cohort* and *Self-paced*: the price card
- * follows, and the cohort date disappears for self-paced. *Reserve my place*
- * checks name and email, then shows a success toast. The address
- * `jordan.lee@example.com` is already enrolled and comes back with an error
- * under the field.
+ * **Try it:** switch between *Live group* and *Self-paced*: the price card
+ * follows, and the start date disappears for self-paced. *Sign up* checks name
+ * and email, then shows a success toast. `sam.rivera@example.com` is already
+ * signed up and comes back with an error under the field.
  *
- * **🟠 Built by hand:** the top bar and wordmark (no component), and the layout
- * classes in `course/Course.module.css`, one per layout frame.
+ * **🟠 Built by hand:** the top bar (the library has none), and the layout
+ * classes in `course-signup/CourseSignUp.module.css`, one per layout frame.
  *
  * **🔴 Known difference:** *Updates* is a one-option `CheckboxGroup`, because a
  * `Checkbox` on its own crashes in code (see the Gaps page).
@@ -218,15 +200,15 @@ function CoursePage() {
 function CourseSignUp() {
   return (
     <Toast.Provider>
-      <CoursePage />
+      <SignUpPage />
       <Toast.Viewport />
     </Toast.Provider>
   );
 }
 
 const docs = prototypeDocs([
-  { source, fn: 'CoursePage' },
-  { source, fn: 'CourseTopBar' },
+  { source, fn: 'SignUpPage', section: true },
+  { source: topBarSource, fn: 'CourseTopBar' },
 ]);
 
 const meta = {
@@ -242,42 +224,42 @@ type Story = StoryObj<typeof meta>;
 /** The empty page, as a visitor first sees it. */
 export const Default: Story = { parameters: { docs: { description: docs.description } } };
 
-/** Self-paced picked: the price card shows €190 and the cohort date is gone. */
+/** Self-paced picked: the price card shows €140 and the start date is gone. */
 export const SelfPaced: Story = {
   play: async ({ canvas }) => {
     await userEvent.click(canvas.getByRole('radio', { name: /Self-paced/ }));
-    await expect(canvas.getByRole('heading', { name: '€190' })).toBeVisible();
-    await expect(canvas.queryByText('Cohort start')).toBeNull();
+    await expect(canvas.getByRole('heading', { name: '€140' })).toBeVisible();
+    await expect(canvas.queryByText('Start date')).toBeNull();
   },
 };
 
-/** Name and email filled in, *Reserve my place* pressed: a success toast. */
-export const PlaceReserved: Story = {
+/** Name and email filled in, *Sign up* pressed: a success toast. */
+export const SignedUp: Story = {
   play: async ({ canvas, canvasElement }) => {
     await userEvent.type(canvas.getByLabelText('Full name'), 'Alex Moreau');
     await userEvent.type(canvas.getByLabelText('Email'), 'alex.moreau@example.com');
-    await userEvent.click(canvas.getByRole('button', { name: 'Reserve my place' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Sign up' }));
     const page = within(canvasElement.ownerDocument.body);
-    await expect(await page.findByText('Your place is reserved')).toBeVisible();
+    await expect(await page.findByText('You’re signed up')).toBeVisible();
   },
 };
 
 /** Pressed with nothing filled in: both required fields say so, and no toast. */
 export const MissingDetails: Story = {
   play: async ({ canvas, canvasElement }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Reserve my place' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Sign up' }));
     await expect(canvas.getByLabelText('Full name')).toHaveAttribute('aria-invalid', 'true');
     await expect(canvas.getByLabelText('Email')).toHaveAttribute('aria-invalid', 'true');
-    await expect(within(canvasElement.ownerDocument.body).queryByText('Your place is reserved')).toBeNull();
+    await expect(within(canvasElement.ownerDocument.body).queryByText('You’re signed up')).toBeNull();
   },
 };
 
-/** An address that is already enrolled: the service's error appears under Email. */
-export const AlreadyEnrolled: Story = {
+/** An address that is already signed up: the service's error appears under Email. */
+export const AlreadySignedUp: Story = {
   play: async ({ canvas }) => {
-    await userEvent.type(canvas.getByLabelText('Full name'), 'Jordan Lee');
-    await userEvent.type(canvas.getByLabelText('Email'), 'jordan.lee@example.com');
-    await userEvent.click(canvas.getByRole('button', { name: 'Reserve my place' }));
-    await expect(await canvas.findByText(/already enrolled/)).toBeVisible();
+    await userEvent.type(canvas.getByLabelText('Full name'), 'Sam Rivera');
+    await userEvent.type(canvas.getByLabelText('Email'), takenEmail);
+    await userEvent.click(canvas.getByRole('button', { name: 'Sign up' }));
+    await expect(await canvas.findByText(/already signed up/)).toBeVisible();
   },
 };
