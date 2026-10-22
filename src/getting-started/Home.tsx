@@ -118,7 +118,7 @@ export function StartHere() {
         <Tile title="Foundations" text="Colour, type, space and motion: the decisions everything else inherits. Flip the theme in the toolbar while you read." href={page('foundations-colour--semantic')} label="Colour" />
         <Tile title="Components" text="Each has a Default story and a story per state. Change props in Controls, check the Accessibility panel." href={page('components-button--docs')} label="Button" />
         <Tile title="Patterns" text="Real screens assembled from the library: where you find out whether the system holds together." href={page('patterns-settings-page--docs')} label="Settings page" />
-        <Tile title="Prototypes" text="Screens that moved between Figma and code: the booking flow, and a sign-up page designed in Figma from a brief." href={page('prototypes-workshop-sign-up--docs')} label="Workshop sign-up" />
+        <Tile title="Prototypes" text="Screens built to try an idea from the real components, each listing what the library was missing. Start with a course sign-up page." href={page('prototypes-course-sign-up--docs')} label="Course sign-up" />
       </div>
     </div>
   );

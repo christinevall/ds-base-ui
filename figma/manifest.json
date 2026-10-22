@@ -78,10 +78,10 @@
           "name": "variant",
           "type": "VARIANT",
           "values": [
-            "info",
             "success",
             "warning",
-            "danger"
+            "danger",
+            "info"
           ],
           "default": "info"
         }

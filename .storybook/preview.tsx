@@ -73,6 +73,8 @@ const preview: Preview = {
           'Components',
           ['Actions', 'Forms', 'Navigation', 'Overlays', 'Content', 'Layout', 'Display', 'Feedback'],
           'Patterns',
+          'Prototypes',
+          ['About prototypes'],
         ],
       },
     },

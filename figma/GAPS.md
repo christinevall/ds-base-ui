@@ -127,7 +127,7 @@ when it is closed; git keeps the history.
   `CheckboxGroup` it works. The Figma component is right (it shows the intended
   render). **Closes when** the code is fixed on a `feature/*` branch. Until
   then prototypes put a single checkbox in a one-option `CheckboxGroup` (the
-  workshop sign-up does).
+  course sign-up does).
 - 🔄 **2026-09-23, the font variables' descriptions are out of date.** Code now
   names Inter and Roboto Mono (`src/fonts/`); the descriptions on `font/sans`
   and `font/mono` in Figma still say "system font stack … stands in". The
@@ -165,3 +165,102 @@ when it is closed; git keeps the history.
 - 👁 **2026-09-23, not checked: text widths after the font switch.** They
   should match wherever Inter loads, but were not measured component by
   component in Storybook against Figma.
+- 🐞 **2026-10-19, field descriptions keep the browser's paragraph margin.**
+  Seen in RadioGroup, NumberField, TextField, Select and RadioGroupItem (the
+  last three measured on *Course sign-up*, same day). Each `.description` is a
+  `<p>` with no `margin` reset, so it gets 12px above and below (measured on a workshop sign-up
+  prototype, since removed). Figma has none, which is the intended look: there
+  a group label sat 24px closer to its options and a field hint 12px higher. **Closes
+  when** the margin is reset in code on a `feature/*` branch.
+- 🔄 **2026-10-19, Fieldset: the legend is taller in Figma.** In code
+  `Fieldset.Legend` is 22px tall with `margin-bottom: -4px`; in Figma it is
+  26px with no offset, so a Figma Fieldset runs about 8px taller. **Closes
+  when** `figma-library-from-code` re-reads the Fieldset CSS.
+- ❓ **2026-10-19, NavigationMenu in Figma holds two Triggers, no Links.** A
+  nav of plain links (a top bar with Events, Workshops, Help) cannot be placed
+  as one NavigationMenu, because an instance cannot change its children; a
+  Figma screen has to use separate `NavigationMenu.Link` instances in a
+  Cluster instead (the booking top bar says the same in code). **Decide:** a variant with Link items, or a slot.
+- 👁 **2026-10-19, not checked: the same `<p>` margin in other fields.**
+  Textarea, CheckboxGroup, Checkbox, Switch and Slider descriptions were not
+  measured. **Check** each story with a
+  description against its Figma component at the same width.
+- 🐞 **2026-10-19, Badge `success` fails colour contrast.** At `size="sm"` the
+  text is #16a34a on #dcfce7, a ratio of 3:1 where text needs 4.5:1 (the
+  Accessibility panel flags it as serious, found on *Prototypes › Course
+  sign-up*). `accent` and `neutral` pass. The page now uses `neutral`.
+  **Closes when** the success badge's content colour is darkened in the tokens
+  or the component, then mirrored to Figma. Not checked: `warning`, `danger`
+  and size `md`.
+- 🐞 **2026-10-19, CheckboxGroup logs a Base UI error on every render.**
+  "`<Field.Label>` expected a `<label>` element because the `nativeLabel` prop
+  is true": the group label is rendered on an element that is not a `<label>`,
+  so native label association is off. The page still works and passes the
+  accessibility check. **Closes when** `CheckboxGroup` sets `nativeLabel={false}`
+  or renders a real label, on a `feature/*` branch.
+- ❓ **2026-10-19, no narrow-screen rule for Columns.** `docs/layout.md` gives
+  the main column and the 320px aside, but no width at which they stack. In a
+  narrow window the form gets squeezed next to the aside (seen on *Course
+  sign-up*, width not measured; the booking flow has the same CSS). A breakpoint token exists (`md`, 48rem) but no pattern
+  uses one. **Decide:** stack below `md`, and write it into the page anatomy.
+- ❓ **2026-10-19, Breadcrumb in Figma has a fixed depth.** It always holds two
+  links and the current page. A shorter trail (*Course sign-up*: Courses ›
+  Writing for interfaces) means hiding a link and a separator inside the
+  instance, which a designer cannot see from the properties panel. **Decide:**
+  a `levels` variant, or a slot.
+- 👁 **2026-10-19, not checked: a component imported from outside the
+  prototype's folder.** *Made in this prototype* now lists every component a
+  page renders that is not from `src/components/`; screen sections are marked
+  `section: true` and named on their own line. A component imported from
+  anywhere else shows with "Defined in: not checked", and its "Built from" is
+  only known when its function is passed to `prototypeDocs`. No prototype does
+  this today. **Check** when one does.
+- 🐞 **2026-10-19, *Components used* counts `Select` in 0 places.** On
+  *Course sign-up* the table lists `Select · 0 · Field, Item`. `prototypeDocs`
+  counts a place only for `<X.Root>` or a bare `<X>`, and `Select.Field` is
+  neither, so a page built from `Select.Field` looks as if it had no select.
+  **Closes when** `prototypeDocs.ts` also counts `.Field` as a root.
+- 👁 **2026-10-19, not checked on the rebuilt *Course sign-up*: dark mode,
+  narrow widths, the Accessibility panel.** Checked at 1440px in light mode
+  only: the page renders, and all four play tests reach their end state in the
+  DOM (self-paced price, both required errors, the taken-address error, the
+  success toast). **Check** the a11y panel and the theme toggle.
+- ❓ **2026-10-19, Card has no place for a badge, an image or a meta line.**
+  Found building the *Blog* prototype in Figma from a brief. An article card
+  needs a category badge, often a cover image, and a small "author · date ·
+  read time" line; Card offers title, description, body and footer only. The
+  Figma screens put the Badge above the Card and the meta line in `body`
+  (body-md, as large as the excerpt). **Decide:** an `ArticleCard` pattern, or
+  optional media and meta parts on Card.
+- ❓ **2026-10-19, ToggleGroup in Figma always holds three Toggles.** A
+  category filter with more options (the *Blog* prototype has six categories)
+  cannot be drawn: an instance cannot add children, so the filter shows All,
+  Design, Research only. **Decide:** variants by count, or a slot — the same
+  question as Breadcrumb's depth and NavigationMenu's links.
+- 👁 **2026-10-19, not checked: the *Blog* prototype in Figma against code.**
+  Two screens (index, article) built in the Prototype file from the snapshot
+  of 2026-10-19 15:30, not a live read of the library. There is no Storybook
+  story for them, so nothing in code was compared. **Check** by bringing them
+  into Storybook (*Figma → Storybook*) and comparing at 1280px.
+- ❓ **2026-10-19, error screens need overrides: no invalid state in Figma.**
+  Field.Error and the danger border are left out on purpose (rows above), but
+  a prototype with validation needs them. Rebuilding *Course sign-up* in the
+  Prototype file, screens 3 and 4 draw the error as overrides inside the
+  TextField instances (Field.Description recoloured to `color/content/danger`
+  and used for the message, Field.Control border `color/border/danger`). The
+  email field on screen 4 loses its hint that way; in code both show.
+  **Decide:** mirror an `invalid` variant (and a Field.Error layer) on
+  TextField, Select, RadioGroup and CheckboxGroup, or keep overrides.
+- ❓ **2026-10-19, Fieldset, RadioGroup and CheckboxGroup have a fixed number
+  of items in Figma.** Three TextFields, three RadioGroupItems, three
+  Checkboxes. *Course sign-up* needs two, two and one, so the rest are hidden
+  inside the instances, which the properties panel does not show. The same
+  question as Breadcrumb's depth and ToggleGroup's count. **Decide:** variants
+  by count, or slots.
+- 👁 **2026-10-19, not checked: *Course sign-up* in Figma, screens 2–5.**
+  Five screens built in the Prototype file from the snapshot of 2026-10-19
+  15:30 (library file not open, so not live). Screen 1 was screenshotted
+  against the Default story at 1280px and matches apart from the known
+  description margin and Fieldset legend. Screens 2–5 were built from the
+  story code, not compared with screenshots; dark mode not checked. **Check**
+  each story at 1280px next to its Figma screen.

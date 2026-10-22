@@ -34,11 +34,30 @@ Three sources of truth, in this order:
 
 | Question | Where the answer is |
 | --- | --- |
-| What components exist, with what props, defaults and stories? | `storybook-static/manifests/components.json` — run `npm run build-storybook` if absent |
+| What components exist, with what props, defaults and stories? | The Storybook MCP: `docs-list`, then `docs-show` (see below). Fallback: `storybook-static/manifests/components.json` — run `npm run build-storybook` if absent |
 | What tokens exist? | `tokens/tier-1-definitions/` and `tokens/tier-2-usage/` |
 | How is a component actually used? | its `*.stories.tsx`, and `src/patterns/` for full screens |
 
-The manifest is generated from source, so it cannot be out of date. It is the answer to "does this component have a `variant` prop" — never guess, and never infer a prop from another component that looks similar.
+### Storybook MCP
+
+Storybook serves an MCP server (`storybook-base-ui` in `.mcp.json`) while it
+runs. If its tools do not answer, start Storybook (`npm run storybook`, port
+6001) and reconnect the server — do not skip it.
+
+- `docs-list` — which components exist. Run it before any UI work.
+- `docs-show` — one component's props, defaults and stories. Run it before
+  using a component; never invent a prop or copy one from a similar component.
+- `get-storybook-story-instructions` — before writing or changing a story.
+- `stories-preview` — to show the user a story after a change.
+- `test-run` is not available here (Storybook Test is not installed).
+
+**If `docs-list` has nothing for what the screen needs** (a top bar, say),
+do not quietly build it by hand. Say so first, then build it in the
+prototype's own folder (`src/patterns/<prototype>/`) so the docs page lists it
+under *Made in this prototype, not in the library*, and note it as a gap.
+
+The live MCP reads the source, so it is never out of date; the static file
+is only as fresh as the last `npm run build-storybook`. Either one is the answer to "does this component have a `variant` prop" — never guess, and never infer a prop from another component that looks similar.
 
 If you cannot read those files, say so and stop. Do not fall back to writing from memory. A wrong answer that looks confident is the failure mode this file exists to prevent.
 

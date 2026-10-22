@@ -1,11 +1,10 @@
 /*
- * Layout for the workshop sign-up prototype. Components own their insides;
- * each class here is one named auto-layout frame in the Figma version
- * (docs/layout.md: layout words and page anatomy). Semantic tokens only, and
- * type is always a whole text style.
+ * Layout for the course sign-up prototype. Components own their insides; each
+ * class here is one named layout frame (docs/layout.md: layout words and page
+ * anatomy). Semantic tokens only, and type is always a whole text style.
  */
 
-/* Figma "GAP: Top bar — Split · space/4": the shell's bar, ends pushed apart. */
+/* "Split · space/5 — Top bar": wordmark left, sign-in right. */
 .topBar {
   justify-content: space-between;
 }
@@ -21,7 +20,7 @@
   white-space: nowrap;
 }
 
-/* Figma "Stack · space/2 — Page header". */
+/* "Stack · space/2 — Page header". */
 .header {
   display: flex;
   flex-direction: column;
@@ -41,6 +40,7 @@
 
 .lead {
   margin: 0;
+  max-width: 40rem;
   font-family: var(--sds-typography-body-md-font-family);
   font-size: var(--sds-typography-body-md-font-size);
   font-weight: var(--sds-typography-body-md-font-weight);
@@ -50,7 +50,7 @@
   color: var(--sds-color-content-muted);
 }
 
-/* Figma "Cluster · space/2 — Badges". */
+/* "Cluster · space/2 — Badges". */
 .cluster {
   display: flex;
   flex-wrap: wrap;
@@ -58,7 +58,7 @@
   gap: var(--sds-space-2);
 }
 
-/* Figma "Columns · space/8": the form grows, the aside is 320px. */
+/* "Columns · space/8": the form grows, the aside is 320px. */
 .columns {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 20rem;
@@ -66,31 +66,20 @@
   align-items: start;
 }
 
-/* Figma "Cluster · space/3 — Host": avatar, then name and role. */
-.host {
+/* "Stack · space/4 — Section": a heading-lg title, then its content. */
+.section {
   display: flex;
-  align-items: center;
-  gap: var(--sds-space-3);
+  flex-direction: column;
+  gap: var(--sds-space-4);
 }
 
-.hostName {
+.sectionTitle {
   margin: 0;
-  font-family: var(--sds-typography-title-sm-font-family);
-  font-size: var(--sds-typography-title-sm-font-size);
-  font-weight: var(--sds-typography-title-sm-font-weight);
-  line-height: var(--sds-typography-title-sm-line-height);
-  letter-spacing: var(--sds-typography-title-sm-letter-spacing);
-  text-transform: var(--sds-typography-title-sm-text-transform);
+  font-family: var(--sds-typography-heading-lg-font-family);
+  font-size: var(--sds-typography-heading-lg-font-size);
+  font-weight: var(--sds-typography-heading-lg-font-weight);
+  line-height: var(--sds-typography-heading-lg-line-height);
+  letter-spacing: var(--sds-typography-heading-lg-letter-spacing);
+  text-transform: var(--sds-typography-heading-lg-text-transform);
   color: var(--sds-color-content-default);
-}
-
-.hostRole {
-  margin: 0;
-  font-family: var(--sds-typography-caption-font-family);
-  font-size: var(--sds-typography-caption-font-size);
-  font-weight: var(--sds-typography-caption-font-weight);
-  line-height: var(--sds-typography-caption-line-height);
-  letter-spacing: var(--sds-typography-caption-letter-spacing);
-  text-transform: var(--sds-typography-caption-text-transform);
-  color: var(--sds-color-content-muted);
 }
